@@ -1,0 +1,6 @@
+# NumPy: numerical checks and plots; mpmath: optional interval certificate.
+# PyMuPDF: metadata and text screening of figure PDFs during anonymous export.
+# Structural package checks and the Lean snapshot checker use the standard library.
+numpy==2.3.5
+mpmath==1.3.0
+PyMuPDF==1.26.7

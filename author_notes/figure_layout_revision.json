@@ -1,0 +1,12 @@
+{
+  "unchanged_files_sha256": {
+    "figures/psi_compact_curve.dat": "0d3fcf67b0941686f04c44130d1c659673f84313a7ec6994f6f83955901fc01a",
+    "figures/phi_leading_compact_curve.dat": "618d900200c303d4fca2c7e7625a753424f6da3741654d2c884a92e728e6a770",
+    "checks/obsf_19.csv.gz": "e8ca89c25fc182c8fb0745a2cf5fdbbe9d155c1829f6d0820b3465c480d9caca",
+    "figures/phi_phase_compact.pdf": "5d667e24c88d6c8c86fe6ddb2e8403299e7e193375f32c6d0427e02cedd1e852",
+    "GD_stepsize_schedule.pdf": "e38f43f82aca4cf4e26d3f58d202a853aedee2bfd4be0d6c9f1fb1a5d6374003"
+  },
+  "curve_data_changed": false,
+  "manuscript_changed": false,
+  "panel_titles_embedded": false
+}

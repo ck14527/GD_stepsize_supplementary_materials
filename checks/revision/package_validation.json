@@ -1,0 +1,27 @@
+{
+  "classification": "Current supplementary-package validation",
+  "python": "3.13.1",
+  "missing_required_files": [],
+  "sha256_manifest": {
+    "present": false,
+    "passed": null,
+    "note": "Manifest is added by anonymous export."
+  },
+  "historical_proof_input_hashes_checked": 74,
+  "historical_proof_or_export_hash_mismatches": [],
+  "checks_executed": [
+    {
+      "command": [
+        "python",
+        "lean/tools/check_snapshot.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "lean_kernel_rebuild_performed": false,
+  "manuscript_compilation_or_layout_check_performed": false,
+  "full_OBSF_run_performed_by_this_command": false,
+  "level17_interval_run_performed_by_this_command": false,
+  "historical_logs_overwritten": false,
+  "passed": true
+}

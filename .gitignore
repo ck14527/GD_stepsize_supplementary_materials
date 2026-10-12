@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+dist/
+tmp/
+checks/revision/
+checks/rerun/
+lean/.lake/
+*.exe
+*.o
+*.aux
+*.log
+
+# The manuscript is available via arXiv; keep it out of the supplement.
+/GD_stepsize_schedule.pdf
+/GD_stepsize_schedule copy.pdf

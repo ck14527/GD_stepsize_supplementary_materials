@@ -1,0 +1,33 @@
+{
+  "name": "gd-stepsize-lean",
+  "owner": "ck14527",
+  "url": "https://github.com/ck14527/gd-stepsize-lean",
+  "version": "unreleased",
+  "paper_title": "Optimal Recursive Composition and Dyadic Phase Laws for Gradient Descent with Predetermined Stepsizes",
+  "paper_arxiv_id": "2609.11788",
+  "paper_url": "https://arxiv.org/abs/2609.11788",
+  "paper_year": 2026,
+  "paper_authors": [
+    {
+      "given-names": "Yu",
+      "family-names": "Liu"
+    },
+    {
+      "given-names": "Kang",
+      "family-names": "Chen"
+    },
+    {
+      "given-names": "Rujun",
+      "family-names": "Jiang"
+    },
+    {
+      "given-names": "Tianyu",
+      "family-names": "Wang"
+    }
+  ],
+  "source_manuscript_sha256": "db3137a4cc77fcebf4f7956f4afdccd5ed51dd006e32dec69657f84843898fc9",
+  "license": null,
+  "source_manuscript_filename": "GD_stepsize_schedule.pdf",
+  "source_manuscript_date": "2026-09-24",
+  "numbered_result_count": 40
+}

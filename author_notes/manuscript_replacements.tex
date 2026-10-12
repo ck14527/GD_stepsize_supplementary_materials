@@ -1,0 +1,43 @@
+% Author-only replacement snippets. Not a standalone manuscript.
+% Insert at the positions documented in MANUSCRIPT_EDITS.md.
+% \nolinkurl is provided by url/hyperref; the manuscript already uses hyperlinks.
+% Use the manuscript's existing labels for cross-references when available.
+
+% Page 10: replace the existing Reproducibility Statement paragraph.
+The appendix proof roadmap locates the complete mathematical proofs, and
+Appendix~A states the imported certificate interfaces and prior results.
+The supplement provides the scalar evaluator, reference Bellman recursions,
+figure data, and reproduction commands.
+\nolinkurl{NUMERICAL_REPRODUCIBILITY.md} distinguishes floating-point
+computations from interval certificates. The phase-minimum and dyadic-corner
+certificates are specified in Appendices~D.8 and~D.7, respectively.
+The supplement also includes Lean~4 proofs of the scalar and combinatorial
+results identified in \nolinkurl{lean/docs/THEOREMS.md}.
+\nolinkurl{LEAN_FORMALIZATION.md} documents the pinned environment,
+verification commands, and scope. The external smooth-convex GD certificates
+and their tightness interpretation remain outside the formalization; the
+level-17 decimal minimum enclosure is checked separately by interval arithmetic.
+
+% Page 8: replace only the last sentence of the Figure 1 caption.
+% Also re-include the corrected figures/psi_phase_compact.pdf and rebuild.
+Numerical methods, reproduction commands, and the distinction between
+finite-scale plots, interval certificates, and Lean verification are documented
+in the supplementary \nolinkurl{NUMERICAL_REPRODUCIBILITY.md}.
+
+% Page 11: optional sentence after the proof roadmap.
+A statement-by-statement correspondence between the scalar and combinatorial
+results and their Lean declarations is provided in
+\nolinkurl{lean/docs/THEOREMS.md}; \nolinkurl{LEAN_FORMALIZATION.md}
+documents the verification commands and scope limitations.
+
+% Page 11: optional scope sentence in the Appendix A introduction.
+The Lean development verifies the scalar and tree-based statements derived
+from these interfaces. The smooth-convex function classes, gradient-descent
+trajectories, and imported composition and tightness certificates recalled
+in this appendix remain outside the formalization.
+
+% Page 36: add after equation (65) and its certificate explanation.
+Proposition~D.10 is formalized in Lean. The displayed level-17 decimal
+enclosure is obtained separately by the interval-arithmetic procedure in
+\nolinkurl{scripts/check_phase_certificate.py}; these particular decimal
+endpoints are not part of the Lean certificate.

@@ -1,0 +1,12 @@
+{
+  "title_sha256": "be15b050542eda0be9996a0a703bfa354a431a2ae5fd48b289b1b2044ccd4de3",
+  "abstract_sha256": "3bcca533dcd4a1583ff5f4e3b4d48a1c54e6114ed0bc9eda6fd69928dd4cb0bb",
+  "unchanged_files": {
+    "iclr2027_conference.sty": "797deef41724e93761426ac0cbcca46279a91cc650dd1f0ce76a4f08d2098ea6",
+    "iclr2027_conference.bst": "2d67552db7ed38ccfccb5957b52f95656e25c249724761d3cf5f7922ad1844c5",
+    "iclr2027_conference.bib": "a3cecd9f271badd3250e297b2e995f74b6d93de1a110829128387c7a5fe5828c",
+    "references.bib": "a3cecd9f271badd3250e297b2e995f74b6d93de1a110829128387c7a5fe5828c",
+    "math_commands.tex": "eac6454f7f5265c0c6281ddf79d5e9b4c281c9003f760444dbe9b646b1457f5b"
+  },
+  "author_identity_tokens": []
+}

@@ -1,0 +1,20 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{times,amsmath,pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+ width=6.65cm,height=5.0cm,scale only axis=false,
+ axis lines=left,xmin=0,xmax=1,xtick={0,.25,.5,.75,1},
+ xticklabels={$0$,$0.25$,$0.5$,$0.75$,$1$},
+ xlabel={Dyadic phase $t$},
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ title style={font=\small},
+ scaled ticks=false,yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+ tick align=outside,major tick length=2pt,
+ylabel={$\frac{1}{2\Phi(t)}$},ymin=.4998,ymax=.5039,
+ ytick={.500,.502,.504},yticklabels={$0.500$,$0.502$,$0.504$}]
+\addplot[thick,no marks] table[x=t,y=value] {phi_leading_compact_curve.dat};
+\end{axis}
+\end{tikzpicture}
+\end{document}

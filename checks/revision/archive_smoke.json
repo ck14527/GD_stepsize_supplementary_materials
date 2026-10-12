@@ -1,0 +1,9 @@
+{
+  "zip_entries": 146,
+  "manifest_entries": 145,
+  "manifest_exactly_covers_archive_payload": true,
+  "manifest_unchanged_after_reviewer_check": true,
+  "local_markdown_links_checked": 98,
+  "missing_local_markdown_links": [],
+  "extracted_verifier_exit_code": 0
+}

@@ -1,0 +1,51 @@
+id,kind,title,pages,prerequisites,formal_status
+3.1,Theorem,Balanced optimality and complete equality classification,4,"B.5,C.1",verified_scalar_model
+3.2,Theorem,Four-point rearrangement and both equality cases,4,"A.6,B.1,B.2,B.3",verified_scalar_model
+4.1,Theorem,Exact symmetric dyadic phase law,6,D.5,verified_scalar_model
+4.2,Corollary,Exact objective phase law and uniform expansion,6,D.7,verified_scalar_model
+5.1,Theorem,Asymmetric uniform phase law and strict support separation,8,"E.4,E.13",verified_scalar_model
+A.1,Definition,Primitive schedule certificate,12,EXT,pending
+A.2,Definition,Optimized primitive composition family,13,"A.1,SCALAR",pending
+A.3,Definition,s-composable schedule certificate,13,EXT,pending
+A.4,Definition,Optimized Basic s-composable Schedule,14,"A.3,SCALAR",pending
+A.5,Proposition,Treewise conjugacy and common Bellman optimum,"14,15","A.2,A.4,SCALAR",verified_scalar_model
+A.6,Proposition,Composition-kernel properties and strict ratio bounds,15,SCALAR,verified_scalar_model
+A.7,Definition,f-composable schedule certificate,15,EXT,pending
+B.1,Lemma,Sign beyond the inner roots,16,A.6,verified_scalar_model
+B.2,Lemma,Pairing-difference identities,"17,18,19",SCALAR,verified_scalar_model
+B.3,Lemma,Quartic evaluation at the composed root,19,SCALAR,verified_scalar_model
+B.4,Theorem,Abstract balanced-composition principle,21,SCALAR,verified_scalar_model
+B.5,Corollary,Balanced recurrence and symmetric supercomposition,22,"A.6,3.2,B.4",verified_scalar_model
+C.1,Lemma,Complete equality patterns in supercomposition,"22,23","3.2,B.5",verified_scalar_model
+C.2,Corollary,All maximizing root splits,23,"C.1,B.5",verified_scalar_model
+C.3,Theorem,Conjecture 4.17 of Zhang and Jiang: balanced ConPP and all ties,24,"A.5,B.5,C.2",verified_scalar_model
+C.4,Corollary,Optimal composition trees,24,"A.6,C.2",verified_scalar_model
+C.5,Proposition,Exact counts of optimal ordered composition trees,"24,25","C.4,C.2",verified_scalar_model
+D.1,Lemma,Sharp power-mean kernel bound,26,A.6,verified_scalar_model
+D.2,Proposition,Sharp power envelope and all equality cases,27,"D.1,B.5",verified_scalar_model
+D.3,Lemma,Adjacent-ratio recursion and contraction,27,"B.5,A.6",verified_scalar_model
+D.4,Lemma,Unique strictly increasing bi-Lipschitz interpolation,28,"D.3,PHASE",verified_scalar_model
+D.5,Theorem,Positive nonconstant symmetric phase profile,30,"D.2,D.4",verified_scalar_model
+D.6,Corollary,Symmetric value and reciprocal-rate cluster intervals,31,D.5,verified_scalar_model
+D.7,Corollary,"Objective coefficient, uniform remainder and clusters",32,"D.5,D.6",verified_scalar_model
+D.8,Proposition,Integral density and nondyadic regularity,32,"D.3,D.4",verified_scalar_model
+D.9,Corollary,Certified dyadic corner,35,D.8,verified_scalar_model
+D.10,Proposition,Nested certified grids and linear work,36,"D.4,D.5",verified_scalar_model
+E.1,Lemma,Local reciprocal comparisons,38,SCALAR,verified_scalar_model
+E.2,Proposition,Reciprocal sandwich and fixed-ray limits,38,"E.1,4.1",verified_scalar_model
+E.3,Lemma,Discrete modulus,39,"E.2,D.4,B.5",verified_scalar_model
+E.4,Theorem,Uniform asymmetric phase convergence,40,"E.2,E.3",verified_scalar_model
+E.5,Lemma,Sharp homogeneous support,41,SCALAR,verified_scalar_model
+E.6,Proposition,Support barrier and nonnegative deficit decomposition,42,"E.5,D.2",verified_scalar_model
+E.7,Lemma,Strict symmetric power envelope,42,"D.1,D.4",verified_scalar_model
+E.8,Lemma,Contact fraction geometry,42,E.5,verified_scalar_model
+E.9,Lemma,Strict dyadic-ray separation,43,"E.6,E.7,E.8",verified_scalar_model
+E.10,Lemma,Constant-phase rigidity,44,"E.4,E.5,E.6",verified_scalar_model
+E.11,Lemma,Global strict support separation,44,"E.4,E.6,E.7,E.8",verified_scalar_model
+E.12,Proposition,Uniform upper phase enclosure,46,"E.4,E.5",verified_scalar_model
+E.13,Theorem,Nonconstant phase and final support bounds,46,"E.9,E.10,E.11,E.12",verified_scalar_model
+ALG1,Algorithm,Binary evaluation of U_N,"5,26",B.5,pending
+CERT17,Certificate,Optional level-17 outward decimal enclosures,"37,49",D.10,pending
+EXT,External,Imported smooth-convex gradient-descent certificates,"12,13,15,32,40",,external
+PHASE,Definition,Canonical interpolants and phase-circle representation,"6,7,8,28,40",SCALAR,pending
+SCALAR,Definition,"Exact scalar kernels, Bellman recursions and trees","3,7,14,16",,pending

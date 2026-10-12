@@ -1,0 +1,1 @@
+maximum_N=524288 candidates=137438691328 seconds=81.5125153

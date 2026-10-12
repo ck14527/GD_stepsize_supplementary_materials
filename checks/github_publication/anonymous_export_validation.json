@@ -1,0 +1,9 @@
+{
+  "packaging_tests_passed": true,
+  "anonymous_export_passed": true,
+  "anonymous_export_sha256": "20006d092eb7299143ffa6b08d3ea398d3d50fe9f863cf911637038aa9de8b78",
+  "public_metadata_removed_from_anonymous_readme": true,
+  "excluded_manuscript_pdf_in_archive": false,
+  "extracted_archive_verifier_exit_code": 0,
+  "no_new_full_lean_build": true
+}

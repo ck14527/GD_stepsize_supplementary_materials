@@ -1,0 +1,1059 @@
+{
+  "schema": 2,
+  "manuscript": "GD_stepsize_schedule.pdf (2026-09-24 local revision)",
+  "source_pdf_sha256": "db3137a4cc77fcebf4f7956f4afdccd5ed51dd006e32dec69657f84843898fc9",
+  "edge_direction": "prerequisite -> dependent",
+  "dag_basis": "Reviewed mathematical dependencies of the current manuscript; definitions and external interfaces are explicit. This is separate from the actual Lean proof DAG, whose edges may differ. Internal supporting-library theorem names retain their historical numbers; only GD.Paper and GD.PaperTargets entry points are current-paper numbering.",
+  "nodes": [
+    {
+      "id": "3.1",
+      "kind": "Theorem",
+      "title": "Balanced optimality and complete equality classification",
+      "pages": [
+        4
+      ],
+      "depends_on": [
+        "B.5",
+        "C.1"
+      ],
+      "statement_excerpt": "With U_0=0, for every N>=2, U_N=K(U_floor(N/2),U_ceil(N/2)); U is strictly increasing; K(U_m,U_n)<=U_(m+n) for all m,n>=0; for positive m,n equality holds iff m=n or the unordered pair is {2^k r,2^k(r+1)} for k>=0,r>=1.",
+      "proof_declarations": [
+        "GD.Paper.theorem_3_1"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_3_1",
+      "scope_note": "Complete numbered scalar statement. EqualityPattern unfolds to the exact two arithmetic alternatives.",
+      "previous_proof_declarations": [
+        "GD.corollary_4_2",
+        "GD.lemma_4_3"
+      ],
+      "migration_note": "Merged former Corollary 4.2 and Lemma 4.3 into the revised main theorem."
+    },
+    {
+      "id": "3.2",
+      "kind": "Theorem",
+      "title": "Four-point rearrangement and both equality cases",
+      "pages": [
+        4
+      ],
+      "depends_on": [
+        "A.6",
+        "B.1",
+        "B.2",
+        "B.3"
+      ],
+      "statement_excerpt": "For 0<=a<=b<=c<=d, K(K(a,b),K(c,d))<=K(K(a,c),K(b,d))<=K(K(a,d),K(b,c)); first equality iff b=c or ad=bc; second equality iff a=b or c=d.",
+      "proof_declarations": [
+        "GD.Paper.theorem_3_2"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_3_2",
+      "scope_note": "Complete numbered statement.",
+      "previous_proof_declarations": [
+        "GD.theorem_3_1"
+      ],
+      "migration_note": "Renumbered former Theorem 3.1; boundary and equality cases retained."
+    },
+    {
+      "id": "4.1",
+      "kind": "Theorem",
+      "title": "Exact symmetric dyadic phase law",
+      "pages": [
+        6
+      ],
+      "depends_on": [
+        "D.5"
+      ],
+      "statement_excerpt": "There exists a unique positive Lipschitz one-periodic Phi with U_N=N^p*Phi(phase N) for N>=1. Phi is nonconstant, 0<min Phi<1, and max Phi=Phi(0)=1.",
+      "proof_declarations": [
+        "GD.Paper.theorem_4_1"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_4_1",
+      "scope_note": "Complete statement. Periodic real functions represent the phase circle; uniqueness is proved among all continuous periodic functions.",
+      "previous_proof_declarations": [
+        "GD.theorem_5_5"
+      ],
+      "migration_note": "Former Theorem 5.5 is now summarized in the main text; explicit nonconstancy is included."
+    },
+    {
+      "id": "4.2",
+      "kind": "Corollary",
+      "title": "Exact objective phase law and uniform expansion",
+      "pages": [
+        6
+      ],
+      "depends_on": [
+        "D.7"
+      ],
+      "statement_excerpt": "B_N=1/(2*N^p*Phi(phase N)-1)=N^(-p)/(2*Phi(phase N))+O(N^(-2*p)), uniformly in phase. Clust(N^p*B_N)=[1/2,1/(2*phiMin)] and N^p*B_N does not converge.",
+      "proof_declarations": [
+        "GD.Paper.corollary_4_2"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_4_2",
+      "scope_note": "Complete scalar coefficient statement. The O(N^(-2*p)) assertion is certified by the stronger explicit positive remainder bound N^(-2*p)/(2*phiMin^2). The interpretation as a tight GD objective coefficient uses external certificates.",
+      "previous_proof_declarations": [
+        "GD.theorem_5_8_scalar"
+      ],
+      "migration_note": "Former Theorem 5.8 scalar conclusion appears in the main text and Appendix D.5; nonconvergence is now explicit."
+    },
+    {
+      "id": "5.1",
+      "kind": "Theorem",
+      "title": "Asymmetric uniform phase law and strict support separation",
+      "pages": [
+        8
+      ],
+      "depends_on": [
+        "E.4",
+        "E.13"
+      ],
+      "statement_excerpt": "There is a unique positive Lipschitz periodic profile Psi_F with uniform convergence of the actual logarithmic piecewise-affine interpolants Psi_k, equivalently uniform dyadic-block approximation C_N=N^p etaF_N by Psi_F(phase N). Consequently etaF_N=N^(-p) Psi_F(phase N)+o(N^(-p)); Clust C=[min Psi_F,max Psi_F]; Psi_F is nonconstant and cstar<min Psi_F<max Psi_F<=cstar/phiMin.",
+      "proof_declarations": [
+        "GD.Paper.theorem_5_1"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_5_1",
+      "scope_note": "Complete scalar statement of the numbered theorem; etaF is the concrete Bellman coefficient, with the external GD certificate boundary described above.",
+      "previous_proof_declarations": [
+        "GD.theorem_6_3",
+        "GD.theorem_6_5"
+      ],
+      "migration_note": "Merged former phase convergence and strict-support theorems; added an explicit little-o statement and nonconstancy to the public theorem bundle."
+    },
+    {
+      "id": "A.1",
+      "kind": "Definition",
+      "title": "Primitive schedule certificate",
+      "pages": [
+        12
+      ],
+      "depends_on": [
+        "EXT"
+      ],
+      "statement_excerpt": "Universal primitive-schedule inequality over smooth convex gradient-descent trajectories; this is an external certificate interface."
+    },
+    {
+      "id": "A.2",
+      "kind": "Definition",
+      "title": "Optimized primitive composition family",
+      "pages": [
+        13
+      ],
+      "depends_on": [
+        "A.1",
+        "SCALAR"
+      ],
+      "statement_excerpt": "Recursive ConPP schedules maximize total stepsize over all root splits; the tree/scalar realization is proved in Proposition A.5."
+    },
+    {
+      "id": "A.3",
+      "kind": "Definition",
+      "title": "s-composable schedule certificate",
+      "pages": [
+        13
+      ],
+      "depends_on": [
+        "EXT"
+      ],
+      "statement_excerpt": "Universal trajectory inequality with the s-rate sum-product identities; this is an external certificate interface."
+    },
+    {
+      "id": "A.4",
+      "kind": "Definition",
+      "title": "Optimized Basic s-composable Schedule",
+      "pages": [
+        14
+      ],
+      "depends_on": [
+        "A.3",
+        "SCALAR"
+      ],
+      "statement_excerpt": "The OBS-S family minimizes the s-join rate over positive root splits; its scalar/tree realization is proved in Proposition A.5."
+    },
+    {
+      "id": "A.5",
+      "kind": "Proposition",
+      "title": "Treewise conjugacy and common Bellman optimum",
+      "pages": [
+        14,
+        15
+      ],
+      "depends_on": [
+        "A.2",
+        "A.4",
+        "SCALAR"
+      ],
+      "statement_excerpt": "For N>=1, U_N=H_N+1=1/s_N, U_1=1, U_N=max_{1<=m<N} K(U_m,U_(N-m)) for N>=2. The treewise model attains maximum primitive sum U_N-1 and minimum s-rate 1/U_N. The scalar objective coefficients are 1/(2H_N+1)=s_N/(2-s_N)=1/(2U_N-1). Corresponding joins insert identical numerical steps.",
+      "proof_declarations": [
+        "GD.Paper.proposition_A_5"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_A_5",
+      "scope_note": "Complete scalar/treewise statement, with Bellman maximum encoded by upper bounds and an attaining split. The correspondence to smooth-convex trajectories uses externally cited certificate interfaces; no such imported certificate is asserted as a Lean theorem.",
+      "previous_proof_declarations": [
+        "GD.proposition_2_5",
+        "GD.primitive_tree_optimum",
+        "GD.s_tree_optimum",
+        "GD.Tree.primitive_conjugacy",
+        "GD.Tree.s_conjugacy",
+        "GD.join_step_conjugacy",
+        "GD.objective_reciprocal"
+      ],
+      "migration_note": "Former Proposition 2.5 moved to Appendix A and assembled with attained-tree optima and coefficient identities."
+    },
+    {
+      "id": "A.6",
+      "kind": "Proposition",
+      "title": "Composition-kernel properties and strict ratio bounds",
+      "pages": [
+        15
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "K on the nonnegative quadrant is nonnegative, continuous, symmetric, positively homogeneous, and strictly increasing in each coordinate. K(0,x)=x and K(x,x)=rho*x for x>=0. For x,y>0, K(x,y)>x+y>max(x,y). For positive x,y,x',y', min(x'/x,y'/y)<=K(x',y')/K(x,y)<=max(x'/x,y'/y), both strict whenever x'/x differs from y'/y.",
+      "proof_declarations": [
+        "GD.Paper.proposition_A_6"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_A_6",
+      "scope_note": "Complete numbered statement; continuity is proved globally, stronger than continuity restricted to the quadrant.",
+      "previous_proof_declarations": [
+        "GD.K_continuous",
+        "GD.K_nonneg",
+        "GD.K_symm",
+        "GD.K_hom",
+        "GD.K_strict_left",
+        "GD.K_strict_right",
+        "GD.K_zero_left",
+        "GD.K_diag",
+        "GD.K_gt_sum",
+        "GD.K_ratio_bounds"
+      ],
+      "migration_note": "Former Proposition 2.6 properties are assembled into one complete public proposition."
+    },
+    {
+      "id": "A.7",
+      "kind": "Definition",
+      "title": "f-composable schedule certificate",
+      "pages": [
+        15
+      ],
+      "depends_on": [
+        "EXT"
+      ],
+      "statement_excerpt": "Universal objective-gap certificate with f-rate sum-product identities; this is an external certificate interface."
+    },
+    {
+      "id": "B.1",
+      "kind": "Lemma",
+      "title": "Sign beyond the inner roots",
+      "pages": [
+        16
+      ],
+      "depends_on": [
+        "A.6"
+      ],
+      "statement_excerpt": "For a,b,c,d>=0 and z>max(K(a,b),K(c,d)), sign(P_ab|cd(z))=sign(z-K(K(a,b),K(c,d))).",
+      "proof_declarations": [
+        "GD.Paper.lemma_B_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_B_1",
+      "scope_note": "Complete statement in equivalent three-way form: negativity, zero and positivity iff the corresponding strict order or equality with the outer root. P is the product of all four actual conjugate-root factors.",
+      "previous_proof_declarations": [
+        "GD.lemma_3_2"
+      ],
+      "migration_note": "Former Lemma 3.2 moved to Appendix B."
+    },
+    {
+      "id": "B.2",
+      "kind": "Lemma",
+      "title": "Pairing-difference identities",
+      "pages": [
+        17,
+        18,
+        19
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "For nonnegative a,b,c,d and every real z, P_ac|bd(z)-P_ab|cd(z)=2*z^2*(d-a)*(c-b)*Q_(ad+bc)(z), and P_ad|bc(z)-P_ac|bd(z)=2*z^2*(b-a)*(d-c)*Q_(ab+cd)(z), with Q_E(z)=z^4-e1*z^3-(e2+2E)*z^2-e3*z+e4.",
+      "proof_declarations": [
+        "GD.Paper.lemma_B_2"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_B_2",
+      "scope_note": "Complete two-identity statement using the actual conjugate-root polynomials.",
+      "previous_proof_declarations": [
+        "GD.lemma_3_3_first",
+        "GD.lemma_3_3_second"
+      ],
+      "migration_note": "Former Lemma 3.3's two declarations combined into one public lemma."
+    },
+    {
+      "id": "B.3",
+      "kind": "Lemma",
+      "title": "Quartic evaluation at the composed root",
+      "pages": [
+        19
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "For a,b,c,d>=0, let u=K(a,b),v=K(c,d),z=K(u,v). If u,v>0, then for every E, Q_E(z)=2*(ab*v^2+cd*u^2-E*u*v)*(u*v+u*z+v*z)/(u*v).",
+      "proof_declarations": [
+        "GD.Paper.lemma_B_3"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_B_3",
+      "scope_note": "Complete statement, with precisely the positive-inner-root hypotheses required by the manuscript.",
+      "previous_proof_declarations": [
+        "GD.lemma_3_4"
+      ],
+      "migration_note": "Former Lemma 3.4 moved to Appendix B."
+    },
+    {
+      "id": "B.4",
+      "kind": "Theorem",
+      "title": "Abstract balanced-composition principle",
+      "pages": [
+        21
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "For a symmetric nonnegative homogeneous coordinatewise strictly increasing composition law, with 0 star x=x, x star x=lambda*x for lambda>1, and both ordered four-point rearrangement inequalities, the balanced sequence V_0=0,V_1=1,V_N=V_floor(N/2) star V_ceil(N/2) is strictly increasing and supercompositional. Every Bellman sequence W with W_1=1 and maximum over positive root splits satisfies W_N=V_N for N>=1.",
+      "proof_declarations": [
+        "GD.Paper.theorem_B_4"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_B_4",
+      "scope_note": "Complete abstract theorem. NonnegativeCompositionLaw contains exactly the manuscript's nonnegative-domain operator assumptions, not the desired conclusion. Its V satisfies the original balanced recurrence by V_rec; BellmanSpec includes attainment.",
+      "previous_proof_declarations": [
+        "GD.theorem_4_1"
+      ],
+      "migration_note": "Former Theorem 4.1 moved to Appendix B. Added a nonnegative-domain interface and a proved extension so no symmetry assumption at negative inputs is imposed."
+    },
+    {
+      "id": "B.5",
+      "kind": "Corollary",
+      "title": "Balanced recurrence and symmetric supercomposition",
+      "pages": [
+        22
+      ],
+      "depends_on": [
+        "A.6",
+        "3.2",
+        "B.4"
+      ],
+      "statement_excerpt": "Extend U by U_0=0. U is strictly increasing, K(U_m,U_n)<=U_(m+n) for all m,n>=0, and U_N=K(U_floor(N/2),U_ceil(N/2)) for every N>=2.",
+      "proof_declarations": [
+        "GD.Paper.corollary_B_5"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_B_5",
+      "scope_note": "Complete numbered statement.",
+      "previous_proof_declarations": [
+        "GD.corollary_4_2"
+      ],
+      "migration_note": "Former Corollary 4.2 moved to Appendix B and reused by Theorem 3.1."
+    },
+    {
+      "id": "C.1",
+      "kind": "Lemma",
+      "title": "Complete equality patterns in supercomposition",
+      "pages": [
+        22,
+        23
+      ],
+      "depends_on": [
+        "3.2",
+        "B.5"
+      ],
+      "statement_excerpt": "For positive integers m,n, K(U_m,U_n)=U_(m+n) iff m=n or there exist k>=0,r>=1 with {m,n}={2^k*r,2^k*(r+1)}.",
+      "proof_declarations": [
+        "GD.Paper.lemma_C_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_C_1",
+      "scope_note": "Complete equivalence, with both unordered orientations represented explicitly by ScaledConsecutive.",
+      "previous_proof_declarations": [
+        "GD.lemma_4_3"
+      ],
+      "migration_note": "Former Lemma 4.3 moved to Appendix C and reused by Theorem 3.1."
+    },
+    {
+      "id": "C.2",
+      "kind": "Corollary",
+      "title": "All maximizing root splits",
+      "pages": [
+        23
+      ],
+      "depends_on": [
+        "C.1",
+        "B.5"
+      ],
+      "statement_excerpt": "Write N=nu*2^ell>=2 with nu odd. The set M_N of optimal left leaf counts is {N/2} when nu=1; {(N-1)/2,(N+1)/2} when nu>1 and ell=0; {(nu-1)*2^(ell-1),nu*2^(ell-1),(nu+1)*2^(ell-1)} when nu>1 and ell>=1.",
+      "proof_declarations": [
+        "GD.Paper.corollary_C_2"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_C_2",
+      "scope_note": "Complete three-case statement, parameterized by nu=2*n+1 (n>=1) and ell=k+1 in the third case.",
+      "previous_proof_declarations": [
+        "GD.corollary_4_4",
+        "GD.optimalSplitSet_dyadic",
+        "GD.optimalSplitSet_odd",
+        "GD.optimalSplitSet_even_odd_part"
+      ],
+      "migration_note": "Former Corollary 4.4 presented as all three finite-set identities."
+    },
+    {
+      "id": "C.3",
+      "kind": "Theorem",
+      "title": "Conjecture 4.17 of Zhang and Jiang: balanced ConPP and all ties",
+      "pages": [
+        24
+      ],
+      "depends_on": [
+        "A.5",
+        "B.5",
+        "C.2"
+      ],
+      "statement_excerpt": "For every step count n>=1, the optimal ConPP total stepsize equals the ConPP sum obtained by child step counts floor((n-1)/2),ceil((n-1)/2). If n=nu*2^ell-1 with nu>1 odd,ell>=1, exactly the three root left leaf counts (nu+i)*2^(ell-1), i in {-1,0,1}, attain the same total stepsize; equivalently child step counts are these leaf counts minus one.",
+      "proof_declarations": [
+        "GD.Paper.theorem_C_3"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_C_3",
+      "scope_note": "Complete recursive-family scalar/stepsize-sum statement. Positive valuation ell is encoded as k+1. Optimized recursive primitive sums are U_N-1, justified constructively by Proposition A.5. External trajectory-certificate closure is outside the scalar model.",
+      "previous_proof_declarations": [
+        "GD.theorem_4_5_balanced",
+        "GD.theorem_4_5_ties",
+        "GD.affine_conjugacy"
+      ],
+      "migration_note": "The two former Theorem 4.5 declarations merged; the tie criterion is now explicitly an equality of ConPP sums via primitive_split_optimal_iff."
+    },
+    {
+      "id": "C.4",
+      "kind": "Corollary",
+      "title": "Optimal composition trees",
+      "pages": [
+        24
+      ],
+      "depends_on": [
+        "A.6",
+        "C.2"
+      ],
+      "statement_excerpt": "A unit-leaf ordered full binary composition tree attains U_N iff its children are optimal at every internal node and every left-child leaf count belongs to the corresponding optimizer set; equivalently iff every internal pair of child leaf counts satisfies one of Lemma C.1's two equality patterns.",
+      "proof_declarations": [
+        "GD.Paper.corollary_C_4"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_C_4",
+      "scope_note": "Complete treewise equivalences; no assumption that every optimal tree represents a different numerical schedule.",
+      "previous_proof_declarations": [
+        "GD.Tree.root_optimal_iff",
+        "GD.corollary_4_6",
+        "GD.optimal_tree_iff_patterns"
+      ],
+      "migration_note": "Former Corollary 4.6 assembled with both root-optimality and recursive arithmetic formulations."
+    },
+    {
+      "id": "C.5",
+      "kind": "Proposition",
+      "title": "Exact counts of optimal ordered composition trees",
+      "pages": [
+        24,
+        25
+      ],
+      "depends_on": [
+        "C.4",
+        "C.2"
+      ],
+      "statement_excerpt": "T_1=1 and T_N=sum_{m in M_N} T_m*T_(N-m). For N=nu*2^ell with nu odd: dyadic N have T_N=1; odd N>1 have T_N=2*T_((N-1)/2)*T_((N+1)/2); even nondyadic N have T_N=2*T_a*T_c+T_b^2 where (a,b,c)=((nu-1)*2^(ell-1),nu*2^(ell-1),(nu+1)*2^(ell-1)).",
+      "proof_declarations": [
+        "GD.Paper.proposition_C_5"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_C_5",
+      "scope_note": "Complete numbered recurrence and three cases for actual finite sets of trees. The subsequent unnumbered asymptotic paragraph and sample table are not included in this target.",
+      "previous_proof_declarations": [
+        "GD.theorem_B_1"
+      ],
+      "migration_note": "Former Theorem B.1 is now Proposition C.5."
+    },
+    {
+      "id": "D.1",
+      "kind": "Lemma",
+      "title": "Sharp power-mean kernel bound",
+      "pages": [
+        26
+      ],
+      "depends_on": [
+        "A.6"
+      ],
+      "statement_excerpt": "For x,y>=0, K(x,y)<=(x^q+y^q)^(1/q), with equality iff x=y or x*y=0.",
+      "proof_declarations": [
+        "GD.Paper.lemma_D_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_D_1",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained.",
+      "previous_proof_declarations": [
+        "GD.lemma_5_1"
+      ],
+      "migration_note": "Former Lemma 5.1 moved to Appendix D."
+    },
+    {
+      "id": "D.2",
+      "kind": "Proposition",
+      "title": "Sharp power envelope and all equality cases",
+      "pages": [
+        27
+      ],
+      "depends_on": [
+        "D.1",
+        "B.5"
+      ],
+      "statement_excerpt": "For N>=1, U_N<=N^p, equivalently s_N>=N^(-p). Equality in either inequality holds iff N is a power of two.",
+      "proof_declarations": [
+        "GD.Paper.proposition_D_2"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_D_2",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained.",
+      "previous_proof_declarations": [
+        "GD.proposition_5_2"
+      ],
+      "migration_note": "Former Proposition 5.2; the reciprocal inequality and its equality characterization are now explicit."
+    },
+    {
+      "id": "D.3",
+      "kind": "Lemma",
+      "title": "Adjacent-ratio recursion and contraction",
+      "pages": [
+        27
+      ],
+      "depends_on": [
+        "B.5",
+        "A.6"
+      ],
+      "statement_excerpt": "R_(2N)=T0(R_N), R_(2N+1)=T1(R_N), 1<R_N<=rho and 0<R_N-1<=(rho-1)/2^floor(log_2 N)<=2*(rho-1)/N for N>=1.",
+      "proof_declarations": [
+        "GD.Paper.lemma_D_3"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_D_3",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained.",
+      "previous_proof_declarations": [
+        "GD.lemma_5_3"
+      ],
+      "migration_note": "Former Lemma 5.3; positivity of R_N-1 is explicitly included."
+    },
+    {
+      "id": "D.4",
+      "kind": "Lemma",
+      "title": "Unique strictly increasing bi-Lipschitz interpolation",
+      "pages": [
+        28
+      ],
+      "depends_on": [
+        "D.3",
+        "PHASE"
+      ],
+      "statement_excerpt": "The actual grid function F extends uniquely to a strictly increasing bi-Lipschitz map [1,2] to [1,rho], with endpoints 1,rho and the midpoint rule. For 1<=x<y<=2, cminus*(y-x)<=F(y)-F(x)<=cplus*(y-x), with the exact displayed constants; cplus is a Lipschitz constant.",
+      "proof_declarations": [
+        "GD.Paper.lemma_D_4"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_D_4",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained.",
+      "previous_proof_declarations": [
+        "GD.theorem_5_4"
+      ],
+      "migration_note": "Former Theorem 5.4 is now Lemma D.4; strict monotonicity and the explicit Lipschitz interface are exposed."
+    },
+    {
+      "id": "D.5",
+      "kind": "Theorem",
+      "title": "Positive nonconstant symmetric phase profile",
+      "pages": [
+        30
+      ],
+      "depends_on": [
+        "D.2",
+        "D.4"
+      ],
+      "statement_excerpt": "Phi(t)=rho^(-t)*F(2^t) on [0,1], extended periodically, is positive, Lipschitz and nonconstant. It uniquely satisfies U_N=N^p*Phi(phase N) among continuous periodic functions; 0<phiMin<1 and max Phi=Phi(0)=1. Its stated explicit Lipschitz bound is also proved.",
+      "proof_declarations": [
+        "GD.Paper.theorem_D_5"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_D_5",
+      "scope_note": "Complete statement. Periodic real functions represent the phase circle; uniqueness is proved among all continuous periodic functions.",
+      "previous_proof_declarations": [
+        "GD.theorem_5_5"
+      ],
+      "migration_note": "Former Theorem 5.5 moved to Appendix D and reused by Theorem 4.1."
+    },
+    {
+      "id": "D.6",
+      "kind": "Corollary",
+      "title": "Symmetric value and reciprocal-rate cluster intervals",
+      "pages": [
+        31
+      ],
+      "depends_on": [
+        "D.5"
+      ],
+      "statement_excerpt": "Clust(U_N/N^p)=[phiMin,1] and Clust(N^p*s_N)=[1,1/phiMin]; neither sequence converges.",
+      "proof_declarations": [
+        "GD.Paper.corollary_D_6"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_D_6",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained.",
+      "previous_proof_declarations": [
+        "GD.corollary_5_7"
+      ],
+      "migration_note": "Former Corollary 5.7 moved to Appendix D."
+    },
+    {
+      "id": "D.7",
+      "kind": "Corollary",
+      "title": "Objective coefficient, uniform remainder and clusters",
+      "pages": [
+        32
+      ],
+      "depends_on": [
+        "D.5",
+        "D.6"
+      ],
+      "statement_excerpt": "B_N=1/(2*N^p*Phi(phase N)-1), with a phase-uniform O(N^(-2*p)) remainder after N^(-p)/(2*Phi(phase N)); Clust(N^p*B_N)=[1/2,1/(2*phiMin)] and the sequence does not converge.",
+      "proof_declarations": [
+        "GD.Paper.corollary_D_7"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_D_7",
+      "scope_note": "Complete scalar coefficient statement. The O(N^(-2*p)) assertion is certified by the stronger explicit positive remainder bound N^(-2*p)/(2*phiMin^2). The interpretation as a tight GD objective coefficient uses external certificates.",
+      "previous_proof_declarations": [
+        "GD.theorem_5_8_scalar"
+      ],
+      "migration_note": "Former Theorem 5.8 is now Corollary D.7; the main-text restatement is Corollary 4.2."
+    },
+    {
+      "id": "D.8",
+      "kind": "Proposition",
+      "title": "Integral density and nondyadic regularity",
+      "pages": [
+        32
+      ],
+      "depends_on": [
+        "D.3",
+        "D.4"
+      ],
+      "statement_excerpt": "There is a bounded D:[1,2]->[cminus,cplus] with F(x)=1+integral_1^x D. D is continuous at every interior nondyadic point and F derivative equals D there. Both one-sided derivatives exist at each interior dyadic point. The uniform binary-product formulas, absolute log tail and the two binary expansions are also proved.",
+      "proof_declarations": [
+        "GD.Paper.proposition_D_8"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_D_8",
+      "scope_note": "Complete regularity statement and the stronger binary-product formulas in its proof. The same canonical derivativeProfile used in the integral explicitly satisfies the bounds, nondyadic continuity and derivative identity. The supporting target is GD.Targets.theorem_C_1.",
+      "previous_proof_declarations": [
+        "GD.theorem_C_1"
+      ],
+      "migration_note": "Former Theorem C.1 is now Proposition D.8; its full stronger proof bundle is retained."
+    },
+    {
+      "id": "D.9",
+      "kind": "Corollary",
+      "title": "Certified dyadic corner",
+      "pages": [
+        35
+      ],
+      "depends_on": [
+        "D.8"
+      ],
+      "statement_excerpt": "The left derivative of F at 3/2 is strictly greater than the right derivative. Consequently F is not differentiable at 3/2 and is not C^1 on [1,2].",
+      "proof_declarations": [
+        "GD.Paper.corollary_D_9"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_D_9",
+      "scope_note": "Complete one-sided derivative separation, nondifferentiability and not-C^1 conclusions. The finite rational corner certificate is checked by the Lean kernel.",
+      "previous_proof_declarations": [
+        "GD.corollary_C_2"
+      ],
+      "migration_note": "Former Corollary C.2; the not-C^1 conclusion is newly made explicit."
+    },
+    {
+      "id": "D.10",
+      "kind": "Proposition",
+      "title": "Nested certified grids and linear work",
+      "pages": [
+        36
+      ],
+      "depends_on": [
+        "D.4",
+        "D.5"
+      ],
+      "statement_excerpt": "The lower and upper dyadic-grid bounds enclose phiMin, with gap at most p/2^k. Lower bounds increase, upper bounds decrease, both tend to phiMin, and all levels through k can be computed in O(2^k) scalar operations.",
+      "proof_declarations": [
+        "GD.Paper.proposition_D_10"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_D_10",
+      "scope_note": "Complete exact grid bounds and limits, a 30*2^k single-level work bound, and a 60*2^k cumulative bound for all levels through k, in the documented real-RAM model (real powers are primitive). Optional level-17 printed decimals are not a Lean interval certificate.",
+      "previous_proof_declarations": [
+        "GD.theorem_C_3"
+      ],
+      "migration_note": "Former Theorem C.3 is now Proposition D.10; actual cached-array correctness and a 30*2^k operation bound are retained."
+    },
+    {
+      "id": "E.1",
+      "kind": "Lemma",
+      "title": "Local reciprocal comparisons",
+      "pages": [
+        38
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "For x,y>0, A(x,rho*y)<=rho*K(x,y). For x,y>=1, 2*K(x,y)-1<=A(x,2*y-1).",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_1",
+      "scope_note": "Complete statement, both inequalities with exactly their stated domains.",
+      "previous_proof_declarations": [
+        "GD.lemma_D_1_upper",
+        "GD.lemma_D_1_lower"
+      ],
+      "migration_note": "Renumbered and combined two former public proof declarations."
+    },
+    {
+      "id": "E.2",
+      "kind": "Proposition",
+      "title": "Reciprocal sandwich and fixed-ray limits",
+      "pages": [
+        38
+      ],
+      "depends_on": [
+        "E.1",
+        "4.1"
+      ],
+      "statement_excerpt": "For N>=1, 2*U_N-1<=W_N<=rho*U_N. For every integer m>=1, C_(m*2^k) tends to Psi_F(phase m), and this fixed-ray limit lies between 1/(rho*Phi(phase m)) and 1/(2*Phi(phase m)).",
+      "proof_declarations": [
+        "GD.Paper.proposition_E_2"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_E_2",
+      "scope_note": "Complete scalar statement including existence, explicit bounds and identification of the fixed-ray limit.",
+      "previous_proof_declarations": [
+        "GD.proposition_6_2",
+        "GD.OBSPhase_ray"
+      ],
+      "migration_note": "Renumbered; strengthened the old existential ray-limit statement by identifying its unique limit with the canonical phase profile."
+    },
+    {
+      "id": "E.3",
+      "kind": "Lemma",
+      "title": "Discrete modulus",
+      "pages": [
+        39
+      ],
+      "depends_on": [
+        "E.2",
+        "D.4",
+        "B.5"
+      ],
+      "statement_excerpt": "For any Lipschitz constant LF of F on [1,2], let LU=max(1,LF). For m,N>=1: 0<U_m-U_(m-1)<=LU*m^(p-1); 0<W_(N+1)-W_N<=4*LU*N^(p-1); |C_(N+1)-C_N|<=(4*LU+rho*p)/(phiMin^2*N).",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_3"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_3",
+      "scope_note": "Complete statement, parametrized by any valid Lipschitz constant LF.",
+      "previous_proof_declarations": [
+        "GD.lemma_D_2"
+      ],
+      "migration_note": "Renumbered without changing assumptions or constants."
+    },
+    {
+      "id": "E.4",
+      "kind": "Theorem",
+      "title": "Uniform asymmetric phase convergence",
+      "pages": [
+        40
+      ],
+      "depends_on": [
+        "E.2",
+        "E.3"
+      ],
+      "statement_excerpt": "The actual continuous piecewise-affine interpolants at nodes log2(N/2^k) converge uniformly on [0,1] to the unique positive periodic Lipschitz profile Psi_F. Uniform dyadic-block approximation also holds. The profile has Lipschitz constant 2*Lobs*log 2; etaF_N=N^(-p)*Psi_F(phase N)+o(N^(-p)); Clust C=Psi_F(T)=[min Psi_F,max Psi_F].",
+      "proof_declarations": [
+        "GD.Paper.theorem_E_4"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_E_4",
+      "scope_note": "Complete scalar phase assertion. The discussion's equation (71) uses an external smooth-convex GD certificate; no claim that the certificate is formalized.",
+      "previous_proof_declarations": [
+        "GD.theorem_6_3",
+        "GD.OBSPhase_error",
+        "GD.C_Clust",
+        "GD.Psi_range"
+      ],
+      "migration_note": "Renumbered former Theorem 6.3; added explicit little-o and equality with the profile image. The reused target also certifies continuity, nodal values, exact affine cell formulas, interpolant uniqueness, uniform-limit uniqueness, and the explicit Lipschitz constant."
+    },
+    {
+      "id": "E.5",
+      "kind": "Lemma",
+      "title": "Sharp homogeneous support",
+      "pages": [
+        41
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "xi is the unique root in (0,1) of xi^(2*q-1)*(2-xi)=1; tau=(1-xi)/(2*xi^2), Bsup=2^q*(1-xi^(2*q))/(1-xi)^q. Then Bsup>2^q and A(u,w)^q<=Bsup*u^q+w^q for u,w>=0. For u,w>0 equality iff u/w=tau; equality holds for u=0, while strictness holds for w=0<u.",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_5"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_5",
+      "scope_note": "Complete statement, unique interior root and all boundary/interior equality cases.",
+      "previous_proof_declarations": [
+        "GD.lemma_6_4",
+        "GD.support_one"
+      ],
+      "migration_note": "Renumbered without weakening equality cases. Supplementary proof identifies the closed-form Bsup with the supremum definition in Section 5.2."
+    },
+    {
+      "id": "E.6",
+      "kind": "Proposition",
+      "title": "Support barrier and nonnegative deficit decomposition",
+      "pages": [
+        42
+      ],
+      "depends_on": [
+        "E.5",
+        "D.2"
+      ],
+      "statement_excerpt": "For N>=1, W_N^q<=Bsup*N and C_N>=cstar. For every maximizing pivot 1<=m<N, E_N=Bsup*(m-U_m^q)+E_(N-m)+sigma(U_m,W_(N-m)), with all three summands nonnegative; E_N=Bsup*N-W_N^q and sigma(u,w)=Bsup*u^q+w^q-A(u,w)^q.",
+      "proof_declarations": [
+        "GD.Paper.proposition_E_6"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_E_6",
+      "scope_note": "Complete scalar statement.",
+      "previous_proof_declarations": [
+        "GD.proposition_D_3"
+      ],
+      "migration_note": "Renumbered without changing the exact identity or nonnegativity clauses."
+    },
+    {
+      "id": "E.7",
+      "kind": "Lemma",
+      "title": "Strict symmetric power envelope",
+      "pages": [
+        42
+      ],
+      "depends_on": [
+        "D.1",
+        "D.4"
+      ],
+      "statement_excerpt": "For every x in (1,2), F(x)<x^p; for every t in (0,1), Phi(t)<1.",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_7"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_7",
+      "scope_note": "Complete statement.",
+      "previous_proof_declarations": [
+        "GD.lemma_D_4"
+      ],
+      "migration_note": "Renumbered; retained the existing quantitative tent-deficit proof of the same strict inequalities."
+    },
+    {
+      "id": "E.8",
+      "kind": "Lemma",
+      "title": "Contact fraction geometry",
+      "pages": [
+        42
+      ],
+      "depends_on": [
+        "E.5"
+      ],
+      "statement_excerpt": "With alpha=Bsup*tau^q/(1+Bsup*tau^q), alpha=1-xi^(2*q), 1-alpha=xi^(2*q), 1/4<1-alpha<1/2, 1/2<alpha<1; hence xstar=2*alpha belongs to (1,2).",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_8"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_8",
+      "scope_note": "Complete statement including all identities and strict interval bounds.",
+      "previous_proof_declarations": [
+        "GD.lemma_D_5"
+      ],
+      "migration_note": "Renumbered and added the newly explicit xstar=2*alpha interval assertion, derived from the exact existing rational bounds."
+    },
+    {
+      "id": "E.9",
+      "kind": "Lemma",
+      "title": "Strict dyadic-ray separation",
+      "pages": [
+        43
+      ],
+      "depends_on": [
+        "E.6",
+        "E.7",
+        "E.8"
+      ],
+      "statement_excerpt": "The dyadic-ray limit C_1^F=lim_k C_(2^k)=Psi_F(0) exists and is strictly greater than cstar.",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_9"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_9",
+      "scope_note": "Complete statement; no circular proof dependency.",
+      "previous_proof_declarations": [
+        "GD.theorem_D_6",
+        "GD.theorem_D_8",
+        "GD.OBSPhase_ray"
+      ],
+      "migration_note": "Former Theorem D.6 is now Lemma E.9; the public target identifies its previously existential limit with Psi_F(0). The implementation obtains strictness from the already proved global contact-propagation result, which does not depend on dyadic-ray strictness."
+    },
+    {
+      "id": "E.10",
+      "kind": "Lemma",
+      "title": "Constant-phase rigidity",
+      "pages": [
+        44
+      ],
+      "depends_on": [
+        "E.4",
+        "E.5",
+        "E.6"
+      ],
+      "statement_excerpt": "If there is a real c such that Psi_F(t)=c for every phase, then c=cstar.",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_10"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_10",
+      "scope_note": "Complete statement.",
+      "previous_proof_declarations": [
+        "GD.lemma_D_7"
+      ],
+      "migration_note": "Renumbered with the complete conditional conclusion."
+    },
+    {
+      "id": "E.11",
+      "kind": "Lemma",
+      "title": "Global strict support separation",
+      "pages": [
+        44
+      ],
+      "depends_on": [
+        "E.4",
+        "E.6",
+        "E.7",
+        "E.8"
+      ],
+      "statement_excerpt": "For every phase t, Psi_F(t)>cstar, and consequently min_t Psi_F(t)>cstar.",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_11"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_11",
+      "scope_note": "Complete pointwise and strict-minimum statement.",
+      "previous_proof_declarations": [
+        "GD.theorem_D_8"
+      ],
+      "migration_note": "Former Theorem D.8 is now Lemma E.11; retained the actual finite-spine deficit concentration and two-contact phase-circle contradiction, with no special presentation or extra assumptions."
+    },
+    {
+      "id": "E.12",
+      "kind": "Proposition",
+      "title": "Uniform upper phase enclosure",
+      "pages": [
+        46
+      ],
+      "depends_on": [
+        "E.4",
+        "E.5"
+      ],
+      "statement_excerpt": "For every phase t, Psi_F(t)<=cstar/phiMin; equivalently Delta_F(t)=1/Psi_F(t)>=Bsup^p*phiMin.",
+      "proof_declarations": [
+        "GD.Paper.proposition_E_12"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_E_12",
+      "scope_note": "Complete pair of equivalent enclosures.",
+      "previous_proof_declarations": [
+        "GD.proposition_D_9"
+      ],
+      "migration_note": "Renumbered and added an explicit proof of the reciprocal lower bound stated in the manuscript."
+    },
+    {
+      "id": "E.13",
+      "kind": "Theorem",
+      "title": "Nonconstant phase and final support bounds",
+      "pages": [
+        46
+      ],
+      "depends_on": [
+        "E.9",
+        "E.10",
+        "E.11",
+        "E.12"
+      ],
+      "statement_excerpt": "Psi_F is nonconstant and cstar<min Psi_F<max Psi_F<=cstar/phiMin. Together with E.4 this identifies a nondegenerate cluster interval strictly above the sharp homogeneous support barrier.",
+      "proof_declarations": [
+        "GD.Paper.theorem_E_13"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_E_13",
+      "scope_note": "Complete scalar statement. Its interpretation as tight objective-gap leading constants invokes the external GD certificate described above.",
+      "previous_proof_declarations": [
+        "GD.theorem_6_5",
+        "GD.lemma_D_7",
+        "GD.theorem_D_8"
+      ],
+      "migration_note": "Former Theorem 6.5 moved to the appendix; explicit nonconstancy is included in addition to the strict min/max chain."
+    },
+    {
+      "id": "ALG1",
+      "kind": "Algorithm",
+      "title": "Binary evaluation of U_N",
+      "pages": [
+        5,
+        26
+      ],
+      "depends_on": [
+        "B.5"
+      ],
+      "statement_excerpt": "Read the input bits from most to least significant, maintaining (U_r,U_(r+1)). Each step evaluates K once and multiplies by rho once. The Lean entry point is GD.Paper.algorithm_1; the existing GD.algorithm_1 also bounds the operation count in the stated exact-arithmetic model."
+    },
+    {
+      "id": "CERT17",
+      "kind": "Certificate",
+      "title": "Optional level-17 outward decimal enclosures",
+      "pages": [
+        37,
+        49
+      ],
+      "depends_on": [
+        "D.10"
+      ],
+      "statement_excerpt": "The printed numerical level-17 enclosures are not a Lean interval certificate. The general exact grid inequalities and complexity are proved in Proposition D.10."
+    },
+    {
+      "id": "EXT",
+      "kind": "External",
+      "title": "Imported smooth-convex gradient-descent certificates",
+      "pages": [
+        12,
+        13,
+        15,
+        32,
+        40
+      ],
+      "depends_on": [],
+      "statement_excerpt": "External primitive, s-composable and f-composable trajectory certificates, join closure and Huber tightness from Zhang and Jiang (2026) and Grimmer et al. (2025b). These analytic optimization interfaces are not formalized here."
+    },
+    {
+      "id": "PHASE",
+      "kind": "Definition",
+      "title": "Canonical interpolants and phase-circle representation",
+      "pages": [
+        6,
+        7,
+        8,
+        28,
+        40
+      ],
+      "depends_on": [
+        "SCALAR"
+      ],
+      "statement_excerpt": "F interpolates rho^(-k)*U_j at j/2^k. Phi(t)=rho^(-t)*F(2^t), periodically extended; phase N is the fractional part of log_2 N. Psi_k interpolates N^p/W_N at logarithmic dyadic-block nodes; Psi is its canonical periodic limit. Periodic real functions represent functions on R/Z. Clust uses strictly increasing integer subsequences tending to infinity."
+    },
+    {
+      "id": "SCALAR",
+      "kind": "Definition",
+      "title": "Exact scalar kernels, Bellman recursions and trees",
+      "pages": [
+        3,
+        7,
+        14,
+        16
+      ],
+      "depends_on": [],
+      "statement_excerpt": "K(x,y)=(x+y+sqrt(x^2+6xy+y^2))/2; A(u,w)=(4u+w+sqrt(w^2+8uw))/2. U_0=0,U_1=1 and U_N is the maximum of K(U_m,U_(N-m)); W_1=1 and W_N is the maximum of A(U_m,W_(N-m)). s_N=1/U_N, B_N=1/(2*U_N-1), etaF_N=1/W_N; rho=1+sqrt 2,p=log_2 rho,q=1/p. All maxima range over positive splits. Trees are ordered full binary trees with unit leaves."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{times,amsmath,pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+ width=6.65cm,height=5.0cm,scale only axis=false,
+ axis lines=left,xmin=0,xmax=1,xtick={0,.25,.5,.75,1},
+ xticklabels={$0$,$0.25$,$0.5$,$0.75$,$1$},
+ xlabel={Dyadic phase $t$},
+ tick label style={font=\footnotesize},label style={font=\footnotesize},
+ title style={font=\small},
+ scaled ticks=false,yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+ tick align=outside,major tick length=2pt,
+title={(b) Asymmetric: finite-scale interpolant},
+ ylabel={$\Psi_{18}(t)$},ymin=.4200,ymax=.4234,
+ ytick={.420,.421,.422,.423},yticklabels={$0.420$,$0.421$,$0.422$,$0.423$}]
+\addplot[semithick,densely dashed] coordinates {(0,0.420809352823451) (1,0.420809352823451)};
+\addplot[thick,no marks] table[x=t,y=value] {psi_compact_curve.dat};
+\node[font=\scriptsize,anchor=south] at (axis cs:.86,0.420869) {$c_*$};
+\end{axis}
+\end{tikzpicture}
+\end{document}

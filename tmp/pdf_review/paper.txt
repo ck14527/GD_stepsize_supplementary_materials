@@ -1,0 +1,5476 @@
+=== PAGE 1 ===
+000
+001
+002
+003
+004
+005
+006
+007
+008
+009
+010
+011
+012
+013
+014
+015
+016
+017
+018
+019
+020
+021
+022
+023
+024
+025
+026
+027
+028
+029
+030
+031
+032
+033
+034
+035
+036
+037
+038
+039
+040
+041
+042
+043
+044
+045
+046
+047
+048
+049
+050
+051
+052
+053
+Under review as a conference paper at ICLR 2027
+OPTIMALRECURSIVECOMPOSITION ANDDYADIC
+PHASELAWS FORGRADIENTDESCENT WITHPREDE-
+TERMINEDSTEPSIZES
+Anonymous authors
+Paper under double-blind review
+ABSTRACT
+Predetermined stepsize schedules featuring carefully chosen long steps have re-
+cently been shown to accelerate gradient descent (GD) on smooth convex func-
+tions. A prominent class of such schedules is built through recursive composition.
+In this paper, we characterize the convergence of these optimized recursive sched-
+ules, revealing a nonconstant log-periodic modulation across prescribed horizons.
+Specifically, we prove that for everyN≥1, the optimized ConPP/OBS-S sched-
+ules (Zhang & Jiang, 2026; Grimmer et al., 2025b) satisfy
+f(x N−1 )−f ∗ ≤ 1
+2N pΦ(log2 N)−1
+L
+2 ∥x0 −x ∗∥2, p= log 2(1 +
+√
+2),
+whereΦis a positive, Lipschitz, nonconstant1-periodic function. We derive this
+by proving that balanced splitting is optimal at every horizon for these construc-
+tions, resolving a conjecture of Zhang & Jiang (2026). Furthermore, for their
+asymmetric counterparts (ConPD/OBS-F schedules), we show that although opti-
+mal splits are not necessarily balanced, the same Silver exponent asymptotically
+persists alongside a distinct log-periodic modulation.
+1 INTRODUCTION
+Letf:R d →Rbe convex withL-Lipschitz gradient and a nonempty minimizer set. Given a
+normalized scheduleh= (h 0, . . . , hn−1)⊤ ∈R n, gradient descent takes the form
+xt+1 =x t − ht
+L ∇f(x t), t= 0, . . . , n−1.(1)
+The schedule is fixed before optimization begins, so all algorithmic design lies in the predetermined
+scalar sequenceh. This leads to a basic question:how much can gradient descent be accelerated by
+stepsize design alone?
+Forh t ∈(0,2), every nonstationary iteration decreases the objective. Tight worst-case analysis
+and carefully chosen varying steps can improve constants within this descent regime, while the
+best achievable order remainsn −1 (Drori & Teboulle, 2014; Teboulle & Vaisbourd, 2023). One-
+dimensional Huber instances, in particular, rule out a uniformo(n −1)guarantee for any schedule
+confined to this regime. Faster convergence therefore requires giving up monotonicity at the level
+of individual iterations. Long-step schedules trade this local monotonicity for progress over a larger
+block: some iterations may increase the objective, while their combined effect yields a stronger
+guarantee.
+Recent work has made such long-step blocks systematic. Performance-estimation methods revealed
+numerically promising schedules (Taylor et al., 2017; Das Gupta et al., 2024), while subsequent
+constructions established first constant-factor and then polynomial improvements (Grimmer, 2024;
+Grimmer et al., 2023). A key structural device behind these advances is recursive composition: two
+shorter certified schedules are placed on either side of a specially chosen joining step, producing a
+longer certified schedule. Iterating this operation yields the Silver schedule of Altschuler & Parrilo
+(2025a;b), with objective-gap rateO(n −p)at horizonsn= 2 k −1, whereρ := 1 +
+√
+2and
+p := log 2 ρ≈1.27155. Later constructions sharpened its objective-gap constant and obtained
+1
+
+=== PAGE 2 ===
+054
+055
+056
+057
+058
+059
+060
+061
+062
+063
+064
+065
+066
+067
+068
+069
+070
+071
+072
+073
+074
+075
+076
+077
+078
+079
+080
+081
+082
+083
+084
+085
+086
+087
+088
+089
+090
+091
+092
+093
+094
+095
+096
+097
+098
+099
+100
+101
+102
+103
+104
+105
+106
+107
+Under review as a conference paper at ICLR 2027
+the same exponent for the squared gradient norm (Grimmer et al., 2025a). At the dyadic horizons
+n= 2 k −1, this recursion is exactly self-similar. The natural structural question is what replaces
+this symmetry at the horizons in between.
+It is convenient to writeN=n+ 1, so that the Silver horizons correspond exactly toN= 2 k. Away
+from these dyadic horizons, recursive composition becomes a split-selection problem: for eachN,
+one must choose child sizesmandN−m. Two concurrent frameworks formalize this optimization.
+Zhang & Jiang (2026) introduced the ConPP and ConPD recursive constructions, while Grimmer
+et al. (2025b) independently developed the corresponding OBS-S and OBS-F families through com-
+posable certificates. The symmetric ConPP/OBS-S family extends the Silver construction to every
+horizon, whereas the asymmetric ConPD/OBS-F family is tailored to the final objective gap. Un-
+der matched split choices, the corresponding constructions generate the same numerical schedules
+(Zhang & Jiang, 2026, Remark 5.9).
+For the symmetric ConPP/OBS-S family, the joining rules reduce the optimization to choosing a split
+m+ (N−m). Exhaustive dynamic programming finds an optimal split for eachN, while Zhang
+& Jiang (2026, Conjecture 4.17) conjectured a uniform structural rule: the balanced split is always
+optimal, with certain unbalanced splits attaining the same value. Establishing such a uniform rule is
+nontrivial because the join is symmetric but nonassociative: symmetry allows the two children to be
+exchanged, but gives no comparison between different hierarchical pairings.
+We resolve this conjecture, including all unbalanced ties. The resulting balanced recurrence exposes
+an exact dyadic self-similarity: doublingNmultiplies the optimized scalar value byρ= 1 +
+√
+2.
+This scaling links the optimal composition structure to the behavior of the convergence bound across
+horizons. The Silver exponentp= log 2 ρdetermines the overall power-law decay, but leaves open
+whether the corresponding normalized coefficient approaches a single constant. We show instead
+that a nontrivial dependence on the fractional part oflog 2 Nremains. We call this quantity the
+dyadic phase: it records the position ofNbetween consecutive powers of two. For the symmetric
+recursion, this phase dependence is exact at every finite horizon. For the asymmetric recursion,
+whose optimal splits need not be balanced, the normalized coefficients converge uniformly over
+dyadic blocks to a distinct nonconstant phase profile. Thus the Silver exponent together with the
+dyadic phase describes the leading-order horizon dependence of both optimized recursive families.
+Contributions.We establish three results on the structure and convergence of these optimized
+recursive schedules.
+Optimal recursive structure.We prove that balanced splitting is optimal at every horizon, resolving
+the ConPP conjecture of Zhang & Jiang (2026), and characterize all unbalanced splits that attain
+the same value. The key mechanism is a sharp four-point rearrangement inequality that compares
+different hierarchical pairings and propagates through the composition tree. As a consequence, we
+characterize all optimal composition trees and obtain anO(logN)-time,O(1)-workspace evaluator
+for a single optimized scalar valueU N (Section 3).
+Exact symmetric phase.The optimized values satisfyU N =N pΦ(log2 N), whereΦis positive,
+Lipschitz,1-periodic, and nonconstant. This yields an exact formula for the tight objective coeffi-
+cient and the complete nondegenerate interval of normalized subsequential limits (Section 4).
+Asymmetric phase beyond balanced composition.For ConPD/OBS-F, optimal splits can be unbal-
+anced, yet the normalized tight objective coefficients still converge uniformly over dyadic blocks to
+a distinct nonconstant phase profile. We further prove that this limiting profile stays strictly above
+the sharp homogeneous support bound obtained from the join map (Section 5).
+Positioning.Recent lower bounds identify the Silver exponent as the optimal polynomial exponent
+for predetermined nonnegative stepsizes (Ye & Liu, 2026). A complementary line of work studies
+anytime acceleration, where a single infinite schedule is required to provide guarantees across all
+stopping times (Kornowski & Shamir, 2024; Zhang et al., 2025; Tsai et al., 2026). Our results refine
+the finite-horizon picture for the ConPP/OBS-S and ConPD/OBS-F recursive families by character-
+izing their optimal composition structure and phase-dependent leading coefficients.
+2
+
+=== PAGE 3 ===
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+Under review as a conference paper at ICLR 2027
+2 FROMRECURSIVESCHEDULES TO ASCALARBELLMANPROBLEM
+A common scalar representation.The symmetric ConPP and OBS-S families admit the same
+scalar description. For a scheduleh, define
+u(h) := 1 +
+X
+i
+hi.
+The empty schedule has valueu= 1. If two child schedulesaandbhave scalar valuesuandv,
+respectively, both recursive constructions are governed by the same composition kernel
+K(u, v):= u+v+
+√
+u2 + 6uv+v 2
+2 , u, v≥0.(2)
+They insert the joining stepK(u, v)−u−v+ 1between the two child schedules, producing
+ 
+a⊤,K(u, v)−u−v+ 1, b ⊤⊤
+,(3)
+whose scalar value isK(u, v). Thus, on any fixed composition tree, ConPP and OBS-S generate the
+same numerical schedule. Appendix A gives the underlying certificate formulations and the change
+of variables establishing this correspondence.
+Each internal node corresponds to one join and therefore inserts exactly one gradient step. Since
+a full binary tree withNleaves hasN−1internal nodes, an orderedN-leaf composition tree
+represents an(N−1)-step schedule, matching the conventionN=n+ 1introduced in Section
+1. Starting from value1at every leaf, recursively applyingKdetermines the scalar value at each
+internal node; together with equation 3, these values determine the inserted steps and hence the
+resulting numerical schedule. For example, joining two leaves gives the one-step schedule(
+√
+2),
+while joining two copies of this block gives(
+√
+2,2,
+√
+2). Maximizing the common scalar value
+within the symmetric recursive families is therefore equivalent to maximizing the root value over
+N-leaf composition trees.
+The Bellman problem.LetU N be the largest root value over all composition trees withNleaves.
+SinceKis strictly increasing in each argument, the two subtrees of an optimal tree may themselves
+be chosen optimally. Hence
+U1 = 1, U N = max
+1≤m<N
+K(Um, UN−m ) (N≥2).(4)
+HeremandN−mare the leaf counts of the two child blocks, while the root contributes their joining
+step. Equation 4 is the scalar optimization problem underlying both symmetric recursive families.
+Exact objective interpretation.LetH N denote the maximum total stepsize in the(N−1)-step
+ConPP family, and lets N denote the optimal OBS-S rate at the same horizon. Their relation to the
+common scalar value is
+UN =H N + 1 = 1
+sN
+.(5)
+Consequently, both families have the same tight objective coefficient
+BN := 1
+2UN −1 ,
+and their optimized(N−1)-step schedules satisfy
+f(x N−1 )−f ∗ ≤B N
+L
+2 ∥x0 −x ∗∥2 .(6)
+A one-dimensional Huber instance attains equality in this bound for each family; the corresponding
+certificate derivations are collected in Appendix A. ThusB N is their exact worst-case objective
+coefficient, and maximizingU N is exactly equivalent to minimizing the worst-case objective gap.
+It remains, therefore, to understand the maximization definingU N in equation 4. For this structural
+question, the key properties ofKare symmetry, positive homogeneity, and strict coordinatewise
+monotonicity, together with
+K(0, u) =u,K(u, u) =ρu, ρ= 1 +
+√
+2.
+The central question is whether the balanced split always attains the maximum in equation 4, and
+when other splits can tie.
+3
+
+=== PAGE 4 ===
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+Under review as a conference paper at ICLR 2027
+3 BALANCED OPTIMALITY AND ALL OPTIMAL COMPOSITIONS TREES
+The Bellman recursion 4 optimizes over every root split, whereas the Silver construction uses equal
+children at dyadic horizons. The next theorem shows that the same balancing principle governs
+every horizon: splitting the leaf count as evenly as possible always attains the optimum. It further
+characterizes exactly when an unbalanced split attains the same value.
+Theorem 3.1.Extend the sequence byU 0 = 0. For everyN≥2,
+UN =K
+ 
+U⌊N/2⌋, U⌈N/2⌉
+
+.(7)
+Moreover,(U N )N≥0 is strictly increasing and satisfies the supercomposition inequality
+K(Um, Un)≤U m+n, m, n≥0.
+For positive integersm, n, equality holds exactly when
+K(Um, Un) =U m+n ⇐ ⇒
+m=n,or
+{m, n}={2 kr,2 k(r+ 1)}for somek≥0, r≥1. (8)
+This resolves Conjecture 4.17 of Zhang & Jiang (2026) and completely characterizes the maximizing
+root splits. In particular, every unbalanced tie is a dyadic rescaling of two consecutive leaf counts.
+For example, atN= 6, the balanced split3 + 3ties with the two ordered splits2 + 4and4 + 2. If
+Nis a power of two, the equal split is the unique maximizing root split; recursively, the completely
+balanced ordered tree is therefore the unique optimal composition tree. More generally, an ordered
+composition tree is optimal if and only if every internal split satisfies one of the two patterns in
+equation 8.
+Appendix C gives the complete root-split classification, translates it to the original step-count nota-
+tion of Zhang & Jiang (2026), and counts the resulting optimal ordered trees; distinct optimal trees
+may still generate the same numerical schedule.
+3.1 AFOUR-POINT REARRANGEMENT PRINCIPLE
+The obstacle is to compare compositions with different tree shapes, something symmetry alone
+does not do. We overcome it by examining two levels of a tree at once: four subtrees can be
+paired in three ways before their values are combined at the parent. The following inequality orders
+these three possibilities and, crucially, retains the equality information. Fora, b, c, d≥0, write
+Zab|cd =K(K(a, b),K(c, d)).
+Theorem 3.2.For0≤a≤b≤c≤d,
+Zab|cd ≤Z ac|bd ≤Z ad|bc.(9)
+The equality cases are
+Zab|cd =Z ac|bd ⇐ ⇒b=corad=bc,(10)
+Zac|bd =Z ad|bc ⇐ ⇒a=borc=d.(11)
+The proof exploits the quadratic identity
+K(x, y)2 −(x+y)K(x, y)−xy= 0.
+Foru=K(a, b)andv=K(c, d), eliminating the inner roots reduces the first comparison to the
+sign of
+abv2 +cdu 2 −(ad+bc)uv= (av−cu)(bv−du).
+Homogeneity gives
+av=K(ac, ad), cu=K(ac, bc),
+and similarly
+bv=K(bc, bd), du=K(ad, bd).
+Monotonicity therefore makes the two factors have opposite signs. The same factorization identifies
+the equality casead=bc, whileb=ccorresponds to coincident pairings. The second comparison
+follows analogously. Appendix B gives the complete elimination and root-sign argument, including
+boundary cases. This turns a comparison of nested compositions into a local exchange rule that can
+be propagated through the tree.
+4
+
+=== PAGE 5 ===
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+Under review as a conference paper at ICLR 2027
+From a local comparison to global optimality.To propagate the four-point rearrangement
+through arbitrary trees, define the balanced candidate sequence
+V0 = 0, V 1 = 1, V N =K(V ⌊N/2⌋, V⌈N/2⌉).
+Monotonicity ofKmakes(V N )strictly increasing. The key inductive invariant is the supercompo-
+sition inequalityK(V m, Vn)≤V m+n. Once this inequality holds, every Bellman split is bounded
+byV N , while the balanced split attainsV N ; henceU N =V N .
+For example, in the even–odd case1≤a≤b,
+K(V2a, V2b+1) =K
+ 
+K(Va, Va),K(V b, Vb+1)
+
+≤ K
+ 
+K(Va, Vb),K(V a, Vb+1)
+
+(rearrangement)
+≤ K(Va+b, Va+b+1)(induction)
+=V 2a+2b+1.
+The remaining parity cases use the same two ingredients: homogeneity handles even–even indices,
+while the full rearrangement chain handles unequal odd indices. Thus the supercomposition inequal-
+ity holds for allm, n, and the preceding argument givesUN =V N for everyN.
+Tracking equality through the same parity recursion yields exactly the dyadic-consecutive pattern
+in equation 8: common powers of two peel off, mixed parity permits equality only for consecutive
+indices, and unequal odd indices are strict. Strict monotonicity then forces both children of every
+optimal node to be optimal for their respective sizes, giving the complete tree characterization in
+Theorem 3.1. Appendix B.5 gives the abstract balanced-composition induction, and Appendix C
+completes the equality and optimal-tree classification.
+The balanced recurrence therefore replaces the exhaustive Bellman search by a deterministic binary
+structure, which we exploit next to evaluateU N without tabulating all smaller horizons.
+3.2 BINARY RECURSION AND SINGLE-HORIZON EVALUATION
+Theorem 3.1 reduces the exhaustive Bellman search to the balanced recurrence, so the table
+U1, . . . , UN can be computed inO(N)scalar operations. For a single prescribed horizon, the recur-
+rence has a stronger binary structure. Indeed,
+(U2r, U2r+1) = (ρUr,K(U r, Ur+1)),(U 2r+1, U2r+2) = (K(Ur, Ur+1), ρUr+1).
+Thus an adjacent pair(U r, Ur+1)determines the pair associated with either binary extensionr7→2r
+orr7→2r+ 1. Starting from(U 0, U1) = (0,1), read the binary digits ofNfrom left to right. After
+a prefix representingrhas been read, maintain(a, b) = (U r, Ur+1). A next bit0sends this pair
+to(U 2r, U2r+1), while a next bit1sends it to(U 2r+1, U2r+2). This gives the following evaluator.
+Algorithm 1:Binary evaluation ofU N
+Input:An integerN≥1, read in binary from the most significant bit.
+1(a, b)←(0,1)
+2foreach binary digitξofNdo
+3c← K(a, b)
+4ifξ= 0then(a, b)←(ρa, c)
+5else(a, b)←(c, ρb)
+6end
+7returna
+Each binary digit requires one evaluation ofKand one multiplication byρ. Hence Algorithm 1 eval-
+uates a single optimized scalar valueU N inO(logN)scalar operations usingO(1)scalar working
+storage. Constructing the full(N−1)-step schedule requires linear output work. Appendix C.3
+proves the adjacent-pair invariant and the operation count.
+The same binary recursion also reveals the exact scalingU 2r =ρU r. Its iteration is the dyadic
+self-similarity underlying the phase law developed next.
+5
+
+=== PAGE 6 ===
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+Under review as a conference paper at ICLR 2027
+4 EXACT DYADIC PHASE LAW FOR THE SYMMETRIC FAMILY
+The exact scaling from Section 3.2 iterates to
+U2kN =ρ kUN , s 2kN =ρ −ksN , N≥1, k≥0.(12)
+Sinceρ= 2 p, the normalized valueU N /Np is invariant under dyadic dilation. Hence its remaining
+dependence on the horizon is determined entirely by the position ofNwithin its dyadic block. Write
+xN :=N/2 ⌊log2 N⌋ ∈[1,2),θ N ={log 2 N} ∈T:=R/Z. Herex N is the dyadic mantissa and
+θN = log 2 xN its logarithmic phase. We writeClust(a N )for the set of subsequential limits of
+a sequence{a N }alongN→ ∞. The next theorem shows that all normalized optimal values lie
+exactly on a single continuous profile of the dyadic phase.
+Theorem 4.1.There exists a unique positive Lipschitz functionΦ :T→(0,∞)such that, for every
+N≥1,
+UN =N pΦ(θN ).(13)
+Moreover,Φis nonconstant and satisfies
+0< ϕ∗ := min
+t∈T
+Φ(t)<1,max
+t∈T
+Φ(t) = Φ(0) = 1.(14)
+Through the identityB N = (2UN −1) −1, the exact phase law forU N induces an exact phase law
+for the tight objective coefficient.
+Corollary 4.2.The optimized symmetric schedules satisfy
+BN = 1
+2N pΦ(θN )−1 .(15)
+Consequently,
+BN = N −p
+2Φ(θN ) +O(N −2p),(16)
+where the remainder is uniform over the dyadic phase, and
+Clust(N pBN ) =
+ 1
+2 , 1
+2ϕ∗
+
+.(17)
+Thus the dyadic phase enters the leadingN −p coefficient itself. In particular, the normalized tight
+objective bound has no single asymptotic constant. Two fixed dyadic rays already exhibit distinct
+limits:
+lim
+k→∞
+(2k)pB2k = 1
+2 ,lim
+k→∞
+(3·2 k)pB3·2k = 3p
+2U3
+> 1
+2 .
+Continuity ofΦthen fills the entire interval in equation 17.
+From dyadic self-similarity to a phase profile.Equation 12 collapses all horizons related by
+powers of two onto the single reference block[1,2]. For example, the horizons3,6,12, . . .all have
+dyadic mantissa3/2and satisfyρ −1U3 =ρ −2U6 =ρ −3U12 =· · ·. More generally, for a dyadic
+pointx=j/2 k ∈[1,2], defineF(x) :=ρ −kUj. The scalingU 2j =ρU j makes this definition
+independent of the representation ofx.
+The balanced recurrence is compatible with dyadic refinement. Ifx=j/2 k andy= (j+ 1)/2 k are
+adjacent grid points, their midpoint corresponds to the odd index2j+ 1, and
+F
+ x+y
+2
+
+=ρ −1K(F(x), F(y)).
+Thus the same recurrence recursively fills in the values ofFon finer dyadic grids.
+6
+
+=== PAGE 7 ===
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+Under review as a conference paper at ICLR 2027
+From the dyadic grid to a continuous phase.The adjacent ratiosR N :=U N+1 /UN satisfy
+a binary recursion contracting toward1, and in particularR N −1 =O(N −1)(Lemma D.3).
+Lemma D.4 converts this estimate into uniform upper and lower bounds on the slopes of the dyadic
+piecewise-linear interpolants. HenceFextends uniquely to a strictly increasing bi-Lipschitz map
+F: [1,2]→[1, ρ].
+Writingx= 2 t, we havex p =ρ t, and thereforeU N /Np =F(x N )/xp
+N . This gives the phase
+profile
+Φ(t) :=ρ −tF(2 t),0≤t≤1.
+SinceF(1) = 1andF(2) =ρ, we haveΦ(0) = Φ(1) = 1, soΦextends continuously and
+periodically toT.
+Why the phase is nonconstant.Letq= 1/p. The sharp kernel inequalityK(x, y)≤(x q +
+yq)1/q impliesU N ≤N p, with equality exactly at powers of two. HenceΦ(0) = 1, whereas
+Φ(log2(3/2)) =U 3/3p <1. ThusΦis nonconstant. Uniqueness follows from the density of the
+integer phases inT.
+This proves Theorem 4.1. Corollary 4.2 follows fromB N = (2UN −1) −1; Appendix D.5 gives the
+uniform expansion and the complete cluster interval.
+5 LIMITINGDYADIC PHASE OF THE ASYMMETRICRECURSION
+The ConPD/OBS-F recursion has a different geometry. Each join combines an optimized symmetric
+prefix with an objective-specific continuation, and the optimal split may be unbalanced. This breaks
+the exact doubling identity that underpins the symmetric phase law in Section 4. Nevertheless,
+after normalization byN p, the tight objective coefficients converge uniformly across dyadic blocks
+to a nonconstant phase profile. The proof proceeds by comparing the ordered recursion with its
+symmetric counterpart and then analyzing the equality structure of a sharp homogeneous support
+bound.
+5.1 ORDEREDBELLMANRECURSION ANDSYMMETRICCOMPARISON
+Letη F
+N denote the tight objective-gap coefficient of the optimized ConPD/OBS-F schedule with
+N−1steps, and setW N := (η F
+N )−1. The composition rules underlying ConPD and OBS-F yield
+the ordered Bellman recursion
+W1 = 1, W N = max
+1≤m<N
+A(Um, WN−m ),(18)
+whereA(u, w) = (4u+w+
+√
+w2 + 8uw)/2. HereU m represents an optimized symmetric prefix
+withmleaves, whereasW N−m represents the optimized objective-specific continuation. The two
+arguments therefore play different roles: the recursion is ordered rather than symmetric, placing it
+outside the four-point rearrangement mechanism of Section 3. Appendix A.4 gives the certificate
+derivation and the correspondence between the ConPD and OBS-F constructions.
+The corresponding optimized schedule satisfies the tight objective guarantee
+f(x N−1 )−f ∗ ≤η F
+N
+L
+2 ∥x0 −x ∗∥2 .(19)
+Matching one-dimensional quadratic and Huber instances attain equality, soη F
+N is the exact worst-
+case objective coefficient for the optimized recursive schedule; see Appendix A.4.
+Despite their different kernels, the symmetric and asymmetric recursions remain quantitatively cou-
+pled. Local comparisons betweenAandK, propagated through the Bellman recursions, give
+2UN −1≤W N ≤ρU N .(20)
+Equivalently,1/(ρU N )≤η F
+N ≤1/(2U N −1) =B N . Hence the asymmetric objective coefficient
+is at most the symmetric one at every horizon. Together with the exact symmetric phase lawU N =
+N pΦ(θN ), equation 20 givesη F
+N = Θ(N −p). The exponent is therefore fixed; what remains is the
+normalized coefficientC N :=N pηF
+N . We next show thatC N retains a nonconstant dyadic-phase
+dependence, converging uniformly over dyadic blocks to a limiting profile.
+7
+
+=== PAGE 8 ===
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+Under review as a conference paper at ICLR 2027
+5.2 UNIFORM PHASE LIMIT AND STRICT SUPPORT SEPARATION
+For each dyadic block2 k ≤N≤2 k+1, letΨ k : [0,1]→Rbe the piecewise-affine interpolation of
+the points(log 2(N/2k), CN ). Thus every dyadic block is represented by a curve on the same phase
+domain. In the symmetric setting, exact doubling makes the corresponding grid values consistent
+across scales. Here the interpolants vary withk, and the central question is whether they converge
+to a common profile.
+A second ingredient is the sharp homogeneous support bound for the asymmetric kernel. With
+q= 1/p, define
+Bsup := sup
+u>0
+A(u,1) q −1
+uq , c ∗ :=B −p
+sup.
+By homogeneity,A(u, w)q ≤B supuq +w q, and combining this with the symmetric power bound
+U q
+m ≤mgivesC N ≥c ∗. The key question is whether an optimizing recursion can asymptotically
+attain this local barrier.
+Theorem 5.1.There is a unique positive Lipschitz profileΨ F :T→(0,∞)such that∥Ψ k −
+ΨF ∥∞ →0. Equivalently,
+sup
+2k≤N≤2 k+1
+|N pηF
+N −Ψ F (θN )| − →0.(21)
+Henceη F
+N =N −pΨF (θN ) +o(N −p), with this dyadic-block uniformity, and
+Clust(N pηF
+N ) = [min ΨF ,max ΨF ].(22)
+The profile is nonconstant and satisfies
+c∗ <min Ψ F <max Ψ F ≤c ∗/ϕ∗.(23)
+Equation 21 is the asymmetric counterpart of the exact phase law in equation 13: every dyadic block
+approaches the same profile uniformly, even though the optimizing splits can vary with the horizon.
+Thus the Silver exponentppersists while the leading objective coefficient retains a nonconstant
+dependence on the dyadic phase. The strict inequalityc ∗ <min Ψ F gives an additional structural
+constraint: a globally compatible optimizing recursion stays strictly above the sharp local support
+barrier.
+0 0.25 0.5 0.75 1
+0.500
+0.502
+Dyadic phase t
+1
+2Φ(t)
+(a) Symmetric: exact leading phase
+0 0.25 0.5 0.75 1
+0.420
+0.421
+0.422
+0.423
+c∗
+Dyadic phase t
+Ψ18(t) (b) Asymmetric: finite-scale interpolant
+Figure 1: Dyadic phase dependence of the objective-gap leading coefficients. Left: the exact sym-
+metric leading-coefficient phase1/(2Φ(t)). Right: the finite-scale asymmetric interpolantΨ 18(t);
+Theorem 5.1 establishes the uniform limitΨ k →Ψ F. The dashed line marks the sharp support bar-
+rierc ∗. The panels use separate vertical ranges to resolve the phase modulation. Detailed numerical
+annotations and certificates are reported in the supplementary numerical README.
+Proof sketch.The proof has three ingredients: fixed-ray limits and regularity produce a common
+phase profile, a deficit decomposition rules out contact with the local support barrier, and the same
+support geometry excludes a constant limiting profile.
+8
+
+=== PAGE 9 ===
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+Under review as a conference paper at ICLR 2027
+Uniform convergence.The idea is to first obtain limits along fixed dyadic rays and then use uniform
+regularity to connect these raywise limits into a single continuous profile. For each fixedm, the
+inequalityη F
+2N ≤ρ −1ηF
+N makesC m2k = (m2 k)pηF
+m2k nonincreasing ink, while the sandwich
+in equation 20 bounds it away from zero and infinity. Hence every fixed dyadic ray has a limit.
+Moreover, the neighboring-value estimate|C N+1 −C N |=O(N −1), together with theO(N −1)
+spacing of adjacent logarithmic phases, makes the interpolants{Ψ k}equi-Lipschitz. Arzel `a–Ascoli
+therefore gives uniformly convergent subsequences. Any such limit agrees with the fixed-ray limits
+on the dense set of dyadic mantissas, so all subsequential limits coincide. ThusΨk →Ψ F uniformly.
+Strict support separation.The key point is that approaching the barrierc ∗ would force several
+independent inequalities in the recursion to become nearly tight simultaneously. Define the support
+deficitE N :=B supN−W q
+N ≥0and the local support slackσ(u, w) :=B supuq +w q −A(u, w)q ≥
+0. At an optimizing splitN=m+r,
+EN =B sup
+ 
+m−U q
+m
+
++E r +σ(U m, Wr).
+The three terms measure, respectively, the loss in the symmetric prefix, the deficit inherited by the
+continuation, and the slack in the local support inequality. HenceE N =o(N)can occur only if all
+three losses are simultaneously negligible.
+To exploit this rigidity, repeatedly follow the continuation childW r; this gives thecontinuation
+spine, and each removed symmetric prefix is apivot. A pivot is called macroscopic when it occupies
+a fixed positive fraction of the current subtree. IfE N =o(N), the first macroscopic pivot must
+nearly saturate both the symmetric power bound and the local support inequality. The latter selects
+a unique limiting prefix fractionα ∗, while the former forces the symmetric prefix phase to approach
+zero. Therefore contact withc ∗ at phaset 0 would imply
+t0 + log2 α∗ = 0 (mod 1).
+The continuation still has negligible relative deficit and has limiting phaset 1 =t 0 + log2(1−α ∗).
+Applying the same argument to this continuation givest 1 + log2 α∗ = 0 (mod 1). Subtracting the
+two identities yieldslog 2(1−α ∗)∈Z, contradicting1/4<1−α ∗ <1/2. HenceΨ F (t)> c∗ for
+every phaset.
+Nonconstancy.A constant profile would make the limiting Bellman relation scale-invariant, and the
+sharp support inequality then determines the only possible constant. Indeed, supposeΨ F ≡cand
+setd:=c −1. Using dyadically scaled symmetric prefixes in the limiting Bellman inequality gives
+d≥A(α p, d(1−α)p)for everyα∈[0,1]. Sharpness of the support inequality forcesd q ≥B sup,
+whereas the global support boundΨF ≥c ∗ =B −p
+sup givesd q ≤B sup. Henced q =B sup andc=c ∗,
+contradicting the strict separation above. ThereforeΨ F is nonconstant.
+Thus the asymmetric recursion changes the leading objective coefficient while retaining a noncon-
+stant dyadic dependence.
+6 DISCUSSION AND CONCLUSION
+The composition tree determines more than a convergence exponent. For the symmetric recursive
+family, the four-point rearrangement inequality identifies a balanced optimizer at every horizon and
+explains all unbalanced ties. That structure gives both a fast scalar evaluator and an exact phase law
+for the tight objective bound. For the asymmetric family, balanced optimality is lost, but a distinct
+nonconstant phase remains in the leading coefficient. Thus the Silver exponent alone does not fully
+describe the horizon dependence of either optimized family.
+Our analysis concerns the specified recursive classes. It leaves open exact finite-horizon minimax
+optimality over arbitrary predetermined schedules, as well as quantitative questions about the asym-
+metric phase: its exact extrema and the asymptotic structure of optimizing splits. The strict support
+separation shows why the sharp local scalar inequality alone does not settle these questions; the
+compatibility of successive compositions also matters.
+9
+
+=== PAGE 10 ===
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+Under review as a conference paper at ICLR 2027
+AIUSE STATEMENT
+We used ChatGPT, including interactions through Codex and Cursor, for manuscript preparation,
+proof development, and assistance with Lean 4 proof scripts. AI assistance was also used in re-
+organizing and editing the presentation and preparing the computational checks described in the
+supplementary numerical README. The mathematical arguments are presented in the paper and
+appendices; numerical checks are distinguished from proofs. The authors take responsibility for the
+final text, mathematical claims, and submitted artifacts.
+REPRODUCIBILITY STATEMENT
+The appendix proof roadmap maps the main results to their complete proofs. Appendix A states
+the imported certificate interfaces and prior results used in the analysis. The scalar evaluator
+and reference Bellman recursions are supplied with the supplementary code. The accompanying
+NUMERICAL REPRODUCIBILITY.mdrecords the numerical methods and distinguishes floating-
+point checks from interval certificates. The phase-minimum and dyadic-corner certificates are spec-
+ified in Appendices D.8 and D.7. We also provide Lean 4 formalization of the mathematical results
+in supplementary materials.
+REFERENCES
+J. M. Altschuler and P. A. Parrilo. Acceleration by stepsize hedging: Multi-step descent and the
+Silver stepsize schedule.Journal of the ACM, 72(2):Article 12, 2025a. doi: 10.1145/3708502.
+J. M. Altschuler and P. A. Parrilo. Acceleration by stepsize hedging: Silver stepsize schedule for
+smooth convex optimization.Mathematical Programming, 213:1105–1118, 2025b. doi: 10.1007/
+s10107-024-02164-2.
+S. Das Gupta, B. P. G. Van Parys, and E. K. Ryu. Branch-and-bound performance estimation pro-
+gramming: A unified methodology for constructing optimal optimization methods.Mathematical
+Programming, 204:567–639, 2024. doi: 10.1007/s10107-023-01973-1.
+Y . Drori and M. Teboulle. Performance of first-order methods for smooth convex minimiza-
+tion: A novel approach.Mathematical Programming, 145:451–482, 2014. doi: 10.1007/
+s10107-013-0653-0.
+B. Grimmer. Provably faster gradient descent via long steps.SIAM Journal on Optimization, 34(3):
+2588–2608, 2024. doi: 10.1137/23M1588408.
+B. Grimmer, K. Shu, and A. L. Wang. Accelerated gradient descent via long steps, 2023. URL
+https://arxiv.org/abs/2309.09961. arXiv preprint arXiv:2309.09961.
+B. Grimmer, K. Shu, and A. L. Wang. Accelerated objective gap and gradient norm convergence
+for gradient descent via long steps.INFORMS Journal on Optimization, 7:156–169, 2025a. doi:
+10.1287/ijoo.2024.0057.
+B. Grimmer, K. Shu, and A. L. Wang. Composing optimized stepsize schedules for gradient descent.
+Mathematics of Operations Research, 2025b. doi: 10.1287/moor.2024.0764. Published online 4
+November 2025.
+G. Kornowski and O. Shamir. Open problem: Anytime convergence rate of gradient descent. In
+Proceedings of the 37th Conference on Learning Theory, volume 247 ofProceedings of Ma-
+chine Learning Research, pp. 5335–5339. PMLR, 2024. URLhttps://proceedings.
+mlr.press/v247/kornowski24a.html.
+A. B. Taylor, J. M. Hendrickx, and F. Glineur. Smooth strongly convex interpolation and exact worst-
+case performance of first-order methods.Mathematical Programming, 161:307–345, 2017. doi:
+10.1007/s10107-016-1009-3.
+M. Teboulle and Y . Vaisbourd. An elementary approach to tight worst case complexity analy-
+sis of gradient based methods.Mathematical Programming, 201:63–96, 2023. doi: 10.1007/
+s10107-022-01899-0.
+10
+
+=== PAGE 11 ===
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+Under review as a conference paper at ICLR 2027
+C.-E. Tsai, I. Fatkhullin, L. Zhang, and N. He. Lower bounds for anytime acceleration of gradient
+descent, 2026. URLhttps://arxiv.org/abs/2607.02053.
+Yuhan Ye and Kaizhao Liu. Silver rate is (almost) optimal for gradient descent acceleration, 2026.
+URLhttps://arxiv.org/abs/2609.09152.
+Z. Zhang and R. Jiang. Accelerated gradient descent by concatenation of stepsize schedules.SIAM
+Journal on Optimization, 36(2):1182–1210, 2026. doi: 10.1137/25M173898X.
+Z. Zhang, J. D. Lee, S. S. Du, and Y . Chen. Anytime acceleration of gradient descent. InProceed-
+ings of COLT 2025, volume 291 ofProceedings of Machine Learning Research, pp. 5991–6013.
+PMLR, 2025. URLhttps://proceedings.mlr.press/v291/zhang25a.html.
+APPENDIX:PROOF ROADMAP
+The main text states the structural and phase results and explains their proof mechanisms. The
+appendices retain all supporting certificate definitions, intermediate results, and complete proofs.
+Main-text material Supporting material and proof ingredients
+Section 2: schedules and scalar values Appendix A: primitive and s-composable certifi-
+cates, joins, and objective guarantees.
+Theorem 3.1: optimal compositions Appendices B.5 and C: propagation, equality,
+and optimal trees.
+Theorem 3.2: rearrangement Appendix B: sign identities and algebraic com-
+parison.
+Algorithm 1: one-horizon evaluation Appendix C.3: adjacent-pair invariant and oper-
+ation count.
+Theorem 4.1: exact symmetric phase Appendices D.1–D.4: power envelope, ratio con-
+traction, and canonical interpolation.
+Corollary 4.2: tight objective coefficient Appendix D.5: exact conversion, uniform expan-
+sion, and cluster set.
+Theorem 5.1: asymmetric phase Appendix E: sandwich, compactness, support
+deficit, and phase rigidity.
+A CERTIFICATE FRAMEWORKS AND SCALAR RECURSIONS
+The composition theorems used in the main text are due to Zhang & Jiang (2026) and Grimmer et al.
+(2025b). We record their certificate interfaces, the changes of variables, and the resulting connection
+to the gradient-descent guarantees. Throughout this appendix,L= 1; applying the dimensionless
+schedules through equation 1 restores the factorL.
+A.1 CERTIFICATE INTERFACES AND RECURSIVE SCHEDULE CLASSES
+LetF 1 be the class of differentiable convex functions with1-Lipschitz gradient and a nonempty
+minimizer set. For a scheduleh= (h 0, . . . , hn−1)⊤ and the associated gradient-descent trajectory,
+writef i =f(x i)andg i =∇f(x i), and fix a minimizerx ∗ withf ∗ =f(x ∗). Smooth convex
+interpolation (Taylor et al., 2017) gives
+Qi,∗ :=f i −f ∗ − ⟨gi, xi −x ∗⟩+ 1
+2 ∥gi∥2 ≤0.
+The two frameworks below use stronger inequalities involving the final iterate to certify recursive
+composition.
+A.1.1 PRIMITIVE SCHEDULES ANDCONPP
+We first recall the definition of a primitive schedule from Zhang & Jiang (2026).
+11
+
+=== PAGE 12 ===
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+Under review as a conference paper at ICLR 2027
+Definition A.1(Definition 2.7 in Zhang & Jiang (2026)).A scheduleh∈R n
++ is primitive if, with
+H :=1 ⊤h, everyf∈ F1 and every associated trajectory satisfy
+1
+2 ∥x0 −x ∗∥2 +
+n−1X
+i=0
+hiQi,∗ −H(f n −f ∗)≥ 1
+2 ∥xn −x ∗∥2 + H(H+ 1)
+2 ∥gn∥2 .
+The empty schedule is primitive withH= 0.
+This certificate also yields the tight objective bound
+fn −f ∗ ≤ 1
+2H+ 1 · 1
+2 ∥x0 −x ∗∥2 ,(24)
+with equality on a suitable one-dimensional Huber instance (Zhang & Jiang, 2026, Theorem 2.6,
+Proposition 2.8, and Corollary 2.9). Thus, within this certificate class, maximizing the total stepsize
+His exactly equivalent to minimizing the certified objective coefficient.
+Ifaandbare primitive, then their primitive–primitive concatenation
+ConPP(a, b):=
+
+a⊤, φ
+ 
+1⊤a,1 ⊤b
+
+, b⊤⊤
+is primitive, where
+φ(x, y):= −x−y+
+p
+(x+y+ 2) 2 + 4(x+ 1)(y+ 1)
+2 .
+This is the ConPP theorem of Zhang & Jiang (2026, Theorem 3.1). In particular, both the inserted
+step and the total stepsize of the joined schedule depend on each input schedule only through its
+total stepsize. We now record the optimized family in the notation of Zhang & Jiang (2026, Defini-
+tion 4.1).
+Definition A.2(Definition 4.1 in Zhang & Jiang (2026)).Seth (0)
+◦ = [ ]⊤. Forn≥1, choose
+h(n)
+◦ ∈arg max
+h∈H(n)
+◦
+1⊤h,H (n)
+◦ :=
+n
+ConPP
+
+h(k)
+◦ , h(n−k−1)
+◦
+
+: 0≤k < n
+o
+.
+If the maximizer is not unique, any maximizing schedule may be selected.
+Sincex+y+φ(x, y)is strictly increasing in each argument, this recursion implements the principle
+of optimality:h (n)
+◦ has maximum total stepsize among alln-step schedules generated recursively
+from the empty schedule by ConPP.
+A.1.2S-COMPOSABLE SCHEDULES ANDOBS-S
+The s-composable framework of Grimmer et al. (2025b) uses a rate parameterηwhose defining
+certificate is attained by canonical quadratic and Huber instances. Its certificate is symmetric in the
+sense that it controls the final objective gap, distance, and gradient norm through the same parameter.
+Definition A.3(Definition 3 in Grimmer et al. (2025b)).A positive scheduleh= (h 0, . . . , hn−1)⊤
+is s-composable with rateη >0if for everyf∈ F 1 and every associated trajectory, it holds that
+1−η
+2 ∥gn∥2 + η2
+2 ∥xn −x ∗∥2 + (η−η 2)(fn −f ∗)≤ η2
+2 ∥x0 −x ∗∥2 ,
+and
+η= 1
+1 + Pn−1
+i=0 hi
+=
+n−1Y
+i=0
+(hi −1).
+The sum–product identity determinesηfrom the total stepsize. The corresponding tight objective
+bound is
+fn −f ∗ ≤ η
+2−η · 1
+2 ∥x0 −x ∗∥2 ,(25)
+12
+
+=== PAGE 13 ===
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+Under review as a conference paper at ICLR 2027
+with equality attained by a one-dimensional Huber instance (Grimmer et al., 2025b, Proposition 1).
+Hence minimizingηstrengthens the certified objective guarantee. For clarity, the quadratic instance
+attains the stronger inequality in Grimmer et al. (2025b, Proposition 1), which contains an additional
+negative squared-norm term; it does not, in general, attain equation 25 after that term is discarded.
+Indeed, forf(x) =x 2/2andx 0 = 1, the normalized objective gap isη 2 < η/(2−η)when
+0< η <1.
+Ifaandbare s-composable with ratesαandβ, respectively, their s-join is
+a ▷ ◁ b:=
+
+a⊤, µ(α, β), b⊤⊤
+, µ(α, β) := 1 +
+p
+α2 + 6αβ+β 2 −(α+β)
+2αβ .
+The joined schedule is s-composable with rate
+J(α, β):= 2αβ
+α+β+
+p
+α2 + 6αβ+β 2
+by Grimmer et al. (2025b, Theorem 3). Repeated s-joins from the empty schedule generate the basic
+s-composable family.
+Definition A.4(Optimized Basic s-composable Schedule (OBS-S) in Grimmer et al. (2025b)).Set
+hOBS-S(0) = [ ]⊤ andη OBS-S(0) = 1. ForN≥2, define
+ηOBS-S(N−1) := min
+1≤m<N
+J
+ 
+ηOBS-S(m−1), ηOBS-S(N−m−1)
+
+.
+Ifm N is any minimizing index, set
+hOBS-S(N−1) :=h OBS-S(mN −1)▷ ◁ hOBS-S(N−m N −1).
+Thusη OBS-S(N−1)is the minimum rate among all basic s-composable schedules withN−1steps.
+Different minimizing splits may yield different schedules, but the optimized rate is unambiguous.
+We next derive the common scalar Bellman recursion underlying the ConPP/OBS-S correspondence.
+A.2 THE COMMON SCALARBELLMAN PROGRAM
+We use the leaf-count convention to describe the structure of schedules. A schedule containingn
+gradient steps can be represented by a full binary composition tree withN=n+ 1leaves. Each
+leaf represents the empty schedule, and every internal node inserts one joining step between the
+schedules represented by its two children.
+Define
+HN :=1 ⊤h(N−1)
+◦ , s N :=η OBS-S(N−1).
+The empty schedule givesH 1 = 0ands 1 = 1. In this notation, the two recursions become
+HN = max
+1≤m<N
+ 
+Hm +H N−m +φ(H m, HN−m )
+
+, s N = min
+1≤m<N
+J(s m, sN−m ).
+We now introduce the symmetric composition law
+K(x, y):= x+y+
+p
+x2 + 6xy+y 2
+2 , x, y≥0.
+Direct substitution gives the reciprocal-affine conjugacies
+1
+J(1/x,1/y) =K(x, y), x+y+φ(x, y) + 1 =K(x+ 1, y+ 1),(26)
+and
+µ
+ 1
+x+ 1 , 1
+y+ 1
+
+=φ(x, y).
+Here the first identity is stated forx, y >0, while the remaining two hold forx, y≥0. The
+last identity shows that corresponding ConPP and s-join nodes insert the same numerical step, not
+merely that their optimized scalar values agree.
+13
+
+=== PAGE 14 ===
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+Under review as a conference paper at ICLR 2027
+Proposition A.5.For everyN≥1,
+UN :=H N + 1 = 1
+sN
+.
+The common value satisfies
+U1 = 1, U N = max
+1≤m<N
+K(Um, UN−m ) (N≥2).
+Proof.The identities in equation 26 show that both1/s N andH N + 1satisfy the same recursion
+and initial condition. Induction then givesH N + 1 = 1/sN for all integersN≥1.
+Equivalently, assign value one to each leaf of an ordered full binary tree and applyKat every internal
+node. ThenU N is the largest root value among all such trees withNleaves. The objective-bound
+coefficients also coincide:
+1
+2HN + 1 = sN
+2−s N
+= 1
+2UN −1 .
+Thus maximizingU N simultaneously optimizes the tight primitive and OBS-S objective coefficients
+over their respective recursively generated classes. This correspondence does not identify the am-
+bient classes of all primitive and all s-composable schedules; it concerns the symmetric families
+generated by ConPP and the s-join from the empty schedule, which is the scope used throughout the
+paper.
+A.3 PROPERTIES OF THE COMPOSITION LAW
+We record the properties ofKneeded below.
+Proposition A.6.The mapK: [0,+∞) 2 →[0,+∞)is continuous, symmetric, positively homoge-
+neous, and strictly increasing in each coordinate. It satisfies
+K(0, x) =x,K(x, x) =ρx,K(x, y)> x+y >max{x, y}(x, y >0).(27)
+Moreover, forx, y, x′, y′ >0,
+min
+ x′
+x , y′
+y
+
+≤ K(x′, y′)
+K(x, y) ≤max
+ x′
+x , y′
+y
+
+,(28)
+and both inequalities are strict ifx ′/x̸=y ′/y.
+Proof.The first assertions follow directly from the definition ofKin equation 2. Strict monotonicity
+follows by differentiation in the positive quadrant and continuity at the boundary. The identities in
+equation 27 can be verified directly from equation 2. LetλandΛbe the minimum and maximum of
+x′/xandy ′/y. Then
+(λx, λy)≤(x ′, y′)≤(Λx,Λy)
+coordinatewise. Monotonicity and homogeneity give equation 28, with strictness whenλ <Λ.
+A.4 THE ASYMMETRIC CERTIFICATE AND RATE RECURSION
+Definition A.7(Definition 1 in Grimmer et al. (2025b)).A positiven-step scheduleh=
+(h0, . . . , hn−1)⊤ isf-composable with rateη >0if, for everyf∈ F 1, every minimizerx ∗, and
+every associated gradient-descent trajectory,
+f(x n)−f ∗ ≤ η
+2 ∥x0 −x ∗∥2 ,
+and its rate satisfies the sum–product identities
+η= 1
+1 + 2Pn−1
+i=0 hi
+=
+n−1Y
+i=0
+(hi −1) 2.(29)
+The empty schedule is f-composable with rate one.
+14
+
+=== PAGE 15 ===
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+Under review as a conference paper at ICLR 2027
+The identities in equation 29 balance the matching quadratic and Huber instances in one dimension,
+both of which attain the bound with equality (Grimmer et al., 2025b, Definition 1 and Lemma 1).
+Thus the rate is the exact worst-case objective coefficient for an f-composable schedule, not merely
+an auxiliary Bellman variable. For a generalL-smooth convex objective, applying the dimensionless
+schedule throughx i+1 =x i −(h i/L)∇f(x i)restores a factorLin Definition A.7. The f-join
+theorem of Grimmer et al. (2025b, Theorem 1) combines an s-composable prefix of rateαwith an
+f-composable continuation of rateβinto an f-composable schedule of rate
+T(α, β) := 2αβ
+α+ 4β+
+p
+α2 + 8αβ
+.
+Starting from the empty schedule and iterating these joins generates the basic f-composable family.
+ForN≥1, leth OBS-F(N−1)be an(N−1)-step member with minimum rate, and write the rate
+ηOBS-F(N−1)asη F
+N .
+Withn=N−1and matched optimal-split choices, the optimized ConPD scheduleh (n)
+• coincides
+withh OBS-F(N−1)(Zhang & Jiang, 2026, Remark 5.9). Their common rate satisfies
+ηF
+N = 1
+21⊤h(N−1)
+• + 1
+.(30)
+All results below therefore apply to both constructions.
+The principle of optimality gives the ConPD/OBS-F dynamic program
+ηF
+1 = 1, η F
+N = min
+1≤m<N
+T(s m, ηF
+N−m ),(31)
+where a minimizing split selects an OBS-S prefixh OBS-S(m−1)and an OBS-F continuation
+hOBS-F(N−m−1). By Definition A.7, after restoring a general smoothness constantL, this
+schedule satisfies the tight guarantee
+f(x N−1 )−f ∗ ≤η F
+N
+L
+2 ∥x0 −x ∗∥2 .
+Hence all subsequent asymptotic statements aboutη F
+N are statements about the exact worst-case co-
+efficient in equation 19 for both optimized ConPD and OBS-F schedules. In particular, minimizing
+equation 31 directly optimizes the certified final objective gap within the basic f-composable class,
+equivalently within the recursively generated ConPD family described above.
+B REARRANGEMENT AND BALANCED OPTIMALITY
+The proof of Theorem 3.2 is algebraic. We first establish three sign identities and then use them to
+compare the pairings. The final subsection propagates the four-point inequality to arbitrary trees.
+B.1 SIGN BEYOND THE INNER ROOTS
+The proof is based on an algebraic sign certificate. Forx, y≥0, define the two conjugate roots
+r±(x, y):= x+y±
+p
+x2 + 6xy+y 2
+2 .
+They are the roots of
+r2 −(x+y)r−xy= 0,
+withr +(x, y) =K(x, y)andr −(x, y)≤0. For the pairing(a, b)|(c, d), wherea, b, c, d≥0,
+define
+Pab|cd(z) :=
+Y
+σ,τ∈{+,−}
+h
+z2 −
+ 
+rσ(a, b) +rτ (c, d)
+
+z−r σ(a, b)rτ (c, d)
+i
+.(32)
+The four quadratic factors account for every choice of the two inner conjugate roots. In particular,
+the distinguished nonnegative root associated with this pairing isZ ab|cd. The first lemma explains
+how the sign of the degree-eight polynomialP ab|cd(z)recovers the position of this root oncez >
+max{K(a, b),K(c, d)}.
+15
+
+=== PAGE 16 ===
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+Under review as a conference paper at ICLR 2027
+Lemma B.1.Leta, b, c, d≥0and letP ab|cd be defined in equation 32. Define
+Mab|cd := max{K(a, b),K(c, d)}.
+Then, for everyz > Mab|cd,
+sgnP ab|cd(z) = sgn
+ 
+z−Z ab|cd
+
+.
+Proof.Write
+u=r +(a, b), r−(a, b) =−s,
+v=r +(c, d), r−(c, d) =−t,
+whereu, v, s, t≥0. Vieta’s relations give
+u−s=a+b, us=ab,
+v−t=c+d, vt=cd.
+Consequently,0≤s≤uand0≤t≤v.
+The(+,+)factor in equation 32 is
+q++(z) =z 2 −(u+v)z−uv.
+Its two roots are the nonnegative rootZ ab|cd and a nonpositive root, so its sign forz >0issgn(z−
+Zab|cd). Ifz >max{u, v}, the remaining three factors satisfy
+q+−(z) =z 2 −(u−t)z+ut=z(z−u) +t(z+u)>0,
+q−+(z) =z 2 −(−s+v)z+sv=z(z−v) +s(z+v)>0,
+q−−(z) =z 2 + (s+t)z−st≥z 2 −st≥z 2 −uv >0.
+Thus the sign of the product in equation 32 is exactly the sign of its(+,+)factor, which finishes
+the proof.
+B.2 PAIRING-DIFFERENCE IDENTITY
+Lete j =e j(a, b, c, d)denote the elementary symmetric polynomial of degreejin the four inputs.
+For a scalarE, define the auxiliary quartic
+QE(z) :=z 4 −e 1z3 −(e 2 + 2E)z2 −e 3z+e 4.(33)
+The next lemma expresses the differences between pairings in terms ofQE. A complete coefficient-
+level derivation is given in Appendix B.2.
+Lemma B.2.For alla, b, c, d≥0,
+Pac|bd(z)−P ab|cd(z) = 2z 2(d−a)(c−b)Q ad+bc(z),
+Pad|bc(z)−P ac|bd(z) = 2z 2(b−a)(d−c)Q ab+cd(z).
+Proof.We first derive the conjugate polynomial for a generic pairing. Let
+A=a+b, B=ab, C=c+d, D=cd,
+and letu ± andv ± be the respective roots of
+u2 −Au−B= 0, v 2 −Cv−D= 0.
+For fixedu, multiplication over the two choices ofvgives
+Y
+τ∈{+,−}
+
+z2 −(u+v τ )z−uv τ
+
+= (z2 −uz) 2 −C(z+u)(z 2 −uz)−D(z+u) 2
+=L(z)u 2 +M(z)u+N(z),
+16
+
+=== PAGE 17 ===
+864
+865
+866
+867
+868
+869
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886
+887
+888
+889
+890
+891
+892
+893
+894
+895
+896
+897
+898
+899
+900
+901
+902
+903
+904
+905
+906
+907
+908
+909
+910
+911
+912
+913
+914
+915
+916
+917
+Under review as a conference paper at ICLR 2027
+where
+L(z) =z 2 +Cz−D,
+M(z) =−2z(z 2 +D),
+N(z) =z 2(z2 −Cz−D).
+Sinceu + +u − =Aandu +u− =−B, multiplication overu + andu − then yields
+PA,B,C,D (z) :=P ab|cd(z) =B 2L2 −BM 2 +N 2 −ABLM+ (A 2 + 2B)LN+AM N.(34)
+Expanding equation 34 gives the monic degree-eight polynomial
+PA,B,C,D (z) =z 8 −2(A+C)z 7 + (A2 + 2AC+C 2 −2B−2D)z 6
++ 2(AB+CD)z 5
++
+ 
+−A2C 2 −2A 2D+ 2ABC+ 2ACD+B 2 −2BC 2 −12BD+D 2
+z4
++ 2(AD2 +B 2C)z 3
++
+ 
+A2D2 + 2ABCD+B 2C 2 −2B 2D−2BD 2
+z2
+−2BD(AD+BC)z+B 2D2.(35)
+We now expose the dependence of this polynomial on the chosen pairing. Lete j be the elementary
+symmetric polynomials in the four underlying inputs and set
+S :=B+D.
+For every pairing of the same four inputs,
+e1 =A+C, e 2 =B+D+AC, e 3 =AD+BC, e 4 =BD.
+The coefficients other than that ofz 4 simplify immediately from
+AB+CD=e 1S−e 3,
+AD2 +B 2C=e 3S−e 1e4,
+A2D2 + 2ABCD+B 2C 2 =e 2
+3,
+B2D+BD 2 =e 4S.
+For thez 4 coefficient, putT :=AC=e 2 −S. Since
+A2D+BC 2 =e 1e3 −T S,
+ABC+ACD=T S,
+B2 +D 2 −12BD=S 2 −14e 4,
+we obtain
+−A 2C 2 −2A 2D+ 2ABC+ 2ACD+B 2 −2BC 2 −12BD+D 2
+=−T 2 −2(e 1e3 −T S) + 2T S+S2 −14e 4
+=−e 2
+2 −2e 1e3 −14e 4 + 6e2S−4S 2.
+Therefore equation 35 can be written solely in terms ofe 1, e2, e3, e4 and the pairing-dependent
+scalarSas
+PS(z) =z 8 −2e 1z7 + (e2
+1 −2S)z 6 + 2(e1S−e 3)z5
++
+ 
+−e2
+2 −2e 1e3 −14e 4 + 6e2S−4S 2
+z4
++ 2(e3S−e 1e4)z3 + (e2
+3 −2e 4S)z 2
+−2e 3e4z+e 2
+4.(36)
+This representation makes the two desired differences transparent. Define
+S0 :=ab+cd, S 1 :=ac+bd, S 2 :=ad+bc.
+17
+
+=== PAGE 18 ===
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927
+928
+929
+930
+931
+932
+933
+934
+935
+936
+937
+938
+939
+940
+941
+942
+943
+944
+945
+946
+947
+948
+949
+950
+951
+952
+953
+954
+955
+956
+957
+958
+959
+960
+961
+962
+963
+964
+965
+966
+967
+968
+969
+970
+971
+Under review as a conference paper at ICLR 2027
+Then
+e2 =S 0 +S 1 +S 2,
+and
+S1 −S 0 =−(d−a)(c−b),
+S2 −S 1 =−(b−a)(d−c).
+LetF= (d−a)(c−b). Subtracting equation 36 atS 0 from the same formula atS 1, and using
+S0 +S 1 =e 2 −S 2, gives
+PS1 (z)−P S0 (z) = 2F z6 −2e 1F z5 −2(e 2 + 2S2)F z4 −2e 3F z3 + 2e4F z2
+= 2F z2
+z4 −e 1z3 −(e 2 + 2S2)z2 −e 3z+e 4
+
+= 2z2(d−a)(c−b)Q ad+bc(z).
+This is the first equality.
+Likewise, letG= (b−a)(d−c). SinceS 1 +S 2 =e 2 −S 0, subtraction atS 1 from the formula at
+S2 yields
+PS2 (z)−P S1 (z) = 2Gz 6 −2e 1Gz5 −2(e 2 + 2S0)Gz4 −2e 3Gz3 + 2e4Gz2
+= 2Gz2
+z4 −e 1z3 −(e 2 + 2S0)z2 −e 3z+e 4
+
+= 2z2(b−a)(d−c)Q ab+cd(z),
+which is the second equality.
+B.3 QUARTIC EVALUATION
+Lemma B.3.Fix a pairing(a, b)|(c, d), wherea, b, c, d≥0, and set
+u=K(a, b), v=K(c, d), z=K(u, v).
+Ifu, v >0, then, for every scalarE,
+QE(z) = 2
+ 
+abv2 +cdu 2 −Euv
+
+(uv+uz+vz)
+uv ,
+whereQ E is formed from the four inputsa, b, c, d.
+Proof.Let
+A=a+b, B=ab, C=c+d, D=cd.
+The two inner quadratic equations and the assumptionu, v >0give
+A=u− B
+u , C=v− D
+v .(37)
+The outer quadratic equation gives
+z2 = (u+v)z+uv.(38)
+SetS=u+vandT=uv. Repeated use of equation 38 yields
+z3 = (S2 +T)z+ST,
+z4 = (S3 + 2ST)z+S 2T+T 2.
+For the four inputsa, b, c, d, their elementary symmetric polynomials satisfy
+e1 =A+C, e 2 =B+D+AC, e 3 =AD+BC, e 4 =BD.
+Substitution into equation 33 reducesQ E(z)to a linear polynomial inz:
+QE(z) =R 1z+R 0,
+18
+
+=== PAGE 19 ===
+972
+973
+974
+975
+976
+977
+978
+979
+980
+981
+982
+983
+984
+985
+986
+987
+988
+989
+990
+991
+992
+993
+994
+995
+996
+997
+998
+999
+1000
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+1010
+1011
+1012
+1013
+1014
+1015
+1016
+1017
+1018
+1019
+1020
+1021
+1022
+1023
+1024
+1025
+Under review as a conference paper at ICLR 2027
+where
+R0 =S 2T+T 2 −e 1ST−(e 2 + 2E)T+e 4,
+R1 =S 3 + 2ST−e 1(S2 +T)−(e 2 + 2E)S−e 3.
+Using equation 37, we first compute
+S2 +T−e 1S−(e 2 + 2E) = 2Bv
+u + 2Du
+v − BD
+uv −2E.
+Consequently,
+R0 =T
+ 2Bv
+u + 2Du
+v − BD
+uv −2E
+
++BD
+= 2
+ 
+Bv 2 +Du 2 −Euv
+
+.(39)
+It remains to relate the coefficientR 1 toR 0. Directly from their definitions,
+R1 − S
+T R0 =ST−e 1T−e 3 − Se4
+T .(40)
+On the other hand, equation 37 gives
+T(S−e 1) =Bv+Du,
+e3 =
+
+u− B
+u
+
+D+B
+
+v− D
+v
+
+=uD+Bv− BD
+u − BD
+v ,
+Se4
+T = BD
+u + BD
+v .
+Substitution into equation 40 shows thatR 1 = (S/T)R 0. Combining this identity with equation 39
+andT+Sz=uv+uz+vzgives
+QE(z) =R 0
+
+1 + S
+T z
+
+= 2
+ 
+Bv 2 +Du 2 −Euv
+
+(uv+uz+vz)
+uv ,
+which finishes the proof.
+B.4 PROOF OF THE FOUR-POINT REARRANGEMENT THEOREM
+Proof of Theorem 3.2.For brevity, write
+Z0 :=Z ab|cd =K
+ 
+K(a, b),K(c, d)
+
+,
+Z1 :=Z ac|bd =K
+ 
+K(a, c),K(b, d)
+
+,
+Z2 :=Z ad|bc =K
+ 
+K(a, d),K(b, c)
+
+.
+Ifb= 0, thena= 0, andK(0, x) =xgivesZ 0 =Z 1 =Z 2 =K(c, d). Both inequalities and their
+stated equality conditions therefore hold. Henceforth assumeb >0, so all inner quantities appearing
+below are positive.
+For the first comparison, set
+u=K(a, b), v=K(c, d), z 0 =K(u, v) =Z 0.
+The quadratic form in Lemma B.3 factors as
+abv2 +cdu 2 −(ad+bc)uv= (av−cu)(bv−du).(41)
+By homogeneity ofK,
+av=K(ac, ad), cu=K(ac, bc), bv=K(bc, bd), du=K(ad, bd).
+19
+
+=== PAGE 20 ===
+1026
+1027
+1028
+1029
+1030
+1031
+1032
+1033
+1034
+1035
+1036
+1037
+1038
+1039
+1040
+1041
+1042
+1043
+1044
+1045
+1046
+1047
+1048
+1049
+1050
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061
+1062
+1063
+1064
+1065
+1066
+1067
+1068
+1069
+1070
+1071
+1072
+1073
+1074
+1075
+1076
+1077
+1078
+1079
+Under review as a conference paper at ICLR 2027
+Thus, by strict coordinatewise monotonicity ofK,av−cuhas the sign ofad−bc, whereasbv−du
+has the opposite sign. Consequently,
+abv2 +cdu 2 −(ad+bc)uv≤0,
+with equality if and only ifad=bc. Applying Lemma B.3 withE=ad+bcyieldsQ ad+bc(z0)≤0.
+SinceP ab|cd(z0) = 0, Lemma B.2 gives
+Pac|bd(z0) = 2z2
+0(d−a)(c−b)Q ad+bc(z0)≤0.
+Moreover,
+z0 > v=K(c, d)≥max{K(a, c),K(b, d)}=M ac|bd.
+The sign certificate in Lemma B.1 therefore impliesZ 0 ≤Z 1.
+Ifb=c, the two pairings definingZ 0 andZ 1 coincide. Ifad=bc, equality holds in equation 41,
+henceQ ad+bc(z0) = 0and the same sign certificate givesZ 0 =Z 1. Conversely, ifb < cand
+ad̸=bc, then equation 41 is strict and(d−a)(c−b)>0. ThusP ac|bd(z0)<0, which gives
+Z0 < Z1. This proves equation 10.
+For the second comparison, set
+u′ =K(a, c), v ′ =K(b, d), z 1 =K(u ′, v′) =Z 1.
+The corresponding quadratic form factors as
+ac(v′)2 +bd(u ′)2 −(ab+cd)u ′v′ = (cv′ −bu ′)(av′ −du ′).(42)
+Homogeneity and coordinatewise monotonicity give
+cv′ =K(bc, cd)≥ K(ab, bc) =bu′,
+av′ =K(ab, ad)≤ K(ad, cd) =du′.
+Hence the right-hand side of equation 42 is nonpositive. By Lemma B.3 withE=ab+cd, we have
+Qab+cd(z1)≤0. SinceP ac|bd(z1) = 0, Lemma B.2 yields
+Pad|bc(z1) = 2z2
+1(b−a)(d−c)Q ab+cd(z1)≤0.
+Furthermore,
+z1 > v′ =K(b, d)≥max{K(a, d),K(b, c)}=M ad|bc.
+Another application of Lemma B.1 givesZ 1 ≤Z 2.
+Ifa=borc=d, the pairings definingZ 1 andZ 2 agree up to symmetry. Conversely, ifa < b
+andc < d, strict monotonicity givescv ′ > bu′ andav ′ < du′. ThusQ ab+cd(z1)<0. Since
+(b−a)(d−c)>0, we haveP ad|bc(z1)<0. The sign certificate then givesZ 1 < Z2. This proves
+equation 11 and completes the proof.
+B.5 AN ABSTRACT BALANCED-COMPOSITION PRINCIPLE
+The propagation argument uses the order, homogeneity, and rearrangement properties of the kernel,
+not its radical formula.
+Theorem B.4.Let⋆: [0,∞) 2 →[0,∞)be symmetric, positively homogeneous, and strictly in-
+creasing in each coordinate. Assume that, for someλ >1,
+0⋆ x=x, x ⋆ x=λx,
+hold for allx≥0, and that the four-point rearrangement inequalities
+(a ⋆ b)⋆(c ⋆ d)≤(a ⋆ c)⋆(b ⋆ d)≤(a ⋆ d)⋆(b ⋆ c)
+hold whenever0≤a≤b≤c≤d. Define the balanced sequence{V N }N≥0 by
+V0 = 0, V 1 = 1, V N =V ⌊N/2⌋ ⋆ V⌈N/2⌉ (N≥2),(43)
+and define the Bellman sequence{W N }N≥1 by
+W1 = 1, W N = max
+1≤m<N
+Wm ⋆ WN−m (N≥2).(44)
+Then{V N }N≥0 is strictly increasing and satisfies the supercomposition inequality
+Vm ⋆ Vn ≤V m+n (m, n≥0).
+Consequently,W N =V N for everyN≥1.
+20
+
+=== PAGE 21 ===
+1080
+1081
+1082
+1083
+1084
+1085
+1086
+1087
+1088
+1089
+1090
+1091
+1092
+1093
+1094
+1095
+1096
+1097
+1098
+1099
+1100
+1101
+1102
+1103
+1104
+1105
+1106
+1107
+1108
+1109
+1110
+1111
+1112
+1113
+1114
+1115
+1116
+1117
+1118
+1119
+1120
+1121
+1122
+1123
+1124
+1125
+1126
+1127
+1128
+1129
+1130
+1131
+1132
+1133
+Under review as a conference paper at ICLR 2027
+Proof.SinceV 0 < V1 < V2, and sinceV r < Vr+1 implies
+V2r =V r ⋆ Vr < Vr ⋆ Vr+1 =V 2r+1 < Vr+1 ⋆ Vr+1 =V 2r+2,
+strict monotonicity follows by induction. We prove the supercomposition inequality by strong in-
+duction onm+n, assuming0< m≤n; the casem= 0is immediate. For even–even indices,
+homogeneity and the induction hypothesis give
+V2a ⋆ V2b =λ(V a ⋆ Vb)≤λV a+b =V 2a+2b.
+The even–odd case follows from the first rearrangement inequality and the induction hypothesis:
+V2a ⋆ V2b+1 = (Va ⋆ Va)⋆(V b ⋆ Vb+1)≤(V a ⋆ Vb)⋆(V a ⋆ Vb+1)≤V a+b ⋆ Va+b+1 =V 2a+2b+1.
+For odd–even indices,a+ 1≤b, and the same inequality with induction hypothesis gives
+V2a+1 ⋆ V2b = (Va ⋆ Va+1)⋆(V b ⋆ Vb)≤(V a ⋆ Vb)⋆(V a+1 ⋆ Vb)≤V a+b ⋆ Va+b+1 =V 2a+2b+1.
+For two odd indices,a=bgives equality. Ifa < b, the full rearrangement chain and the induction
+hypothesis give
+V2a+1 ⋆ V2b+1 = (Va ⋆ Va+1)⋆(V b ⋆ Vb+1)≤(V a ⋆ Vb+1)⋆(V a+1 ⋆ Vb)
+≤V a+b+1 ⋆ Va+b+1 =V 2a+2b+2.
+This proves supercomposition. Finally, ifW j =V j forj < N, every root split has value at most
+VN , whereas the balanced split attainsV N by equation 43. Induction givesW N =V N .
+Corollary B.5.Extend the common scalar sequence byU 0 := 0. Then{U N }N≥0 is strictly increas-
+ing, and for allm, n≥0,
+K(Um, Un)≤U m+n.
+Moreover, everyN≥2satisfies the balanced recurrence
+UN =K
+ 
+U⌊N/2⌋, U⌈N/2⌉
+
+.
+In particular, the balanced root split solves the Bellman program equation 4 at every leaf count.
+Proof.Note that equation 44 is exactly the Bellman sequence defined by equation 4. Apply Theorem
+B.4 with⋆=Kandλ=ρto obtain thatU N =V N for allN≥0, which finishes the proof.
+These statements give the balanced recurrence and supercomposition part of Theorem 3.1. Equality
+and complete-tree optimality are proved next.
+C OPTIMAL SPLITS,COMPOSITION TREES,AND FAST EVALUATION
+The equality conditions below complete the proof of Theorem 3.1. All counts refer to ordered
+composition trees; distinct certificates need not produce distinct numerical stepsize vectors.
+C.1 EQUALITY IN SUPERCOMPOSITION AND ALL MAXIMIZING ROOT SPLITS
+The sharp rearrangement equality conditions determine whether an unbalanced split can tie. The
+next lemma identifies exactly when the inequality in Corollary B.5 is tight. The exceptional pairs
+are those that become consecutive after removal of a common power of two; this is the source of
+every nonbalanced tie in the Bellman recursion.
+Lemma C.1.For positive integersm, n,
+K(Um, Un) =U m+n
+if and only if either
+(i)m=n; or
+21
+
+=== PAGE 22 ===
+1134
+1135
+1136
+1137
+1138
+1139
+1140
+1141
+1142
+1143
+1144
+1145
+1146
+1147
+1148
+1149
+1150
+1151
+1152
+1153
+1154
+1155
+1156
+1157
+1158
+1159
+1160
+1161
+1162
+1163
+1164
+1165
+1166
+1167
+1168
+1169
+1170
+1171
+1172
+1173
+1174
+1175
+1176
+1177
+1178
+1179
+1180
+1181
+1182
+1183
+1184
+1185
+1186
+1187
+Under review as a conference paper at ICLR 2027
+(ii) there exist integersk≥0andr≥1such that
+{m, n}={2 kr,2 k(r+ 1)}.
+Proof.We use strong induction onm+nand assumem≤nby symmetry. The base casem=
+n= 1follows from equation 7. Ifm= 2aandn= 2b, then
+K(Um, Un) =ρK(U a, Ub), U m+n =ρU a+b.
+Equality for(m, n)is therefore equivalent to equality for(a, b). By the induction hypothesis, either
+a=b, which givesm=n, or{a, b}={2 kr,2 k(r+ 1)}. Conversely, either lower-level equality
+propagates to(m, n)by the same identities.
+Next letm= 2aandn= 2b+ 1. Herea≥1anda≤b. The supercomposition proof begins with
+K
+ 
+K(Ua, Ua),K(U b, Ub+1)
+
+≤ K
+ 
+K(Ua, Ub),K(U a, Ub+1)
+
+.
+For the ordered quadrupleU a ≤U a ≤U b ≤U b+1, the first equality condition in Theorem 3.2
+requires eitherU a =U b orU aUb+1 =U aUb. The second alternative is impossible becauseU a >0
+andU b+1 > Ub, while strict monotonicity of{U j}makes the first equivalent toa=b. Hence the
+supercomposition inequality is strict unless(m, n) = (2a,2a+ 1). In that remaining case the two
+indices are consecutive, and equality follows directly from equation 7.
+Similarly, for(m, n) = (2a+ 1,2b), it forcesb=a+ 1, again giving consecutive indices. These
+equalities also follow directly from the balanced recurrence.
+Finally, for(m, n) = (2a+ 1,2b+ 1), equality is immediate whena=b. Ifa < b, then
+K
+ 
+K(Ua, Ua+1),K(U b, Ub+1)
+
+≤ K
+ 
+K(Ua, Ub),K(U a+1, Ub+1)
+
+<K
+ 
+K(Ua, Ub+1),K(U a+1, Ub)
+
+≤ K(Ua+b+1, Ua+b+1) =U 2a+2b+2.
+The middle inequality is strict by Theorem 3.2. Thus unequal odd indices never tie, completing the
+induction in both directions.
+The optimizer set now follows from the2-adic factorization of the total leaf count.
+Corollary C.2.ForN≥2, define the set of maximizing left-child leaf counts by
+MN := arg max
+1≤m<N
+K(Um, UN−m ).
+WriteN=ν·2 ℓ, whereνis odd. Then
+(i) Ifν= 1, then
+MN ={N/2}.
+(ii) Ifν >1andℓ= 0, then
+MN ={(N−1)/2,(N+ 1)/2}.
+(iii) Ifν >1andℓ≥1, then
+MN =
+
+(ν−1)2 ℓ−1, ν·2ℓ−1,(ν+ 1)2 ℓ−1	
+.(45)
+Proof.By the Bellman recursion and Corollary B.5, a split is maximizing exactly when
+K(Um, UN−m ) =U N =U m+(N−m) .
+The equality characterization in Lemma C.1 therefore applies. The equal-child alternative gives the
+unique balanced splitm=N/2wheneverNis even. Under the scaled-consecutive alternative,
+N= 2 kr+ 2 k(r+ 1) = 2 k(2r+ 1).
+22
+
+=== PAGE 23 ===
+1188
+1189
+1190
+1191
+1192
+1193
+1194
+1195
+1196
+1197
+1198
+1199
+1200
+1201
+1202
+1203
+1204
+1205
+1206
+1207
+1208
+1209
+1210
+1211
+1212
+1213
+1214
+1215
+1216
+1217
+1218
+1219
+1220
+1221
+1222
+1223
+1224
+1225
+1226
+1227
+1228
+1229
+1230
+1231
+1232
+1233
+1234
+1235
+1236
+1237
+1238
+1239
+1240
+1241
+Under review as a conference paper at ICLR 2027
+Since2r+ 1is odd, uniqueness of the factorization ofNinto an odd part and a power of two forces
+k=ℓand2r+ 1 =ν. Thusr= (ν−1)/2, and the two child counts are
+2ℓr= 2 ℓ−1(ν−1),2 ℓ(r+ 1) = 2 ℓ−1(ν+ 1).
+Ifν= 1, this alternative is excluded byr≥1, leaving only the equal split. Ifν >1andℓ= 0,N
+is odd and only the two orientations of the consecutive split remain. Ifν >1andℓ≥1, the equal
+split contributes2 ℓ−1νin addition to the two orientations of the scaled-consecutive split. This gives
+all three cases.
+We finish by translating leaf counts into the step-count notation used by Zhang & Jiang (2026). This
+makes explicit both the balanced assertion and all the additional ties in their conjecture.
+Theorem C.3(Conjecture 4.17 in Zhang & Jiang (2026)).For every step countn≥1,
+1⊤h(n)
+◦ =1 ⊤ ConPP
+
+h(⌊(n−1)/2⌋)
+◦ , h(⌈(n−1)/2⌉)
+◦
+
+.
+Moreover, ifn=ν·2 ℓ −1withν >1odd andℓ≥1, then, for everyi∈ {−1,0,1},
+1⊤h(n)
+◦ =1 ⊤ ConPP
+
+h((ν+i)2ℓ−1−1)
+◦ , h((ν−i)2ℓ−1−1)
+◦
+
+,
+and no other ConPP root split between two recursively optimized primitive schedules attains the
+same total stepsize.
+Proof.Note thatN=n+ 1. The balanced leaf counts⌊N/2⌋and⌈N/2⌉therefore become the
+child step counts⌊(n−1)/2⌋and⌈(n−1)/2⌉, which proves the first assertion by Proposition A.5
+and Corollary B.5. IfN=ν·2 ℓ withν >1odd andℓ≥1, by Corollary C.2, the maximizing leaf
+counts are(ν+i)2 ℓ−1 fori∈ {−1,0,1}. Completeness follows again from Corollary C.2.
+By the treewise conjugacy established in Proposition A.5, the same split rules characterize all opti-
+mal basic s-join trees: replace ConPP by the s-join and interpret maximization ofU N as minimiza-
+tion ofs N =U −1
+N . These statements concern the recursively generated symmetric families and do
+not identify their ambient certificate classes. It remains only to pass from the root optimizer set to
+complete trees.
+Corollary C.4.LetTbe an ordered full binary composition tree withNleaves, assign value1to
+every leaf, and evaluate each internal node usingK. ThenTattains the optimal root valueU N if
+and only if, at every internal node withjdescendant leaves, its two child subtrees are optimal for
+their respective leaf counts and its left-child leaf count belongs toM j. Equivalently,Tis optimal if
+and only if every internal split satisfies one of the two equality patterns in Lemma C.1.
+Proof.If the root subtrees havemandN−mleaves and valuesXandY, thenX≤U m andY≤
+UN−m . Strict monotonicity ofKshows that the root can attainU N only ifX=U m,Y=U N−m ,
+andm∈ MN ; these conditions are also sufficient by Corollary C.2. Recursion gives necessity at
+every node, while upward induction gives sufficiency.
+The resulting multiplicity of optimal plane composition certificates is quantified in Appendix C.2.
+C.2 OPTIMAL-TREE MULTIPLICITY
+Although each internal node has at most three maximizing splits, independent choices across the
+hierarchy can produce many optimal composition certificates. LetT N be the number ofplanefull
+binary trees withNunit-valued leaves whose evaluation underKequalsU N ; plane means that left
+and right children are ordered. These numbers count recursive certificates, which need not yield
+distinct numerical schedule vectors.
+Proposition C.5.The sequence{T N }N≥1 satisfies
+T1 = 1, T N =
+X
+m∈MN
+TmTN−m (N≥2).(46)
+More explicitly, writeN=ν2 ℓ, whereνis odd. ForN≥2,
+23
+
+=== PAGE 24 ===
+1242
+1243
+1244
+1245
+1246
+1247
+1248
+1249
+1250
+1251
+1252
+1253
+1254
+1255
+1256
+1257
+1258
+1259
+1260
+1261
+1262
+1263
+1264
+1265
+1266
+1267
+1268
+1269
+1270
+1271
+1272
+1273
+1274
+1275
+1276
+1277
+1278
+1279
+1280
+1281
+1282
+1283
+1284
+1285
+1286
+1287
+1288
+1289
+1290
+1291
+1292
+1293
+1294
+1295
+Under review as a conference paper at ICLR 2027
+(i) ifν= 1, thenT N =T 2
+N/2 = 1;
+(ii) ifν >1andℓ= 0, then
+TN = 2T(N−1)/2 T(N+1)/2 ;
+(iii) ifν >1andℓ≥1, setting
+a= (ν−1)2 ℓ−1, b=ν2 ℓ−1, c= (ν+ 1)2 ℓ−1,
+gives
+TN = 2TaTc +T 2
+b .(47)
+Proof.There is only one full binary tree with one leaf, soT 1 = 1. FixN≥2and consider
+an optimal plane tree withNleaves. If its left subtree hasmleaves, then its right subtree has
+N−mleaves. By Corollary C.4, optimality of the whole tree is equivalent to the conjunction of the
+following three conditions:m∈ MN , the left subtree is optimal formleaves, and the right subtree
+is optimal forN−mleaves.
+For a fixed ordered root indexm∈ MN , the two subtrees can be chosen independently. There are
+Tm possibilities for the left subtree andT N−m possibilities for the right subtree, henceT mTN−m
+optimal trees with that root index. Different values ofmspecify different ordered root splits and
+therefore give disjoint classes of plane trees. Summing over all admissible root indices proves equa-
+tion 46.
+We next substitute the explicit optimizer sets from Corollary C.2. Ifν= 1, thenNis a power of
+two andM N ={N/2}, so
+TN =T 2
+N/2.
+Repeatedly halvingNeventually reaches1; sinceT 1 = 1, induction onℓyieldsT N = 1. Thus the
+completely balanced plane tree is the unique optimal certificate at dyadic leaf counts.
+Ifν >1andℓ= 0, thenNis odd and
+MN =
+ N−1
+2 , N+ 1
+2
+
+.
+The two terms in equation 46 are equal after interchanging the ordered children, which gives
+TN =T (N−1)/2 T(N+1)/2 +T (N+1)/2 T(N−1)/2
+= 2T(N−1)/2 T(N+1)/2 .
+Finally, supposeν >1andℓ≥1. In the notation of the statement, Corollary C.2 gives
+MN ={a, b, c}.
+Sincea+c=Nand2b=N, the three contributions to equation 46 are
+TaTc, T 2
+b , T cTa,
+and their sum is exactly equation 47.
+In particular, ifA k :=T 3·2k, then
+A0 = 2, A k+1 =A 2
+k + 2,
+and consequently
+T3·2k = exp
+ 
+Θ(2k)
+
+= exp
+ 
+Θ(N)
+
+.
+Thus dyadic leaf counts have a unique optimal plane certificate, whereas the subsequenceN= 3·2 k
+has exponentially many. For reference,
+(T1, . . . , T12) = (1,1,2,1,4,6,4,1,8,28,48,38),
+(T3·2k )5
+k=0 = (2,6,38,1446,2090918,4371938082726).
+24
+
+=== PAGE 25 ===
+1296
+1297
+1298
+1299
+1300
+1301
+1302
+1303
+1304
+1305
+1306
+1307
+1308
+1309
+1310
+1311
+1312
+1313
+1314
+1315
+1316
+1317
+1318
+1319
+1320
+1321
+1322
+1323
+1324
+1325
+1326
+1327
+1328
+1329
+1330
+1331
+1332
+1333
+1334
+1335
+1336
+1337
+1338
+1339
+1340
+1341
+1342
+1343
+1344
+1345
+1346
+1347
+1348
+1349
+Under review as a conference paper at ICLR 2027
+C.3 CORRECTNESS AND COMPLEXITY OF THE BINARY EVALUATOR
+For everyr≥0, the balanced recurrence andK(x, x) =ρxgive
+(U2r, U2r+1) = (ρUr,K(U r, Ur+1)),
+(U2r+1, U2r+2) = (K(Ur, Ur+1), ρUr+1).
+Indeed, after a binary prefix of valuerhas been processed, the invariant is(a, b) = (Ur, Ur+1). The
+two identities above map this pair to(U 2r, U2r+1)or(U 2r+1, U2r+2)according to the next digit.
+Hence, at termination,a=U N . Sincek=⌊log 2 N⌋+ 1, Algorithm 1 uses exactlykevaluations of
+K,kmultiplications byρ, andΘ(1)scalar memory. ThusU N is computed inΘ(logN)scalar time
+forN≥2, without formingU 1, . . . , UN−1 . These counts treat scalar arithmetic and evaluations of
+Kas unit-cost operations and exclude storage of the input.
+The bound is a scalar-operation count, not a bit-complexity bound. Computing the whole prefix
+table costsO(N)scalar operations, and explicitly returning an(N−1)-step schedule requiresΩ(N)
+output operations.
+D SYMMETRIC PHASE:PROOFS AND FURTHER PROPERTIES
+This appendix proves the exact symmetric phase law in Theorem 4.1 and derives the tight objective
+consequences in Corollary 4.2. It also records subdivision derivatives, a dyadic corner, certified
+minimum bounds, and marginal increments. Throughout,q= 1/p= log ρ 2.
+D.1 SHARP POWER ENVELOPE
+The balanced split of2Nis(N, N). By Corollary B.5 andK(x, x) =ρx, we haveU 2N =ρU N .
+Iteration, together withs N =U −1
+N , yields
+U2kN =ρ kUN , s 2kN =ρ −ksN , N≥1, k≥0.
+Lemma D.1.For allx, y≥0,
+K(x, y)≤(x q +y q)1/q.
+Equality holds if and only ifx=yorxy= 0.
+Proof.The equality is immediate ifxy= 0, so assumex, y >0. Write
+x= e m−s, y= e m+s, s≥0,
+where symmetry allows the last restriction. Direct calculation gives
+K(x, y) = em exp
+ 
+arsinh(coshs)
+
+,
+(xq +y q)1/q = em 
+2 cosh(qs)
+1/q
+.
+It therefore suffices to show
+G(s) := 1
+q log
+ 
+2 cosh(qs)
+
+−arsinh(coshs)≥0.
+Since2 1/q =ρ, one hasG(0) = 0, while the large-sasymptotics giveG(s)→0ass→ ∞.
+Moreover,
+G′(s) = tanh(qs)− sinhsp
+1 + cosh2 s
+.
+Define
+α(s) := artanh
+ 
+sinhsp
+1 + cosh2 s
+!
+.
+25
+
+=== PAGE 26 ===
+1350
+1351
+1352
+1353
+1354
+1355
+1356
+1357
+1358
+1359
+1360
+1361
+1362
+1363
+1364
+1365
+1366
+1367
+1368
+1369
+1370
+1371
+1372
+1373
+1374
+1375
+1376
+1377
+1378
+1379
+1380
+1381
+1382
+1383
+1384
+1385
+1386
+1387
+1388
+1389
+1390
+1391
+1392
+1393
+1394
+1395
+1396
+1397
+1398
+1399
+1400
+1401
+1402
+1403
+Under review as a conference paper at ICLR 2027
+Then
+α′(s) = coshsp
+1 + cosh2 s
+,
+which increases strictly from1/
+√
+2to1. Also1/
+√
+2< q <1: the upper bound follows from
+ρ >2, and the lower bound fromρ 3 = 7 + 5
+√
+2<16. Henceα(s)−qsis strictly convex, initially
+decreasing, tends to+∞, and has a unique positive zeros 0. Sincetanhis strictly increasing,G ′ is
+positive on(0, s0)and negative on(s 0,∞). Together with the endpoint values, this provesG(s)>0
+fors >0. Equality therefore occurs only whens= 0, equivalentlyx=y.
+Proposition D.2.For everyN≥1,
+UN ≤N p.
+Equivalently,s N ≥N −p. Equality holds if and only ifNis a power of two.
+Proof.We argue by induction onN. ForN= 1, we directly haveU 1 = 1 = 1 p. ForN≥2, let
+a=⌊N/2⌋andb=⌈N/2⌉. Monotonicity ofK, the induction hypothesis, Lemma D.1, andpq= 1
+give
+UN =K(U a, Ub)≤ K(ap, bp)≤(a pq +b pq)1/q = (a+b) p =N p.
+IfNis odd, thena̸=b, so the second inequality is strict. IfN= 2a, equality holds precisely when
+Ua =a p. Recursing proves that equality occurs exactly at powers of two.
+D.2 ADJACENT-RATIO CONTRACTION
+The regularity of the phase profile is controlled by a one-dimensional dynamical system. ForN≥1,
+define
+RN := UN+1
+UN
+, k(r) :=K(1, r), T 0(r) := k(r)
+ρ , T 1(r) := ρr
+k(r) .
+Lemma D.3.For everyN≥1,
+R2N =T 0(RN ), R 2N+1 =T 1(RN ),(48)
+and
+1< RN ≤ρ,0< R N −1≤ ρ−1
+2⌊log2 N⌋ ≤ 2(ρ−1)
+N .(49)
+Proof.The adjacent-pair identities in Section 3 and the homogeneity ofKgive equation 48. Put
+∆(r) :=
+p
+r2 + 6r+ 1.
+Then
+T0(r) = 1 +r+ ∆(r)
+2ρ , T 1(r) = ρ
+2
+ 
+∆(r)−r−1
+
+,(50)
+where the second identity follows fromr/k(r) =k(r)−(1 +r). Both maps fix1. Their derivatives
+are
+T ′
+0(r) = 1
+2ρ
+
+1 + r+ 3
+∆(r)
+
+,(51)
+T ′
+1(r) = ρ
+2
+ r+ 3
+∆(r) −1
+
+.
+Since
+ r+ 3
+∆(r)
+′
+=− 8
+∆(r)3 <0,
+26
+
+=== PAGE 27 ===
+1404
+1405
+1406
+1407
+1408
+1409
+1410
+1411
+1412
+1413
+1414
+1415
+1416
+1417
+1418
+1419
+1420
+1421
+1422
+1423
+1424
+1425
+1426
+1427
+1428
+1429
+1430
+1431
+1432
+1433
+1434
+1435
+1436
+1437
+1438
+1439
+1440
+1441
+1442
+1443
+1444
+1445
+1446
+1447
+1448
+1449
+1450
+1451
+1452
+1453
+1454
+1455
+1456
+1457
+Under review as a conference paper at ICLR 2027
+both derivatives are positive and at most1/2on[1, ρ], with equality atr= 1. Furthermore,
+ρ=K(0, ρ)< k(ρ)<K(ρ, ρ) =ρ 2,
+so1< T 0(ρ)< ρand1< T 1(ρ)< ρ. HenceT 0 andT 1 map[1, ρ]into itself and are1/2-Lipschitz
+on this interval, with common fixed point1.
+ForN= 1, the claimed bounds follow immediately fromR 1 =ρ. Hence assumeN≥2and write
+N= (1ϵ 1ϵ2 · · ·ϵm)2, ϵ j ∈ {0,1}, m=⌊log 2 N⌋,
+and letn j = (1ϵ1 · · ·ϵj)2 be the integer represented by the firstj+ 1digits, withn 0 = 1. Then
+nj = 2nj−1 +ϵ j,1≤j≤m, n m =N.
+The two identities in equation 48 give, successively,
+Rnj =T ϵj (Rnj−1 ), R N =T ϵm ◦T ϵm−1 ◦ · · · ◦Tϵ1 (R1).
+Thus each digit after the leading digit selects the corresponding branch mapT ϵj . For eitherT∈
+{T0, T1}, the fixed-point identityT(1) = 1and the derivative bound0< T ′(r)≤1/2on[1, ρ]
+imply
+0≤T(r)−1 =T(r)−T(1)≤ 1
+2 (r−1),1≤r≤ρ.
+BecauseR 1 =U 2/U1 =ρand both maps preserve[1, ρ], induction along the binary prefixes yields
+0≤R nj −1≤2 −j(R1 −1) = 2 −j(ρ−1),0≤j≤m.
+Takingj=m=⌊log 2 N⌋givesR N −1≤(ρ−1)2 −m and, in particular,R N ≤ρ. Moreover,
+2m ≤N <2 m+1 implies
+2−m ≤ 2
+N ,
+which proves both upper bounds in equation 49. Finally, the strict increase of{U N }established in
+the preceding section givesU N+1 > UN >0, and hence
+RN = UN+1
+UN
+>1.
+This proves the strict lower bound and completes the proof.
+D.3 CANONICAL INTERPOLATION
+For eachk≥0, define the level-kdyadic grid and its intervals by
+Dk :=
+ j
+2k : 2k ≤j≤2 k+1
+
+, I k,j :=
+ j
+2k , j+ 1
+2k
+
+,2 k ≤j <2 k+1.
+The elements ofD k are called level-knodes, the setsI k,j are called level-kintervals, andD :=S
+k≥0 Dk is the set of dyadic rationals in[1,2]. Forx=j/2 k ∈ Dk, define
+F(x) :=ρ −kUj.(52)
+This is well defined since the definition is independent of the chosen level by equation 12. LetF k
+be the continuous function that agrees withFonD k and is affine on everyI k,j. For the endpoints
+x < yof any level-kinterval, the balanced recurrence gives the nonlinear midpoint rule
+F
+ x+y
+2
+
+= 1
+ρ K
+ 
+F(x), F(y)
+
+.(53)
+Lemma D.4.The function in equation 52 extends uniquely to a strictly increasing bi-Lipschitz map
+F: [1,2]→[1, ρ]
+that satisfiesF(1) = 1,F(2) =ρ, and equation 53 on every dyadic interval. More precisely,
+c−(y−x)≤F(y)−F(x)≤c +(y−x),1≤x < y≤2,(54)
+where
+c− := (ρ−1)
+
+1− 1
+2ρ
+
+, c + := (ρ−1) exp
+ 1
+2ρ
+
+.
+In particular, one may takeL F :=c + as a Lipschitz constant forF.
+27
+
+=== PAGE 28 ===
+1458
+1459
+1460
+1461
+1462
+1463
+1464
+1465
+1466
+1467
+1468
+1469
+1470
+1471
+1472
+1473
+1474
+1475
+1476
+1477
+1478
+1479
+1480
+1481
+1482
+1483
+1484
+1485
+1486
+1487
+1488
+1489
+1490
+1491
+1492
+1493
+1494
+1495
+1496
+1497
+1498
+1499
+1500
+1501
+1502
+1503
+1504
+1505
+1506
+1507
+1508
+1509
+1510
+1511
+Under review as a conference paper at ICLR 2027
+Fork≥0and2 k ≤j <2 k+1, recall that
+Ik,j =
+ j
+2k , j+ 1
+2k
+
+.
+Forr >1, define the subdivision weights
+w0(r) := 2(T0(r)−1)
+r−1 , w 1(r) := 2(r−T 0(r))
+r−1 ,(55)
+and setw 0(1) =w 1(1) = 1. Thusw 0 +w 1 = 2.
+Proof.LetS k,j be the slope ofF k onI k,j. Writea :=F(j/2 k). Since the right endpoint value is
+aRj, the midpoint rule, the homogeneity ofK, and the definition ofT 0 give
+F
+ 2j+ 1
+2k+1
+
+= 1
+ρ K(a, aRj) = a
+ρ K(1, Rj) =aT 0(Rj).
+The left and right children ofI k,j areI k+1,2j andI k+1,2j+1. Their increments area(T 0(Rj)−1)
+anda(R j −T 0(Rj)), respectively, whereas the increment overI k,j isa(R j −1). Therefore
+Sk,j = 2ka(Rj −1),
+Sk+1,2j = 2k+1a(T0(Rj)−1) = 2(T0(Rj)−1)
+Rj −1 Sk,j ,
+Sk+1,2j+1 = 2k+1a(Rj −T 0(Rj)) = 2(Rj −T 0(Rj))
+Rj −1 Sk,j .
+Thus
+Sk+1,2j =w 0(Rj)Sk,j , S k+1,2j+1 =w 1(Rj)Sk,j .(56)
+Differentiating equation 51 once more gives
+T ′′
+0 (r) =− 4
+ρ(r2 + 6r+ 1) 3/2 .
+ThusT 0 is strictly concave andT ′
+0(1) = 1/2. On[1, ρ],
+0≤ −T′′
+0 (r)≤M, M := 1
+4ρ(ρ−1) ,(57)
+because−T ′′
+0 is decreasing on[1, ρ]and−T ′′
+0 (1) = 1/[4ρ(ρ−1)]. Forr >1, the strict increase of
+T0 givesw 0(r)>0, while concavity andT 0(1) = 1,T ′
+0(1) = 1/2give
+T0(r)−1≤T ′
+0(1)(r−1) = 1
+2 (r−1),
+sow 0(r)≤1. Moreover, Taylor’s theorem yields someξ r ∈(1, r)such that
+T0(r) =T 0(1) +T ′
+0(1)(r−1) + 1
+2 T ′′
+0 (ξr)(r−1) 2 = 1 + 1
+2 (r−1) + 1
+2 T ′′
+0 (ξr)(r−1) 2.
+Hence, usingw 0 +w 1 = 2and equation 57,
+0≤1−w 0(r) =w 1(r)−1 =−T ′′
+0 (ξr)(r−1)≤M(r−1).
+The definitions atr= 1give the same bounds there. Thus, for everyr∈[1, ρ],
+0< w0(r)≤1≤w 1(r),0≤1−w 0(r) =w 1(r)−1≤M(r−1).(58)
+FixI k,J and, for0≤ℓ≤k, set
+jℓ :=
+ J
+2k−ℓ
+
+.
+ThenI ℓ,jℓ is the unique level-ℓinterval containingI k,J . The nested sequenceI 0,j0 ⊃I 1,j1 ⊃ · · · ⊃
+Ik,jk is called the ancestor chain ofI k,J . Herej 0 = 1,j k =J, and for each0≤ℓ < kthere is
+28
+
+=== PAGE 29 ===
+1512
+1513
+1514
+1515
+1516
+1517
+1518
+1519
+1520
+1521
+1522
+1523
+1524
+1525
+1526
+1527
+1528
+1529
+1530
+1531
+1532
+1533
+1534
+1535
+1536
+1537
+1538
+1539
+1540
+1541
+1542
+1543
+1544
+1545
+1546
+1547
+1548
+1549
+1550
+1551
+1552
+1553
+1554
+1555
+1556
+1557
+1558
+1559
+1560
+1561
+1562
+1563
+1564
+1565
+Under review as a conference paper at ICLR 2027
+a uniqueδ ℓ ∈ {0,1}such thatj ℓ+1 = 2j ℓ +δ ℓ; the values0and1select the left and right child,
+respectively. Setr ℓ :=R jℓ and
+eℓ := 1−w 0(rℓ) =w 1(rℓ)−1, σ ℓ := 2δℓ −1∈ {−1,1}.
+Thenw δℓ (rℓ) = 1 +σ ℓeℓ. SinceI 0,1 = [1,2]has slopeρ−1, iteration of equation 56 along this
+chain gives
+Sk,J = (ρ−1)
+k−1Y
+ℓ=0
+ 
+1 +σ ℓeℓ
+
+.
+Since2 ℓ ≤j ℓ <2 ℓ+1, equation 49 and equation 58 imply
+0≤e ℓ ≤M(r ℓ −1)≤M(ρ−1)2 −ℓ,0≤ℓ < k.
+Consequently,
+E :=
+∞X
+ℓ=0
+M(ρ−1)2 −ℓ = 2M(ρ−1) = 1
+2ρ <1.
+In particular,0≤e ℓ <1. Since1−e ℓ ≤1 +σ ℓeℓ ≤1 +e ℓ, the elementary inequalitiesQk−1
+ℓ=0 (1−e ℓ)≥1− Pk−1
+ℓ=0 eℓ, proved by induction, and1 +t≤e t fort≥0yield
+Sk,J ≥(ρ−1)
+k−1Y
+ℓ=0
+(1−e ℓ)≥(ρ−1)
+ 
+1−
+k−1X
+ℓ=0
+eℓ
+!
+≥(ρ−1)(1−E) =c −,
+Sk,J ≤(ρ−1)
+k−1Y
+ℓ=0
+(1 +e ℓ)≤(ρ−1) exp
+ k−1X
+ℓ=0
+eℓ
+!
+≤(ρ−1)e E =c +.
+Thus every slope of everyF k lies in[c −, c+].
+Ifx=m/2 k < y=n/2 k are in the same gridD k, then
+F(y)−F(x) = 2 −k
+n−1X
+j=m
+Sk,j .
+The slope bounds therefore give equation 54 forx, y∈ D, after passing to a common level when
+necessary. The upper bound makesFuniformly continuous on the dense setD, soFhas a unique
+continuous extension to[1,2]. Taking dyadic limits gives equation 54 for all1≤x < y≤2. The
+lower bound makes the extension strictly increasing, andF(1) =U 1 = 1,F(2) =U 2 =ρshow
+that its range is[1, ρ]. Finally, equation 53 remains valid on every dyadic interval because its two
+endpoints and midpoint belong toD.
+D.4 EXACT SCALAR PHASE AND CLUSTER SETS
+Theorem D.5.For0≤t≤1, define
+Φ(t) :=ρ −tF(2 t),
+and extendΦas a1-periodic function. LetT :=R/Z. ThenΦ :T→Ris positive, Lipschitz, and
+nonconstant, and
+UN =N pΦ
+ 
+{log2 N}
+
+(N≥1),
+where{·}takes the fractional part of a real. It is the unique continuous1-periodic function with this
+property. Furthermore,
+0< ϕ∗ := min
+t∈[0,1]
+Φ(t)<1,max
+t∈[0,1]
+Φ(t) = 1.
+One valid Lipschitz constant on the phase circle isL Φ := 2(log 2)c+ +ρlogρ.
+29
+
+=== PAGE 30 ===
+1566
+1567
+1568
+1569
+1570
+1571
+1572
+1573
+1574
+1575
+1576
+1577
+1578
+1579
+1580
+1581
+1582
+1583
+1584
+1585
+1586
+1587
+1588
+1589
+1590
+1591
+1592
+1593
+1594
+1595
+1596
+1597
+1598
+1599
+1600
+1601
+1602
+1603
+1604
+1605
+1606
+1607
+1608
+1609
+1610
+1611
+1612
+1613
+1614
+1615
+1616
+1617
+1618
+1619
+Under review as a conference paper at ICLR 2027
+Proof.Letk=⌊log 2 N⌋,x=N/2 k ∈[1,2), andt= log 2 x={log 2 N}. By equation 52,
+F(x) =ρ −kUN , whileN p =ρ k+t. Hence
+UN =ρ kF(2 t) =N pρ−tF(2 t) =N pΦ(t),
+which proves equation 13. SinceΦ(0) =F(1) = 1andΦ(1) =ρ −1F(2) = 1, the periodic
+extension is continuous. Fors, t∈[0,1], equation 54 gives
+|Φ(t)−Φ(s)| ≤c+|2t −2 s|+ρ|ρ −t −ρ −s| ≤
+ 
+2(log 2)c+ +ρlogρ
+
+|t−s|.
+The same estimate across the identified endpoints gives the stated Lipschitz constant. Positivity
+follows fromF >0.
+Forx=j/2 m ∈ D, Proposition D.2 gives
+F(x) =ρ −mUj ≤ρ −mjp =x p.
+Density extends this bound to[1,2], soΦ≤1. Att ∗ = log2(3/2), the strict part of Proposition D.2
+gives
+Φ(t∗) = U3
+3p <1.
+Thus equation 14 holds andΦis nonconstant. Finally, the phases{{log 2 N}:N≥1}are dense:
+for anyθ∈[0,1), takeN k =
+
+2k+θ
+. Any other continuous periodic profile satisfying equation 13
+agrees withΦon this dense set and hence everywhere.
+As in Section 4,Clust(a N )denotes the set of subsequential limits ofa N asN→ ∞.
+Corollary D.6.The normalized scalar and rate sequences satisfy
+Clust
+ UN
+N p
+
+= [ϕ∗,1],Clust(N psN ) =
+
+1, 1
+ϕ∗
+
+.
+In particular, neither sequence converges.
+Proof.By equation 13,U N /Np = Φ(θ N )withθ N ={log 2 N}. The sequence{θ N }is dense on
+the phase circle, and every phase is approached along integers tending to infinity. Continuity ofΦ
+and equation 14 therefore give
+Clust
+ UN
+N p
+
+= Φ([0,1]) = [ϕ∗,1].
+SinceN psN = (UN /Np)−1 andΦis positive, taking reciprocals proves the second identity.
+D.5 TIGHT OBJECTIVE-GAP PHASE
+We now translate the scalar phase into worst-case guarantees for gradient descent with recursive
+primitive schedules and OBS-S. Restore a general smoothness constantL, and apply a dimensionless
+scheduleh= (h 0, . . . , hN−2 )⊤ through
+xi+1 =x i − hi
+L ∇f(x i).
+For an optimized primitive schedule ofN−1steps, Proposition A.5 givesH N =U N −1. Hence
+the tight Huber certificate equation 24 becomes
+f(x N−1 )−f ∗ ≤B N
+L
+2 ∥x0 −x ∗∥2 , B N := 1
+2UN −1 .
+The same coefficient governs the objective consequence of OBS-S. Indeed, its optimized s-
+composable rate isη=s N = 1/UN , and equation 25 gives
+η
+2−η = 1/UN
+2−1/U N
+= 1
+2UN −1 =B N .
+30
+
+=== PAGE 31 ===
+1620
+1621
+1622
+1623
+1624
+1625
+1626
+1627
+1628
+1629
+1630
+1631
+1632
+1633
+1634
+1635
+1636
+1637
+1638
+1639
+1640
+1641
+1642
+1643
+1644
+1645
+1646
+1647
+1648
+1649
+1650
+1651
+1652
+1653
+1654
+1655
+1656
+1657
+1658
+1659
+1660
+1661
+1662
+1663
+1664
+1665
+1666
+1667
+1668
+1669
+1670
+1671
+1672
+1673
+Under review as a conference paper at ICLR 2027
+For primitive schedules, equality in equation 6 is attained on the one-dimensional Huber instance
+of Zhang & Jiang (2026, Theorem 2.6 and Corollary 2.9); for OBS-S, a matching one-dimensional
+Huber instance is supplied by Grimmer et al. (2025b, Proposition 1). ThusB N is the exact worst-
+case objective coefficient for the corresponding optimized schedules, not merely an upper estimate
+produced by the scalar analysis.
+It is useful to distinguishB N from the s-composable rate itself. Their exact relation is
+BN = sN
+2−s N
+, B N − sN
+2 = s2
+N
+2(2−s N ) >0.(59)
+Consequently, the objective coefficient is asymptotically one half of the OBS-S rate, while the pos-
+itive correction in equation 59 records the finite-horizon effect of the term−1in the denominator
+2UN −1.
+Corollary D.7.Letθ N ={log 2 N}. For everyN≥1,
+BN = 1
+2N pΦ(θN )−1 .
+AsN→ ∞,
+BN = N −p
+2Φ(θN ) +O(N −2p),
+where theO(N −2p)remainder is uniform in the dyadic phaseθ N . Furthermore,
+Clust(N pBN ) =
+ 1
+2 , 1
+2ϕ∗
+
+.
+Consequently, the normalized tight objective coefficient has no single asymptotic constant.
+Proof.Substituting equation 13 into the definition ofB N gives equation 15. SinceΦ(θ N )≥ϕ ∗ >0,
+BN − N −p
+2Φ(θN ) = 1 
+2N pΦ(θN )−1
+
+2N pΦ(θN ) .
+Moreover,N pΦ(θN ) =U N ≥1, so2N pΦ(θN )−1≥N pΦ(θN ). The displayed remainder is
+therefore bounded above byN −2p/(2ϕ2
+∗ ), proving equation 16. After multiplication byN p,
+N pBN = 1
+2Φ(θN ) +O(N −p).
+Density of the integer phases, continuity ofΦ, and equation 14 now yield
+Clust(N pBN ) =
+ 1
+2Φ(t) : 0≤t≤1
+
+=
+ 1
+2 , 1
+2ϕ∗
+
+.
+The oscillation occurs in the leading term and cannot be absorbed into theO(N −2p)remainder.
+This proves the exact formula, uniform expansion, and cluster-set statement in Corollary 4.2. No
+numerical approximation is used in that proof.
+D.6 SUBDIVISION DERIVATIVES AND BINARY-PATH PRODUCTS
+Proposition D.8.There exists a bounded functionD: [1,2]→[c −, c+]such that
+F(x) = 1 +
+Z x
+1
+D(u) du.(60)
+The functionDis continuous at every nondyadic pointx∈(1,2), andF ′(x) =D(x)there. At
+every interior dyadic point, both one-sided derivatives ofFexist.
+31
+
+=== PAGE 32 ===
+1674
+1675
+1676
+1677
+1678
+1679
+1680
+1681
+1682
+1683
+1684
+1685
+1686
+1687
+1688
+1689
+1690
+1691
+1692
+1693
+1694
+1695
+1696
+1697
+1698
+1699
+1700
+1701
+1702
+1703
+1704
+1705
+1706
+1707
+1708
+1709
+1710
+1711
+1712
+1713
+1714
+1715
+1716
+1717
+1718
+1719
+1720
+1721
+1722
+1723
+1724
+1725
+1726
+1727
+Under review as a conference paper at ICLR 2027
+For a binary pathϵ={ϵ i}i≥1 ∈ {0,1}N, setr 0 =ρand recursively define
+ri =
+T0(ri−1), ϵ i = 0,
+T1(ri−1), ϵ i = 1. (61)
+Fork≥1, define the partial product
+Pk(ϵ) := (ρ−1)
+kY
+i=1
+wϵi (ri−1).
+ThenP k converges uniformly on the path space{0,1} N to
+P(ϵ) := (ρ−1)
+∞Y
+i=1
+wϵi (ri−1)(62)
+in the precise sense thatsup ϵ |Pk(ϵ)−P(ϵ)| →0. More precisely, withM= 1/[4ρ(ρ−1)],
+sup
+ϵ∈{0,1}N
+∞X
+i=k+1
+|logw ϵi (ri−1)| ≤4M(ρ−1)2 −k.
+Ifx∈(1,2)is nondyadic andx−1 = 0.ϵ 1ϵ2 · · ·, thenD(x) =F′(x) =P(ϵ). If an interior dyadic
+pointx 0 has the two binary expansions
+x0 −1 = 0.ϵ 1 · · ·ϵm000· · ·
+= 0.ϵ1 · · ·ϵm−10111· · ·, ϵm = 1,
+then
+F ′
++(x0) =P(ϵ 1, . . . , ϵm,0,0, . . .),
+F ′
+−(x0) =P(ϵ 1, . . . , ϵm−1,0,1,1, . . .).
+Proof.For step-function bookkeeping, define the half-open level-kcells
+I h
+k,j :=
+ j
+2k , j+ 1
+2k
+
+,2 k ≤j <2 k+1.
+Forx∈I h
+k,j, setS k(x) :=S k,j, whereS k,j is the slope ofF k onI k,j, and setS k(2) :=S k,2k+1−1.
+ThusS k is a step function on[1,2]whose value on each level-kcell is the corresponding slope of
+Fk.
+Fixx∈I h
+k,j, and letδ∈ {0,1}be determined byx∈I h
+k+1,2j+δ . By equation 56,S k+1(x) =
+wδ(Rj)Sk(x). SinceS k(x)≤c +,⌊log 2 j⌋=k, and equation 49 and equation 58 give|w δ(Rj)−
+1| ≤M(Rj −1)≤M(ρ−1)2 −k, it follows that
+|Sk+1(x)−S k(x)|=S k(x)|wδ(Rj)−1| ≤c+M(ρ−1)2 −k.
+The same estimate holds atx= 2by using the rightmost level-kcell. Hence, form > k,
+∥Sm −S k∥∞ ≤
+m−1X
+ℓ=k
+∥Sℓ+1 −S ℓ∥∞ ≤c +M(ρ−1)
+m−1X
+ℓ=k
+2−ℓ ≤2c +M(ρ−1)2 −k.
+Thus{S k}is uniformly Cauchy and converges uniformly to a functionD: [1,2]→[c −, c+],
+because everyS k takes values in the closed interval[c −, c+].
+The functionF k is continuous and piecewise affine, has slopeSk away from its finitely many level-k
+nodes, and satisfiesF k(1) = 1. Therefore
+Fk(x) = 1 +
+Z x
+1
+Sk(u) du,1≤x≤2.
+Uniform convergence ofS k implies uniform convergence of the right-hand side toG(x) := 1 +R x
+1 D(u)du. Ifx∈ Dm, thenF k(x) =F(x)for everyk≥m, soG=Fon the dense setD. Since
+both functions are continuous,G=Fon[1,2], proving equation 60.
+32
+
+=== PAGE 33 ===
+1728
+1729
+1730
+1731
+1732
+1733
+1734
+1735
+1736
+1737
+1738
+1739
+1740
+1741
+1742
+1743
+1744
+1745
+1746
+1747
+1748
+1749
+1750
+1751
+1752
+1753
+1754
+1755
+1756
+1757
+1758
+1759
+1760
+1761
+1762
+1763
+1764
+1765
+1766
+1767
+1768
+1769
+1770
+1771
+1772
+1773
+1774
+1775
+1776
+1777
+1778
+1779
+1780
+1781
+Under review as a conference paper at ICLR 2027
+Now letx∈(1,2)be nondyadic and writex−1 = 0.ϵ 1ϵ2 · · ·. Define the indices of its successive
+containing cells by
+j0 := 1, j i := 2ji−1 +ϵ i = 2i +
+
+2i(x−1)
+
+, i≥1.
+Thenx∈I h
+i,ji andI h
+i,ji is the child ofI h
+i−1,ji−1 selected byϵ i. Moreover,r 0 =ρ=R j0, and
+induction using equation 48 and equation 61 givesr i =R ji. Iterating equation 56 along these
+containing cells therefore yields
+Sk(x) = (ρ−1)
+kY
+i=1
+wϵi (ri−1).
+Lettingk→ ∞and usingS k(x)→D(x)proves equation 62.
+The same construction applies to any infinite binary path{ϵi}i≥1. Sincej i−1 is a level-(i−1)index,
+equation 49 and equation 58 give
+|wϵi (ri−1)−1| ≤M(r i−1 −1)≤M(ρ−1)2 −(i−1) =:a i.
+Herea i ≤a 1 =M(ρ−1) = 1/(4ρ)<1/2. The elementary estimate|log(1 +t)| ≤2|t|for
+|t| ≤1/2consequently gives, uniformly over all binary paths,
+∞X
+i=k+1
+|logw ϵi (ri−1)| ≤2M(ρ−1)
+∞X
+i=k+1
+2−(i−1) = 4M(ρ−1)2 −k.
+This path-independent tail bound is precisely uniform convergence of the logarithms of the partial
+products. Since all partial products lie in the common compact interval[c −, c+], exponentiation
+givessup ϵ |Pk(ϵ)−P(ϵ)| →0. Thus the uniformity is with respect to the binary-path parameter
+indexing the family of products.
+To prove continuity, use for everyy∈[1,2)its canonical binary expansion, namely the expansion
+that does not end in recurring ones. For dyadicy, this is the terminating expansion, and the preceding
+slope-product argument still givesD(y)as the corresponding infinite product. Fix a nondyadicx
+and an integerk. Sincexlies in the interior of its half-open level-kcell, all sufficiently closeylie in
+the same cell and hence share the firstkbinary digits withx. The preceding tail estimate then gives
+|logD(y)−logD(x)| ≤8M(ρ−1)2 −k.
+First choosingklarge and thenysufficiently close toxproves thatDis continuous atx. The integral
+representation equation 60 and the fundamental theorem of calculus now yieldF ′(x) =D(x).
+Finally, letx 0 ∈(1,2)be dyadic. Its two binary expansions have the form
+x0 −1 = 0.ϵ 1 · · ·ϵm000· · ·, ϵm = 1, x 0 −1 = 0.ϵ 1 · · ·ϵm−10111· · ·.
+The uniform logarithmic tail estimate shows that the infinite products associated with these two
+paths are well defined; denote them byD +(x0)andD −(x0), respectively. For everyn≥m, the
+level-ncells selected by the firstndigits of these paths are[x 0, x0 + 2−n)and[x 0 −2 −n, x0),
+respectively. The common-prefix argument therefore gives
+lim
+x↓x0
+D(x) =D +(x0),lim
+x↑x0
+D(x) =D −(x0).
+Forh >0, equation 60 implies
+F(x 0 +h)−F(x 0)
+h = 1
+h
+Z x0+h
+x0
+D(u) du, F(x 0)−F(x 0 −h)
+h = 1
+h
+Z x0
+x0−h
+D(u) du.
+Passing to the limith↓0givesF ′
++(x0) =D +(x0)andF ′
+−(x0) =D −(x0). Hence the terminat-
+ing expansion gives the right derivative and the expansion ending in recurring ones gives the left
+derivative.
+33
+
+=== PAGE 34 ===
+1782
+1783
+1784
+1785
+1786
+1787
+1788
+1789
+1790
+1791
+1792
+1793
+1794
+1795
+1796
+1797
+1798
+1799
+1800
+1801
+1802
+1803
+1804
+1805
+1806
+1807
+1808
+1809
+1810
+1811
+1812
+1813
+1814
+1815
+1816
+1817
+1818
+1819
+1820
+1821
+1822
+1823
+1824
+1825
+1826
+1827
+1828
+1829
+1830
+1831
+1832
+1833
+1834
+1835
+Under review as a conference paper at ICLR 2027
+D.7 ACERTIFIED DYADIC CORNER
+Corollary D.9.The two one-sided derivatives atx= 3/2satisfy
+F ′
+−(3/2)> F′
++(3/2).(63)
+Consequently,Fis not differentiable at3/2and is not continuously differentiable on[1,2].
+Proof.The two binary expansions
+3
+2 −1 = 1
+2 = 0.0111· · ·= 0.1000· · ·
+and equation 62 give
+F ′
+−(3/2) = (ρ−1)w 0(ρ)
+Y
+i≥0
+w1
+ 
+T i
+1(T0(ρ))
+
+,
+F ′
++(3/2) = (ρ−1)w 1(ρ)
+Y
+i≥0
+w0
+ 
+T i
+0(T1(ρ))
+
+.
+Form≥0, set
+xm :=T m
+1 (T0(ρ)), P −
+m := (ρ−1)w 0(ρ)
+m−1Y
+i=0
+w1(xi),
+ym :=T m
+0 (T1(ρ)), P +
+m := (ρ−1)w 1(ρ)
+m−1Y
+i=0
+w0(yi),
+where an empty product equals one. ThusP −
+6 andP +
+6 contain the initial factor and exactly six tail
+factors.
+We now give a rational interval certificate for these two finite products. For positive rational intervals
+X= [a, b]andY= [c, d], withc >0, use
+X+Y= [a+c, b+d], X−Y= [a−d, b−c],
+XY= [ac, bd], X
+Y =
+ a
+d , b
+c
+
+.
+An enclosure
+√
+X⊆[s −, s+]is certified by the rational inequalitiess 2
+− ≤a≤b≤s 2
++. For
+G∈ {T0, T1, w0, w1}, letG □(X)denote the interval obtained by applying these rules to the explicit
+formulas in equation 50 and equation 55; every square-root endpoint is chosen by the preceding
+squaring test. Finally, let⟨X⟩ 12 be the smallest interval with endpoints in10 −12Zthat containsX.
+Start from
+ρ := [2.414213562373095048801688724209,2.414213562373095048801688724210],
+which containsρ= 1 +
+√
+2because the squares of the two endpoints after subtracting one lie below
+and above2, respectively. Define
+x0 :=
+D
+T □
+0 (ρ)
+E
+12
+,P −
+0 :=
+D
+(ρ−1)w □
+0 (ρ)
+E
+12
+,
+y0 :=
+D
+T □
+1 (ρ)
+E
+12
+,P +
+0 :=
+D
+(ρ−1)w □
+1 (ρ)
+E
+12
+,
+and, for0≤m <6, recursively set
+xm+1 :=
+D
+T □
+1 (xm)
+E
+12
+,P −
+m+1 :=
+D
+P−
+mw□
+1 (xm)
+E
+12
+,
+ym+1 :=
+D
+T □
+0 (ym)
+E
+12
+,P +
+m+1 :=
+D
+P+
+mw□
+0 (ym)
+E
+12
+.
+Because rational interval operations preserve inclusion, induction givesx m ∈x m,y m ∈y m,
+P −
+m ∈P −
+m, andP +
+m ∈P +
+m. Six exact rational interval iterations give the terminal enclosures
+x6 ∈[1.006713216536,1.006713216564], P −
+6 ∈[1.419687938587,1.419687949396],
+y6 ∈[1.006668059132,1.006668059134], P +
+6 ∈[1.419604771595,1.419604772437].
+34
+
+=== PAGE 35 ===
+1836
+1837
+1838
+1839
+1840
+1841
+1842
+1843
+1844
+1845
+1846
+1847
+1848
+1849
+1850
+1851
+1852
+1853
+1854
+1855
+1856
+1857
+1858
+1859
+1860
+1861
+1862
+1863
+1864
+1865
+1866
+1867
+1868
+1869
+1870
+1871
+1872
+1873
+1874
+1875
+1876
+1877
+1878
+1879
+1880
+1881
+1882
+1883
+1884
+1885
+1886
+1887
+1888
+1889
+Under review as a conference paper at ICLR 2027
+In particular,
+1.4196879< P−
+6 <1.4196880,1.4196047< P +
+6 <1.4196048.
+By equation 58, every omitted factor in the left product is at least one, whereas every omitted factor
+in the right product is at most one. Therefore
+F ′
+−(3/2)≥P −
+6 > P+
+6 ≥F ′
++(3/2),
+which proves equation 63.
+D.8 NESTED CERTIFICATES FOR THE PHASE MINIMUM
+No numerical approximation is used as a premise in the qualitative phase theorem. The following
+finite-grid bounds provide optional, rigorously convergent certificates for its minimum. Fork≥0,
+define
+ϕk := min
+2k≤j<2k+1
+Uj
+(j+ 1) p ,(64)
+ϕk := min
+2k≤j≤2k+1
+Uj
+jp .
+Proposition D.10.For everyk≥0,
+ϕk ≤ϕ ∗ ≤ ϕk,0≤ ϕk −ϕ k ≤ p
+2k .
+The sequence{ϕ k}is nondecreasing, the sequence{ ϕk}is nonincreasing, and both converge toϕ ∗.
+All quantities through levelkare computable inO(2 k)scalar operations.
+Proof.Writingx= 2 t gives
+ϕ∗ = min
+x∈[1,2]
+F(x)
+xp .
+Ifx∈I k,j, monotonicity ofFand equation 52 imply
+F(x)
+xp ≥ F(j/2 k)
+((j+ 1)/2 k)p = Uj
+(j+ 1) p ,
+which gives the lower certificate. MinimizingF(x)/x p over the level-kgrid gives the upper certifi-
+cate.
+For each parent indexj, the lower candidates of its two children satisfy
+U2j
+(2j+ 1) p > Uj
+(j+ 1) p ,
+U2j+1
+(2j+ 2) p > ρUj
+ρ(j+ 1) p = Uj
+(j+ 1) p ,
+where we used equation 12 andU 2j+1 =K(U j, Uj+1)> ρUj. Henceϕ k+1 ≥ϕ k. Since the level-k
+grid is contained in the level-(k+ 1)grid, ϕk+1 ≤ ϕk.
+Choosej k attainingϕ k. By Proposition D.2 and Bernoulli’s inequality,
+0≤ ϕk −ϕ k ≤ Ujk
+jp
+k
+
+1−
+ jk
+jk + 1
+p
+≤ p
+jk + 1 ≤ p
+2k .
+The nested bounds and vanishing gap force both endpoints to converge toϕ ∗. Finally, iterating the
+balanced recurrence computes all requiredU j through2 k+1 inO(2 k)scalar operations; scanning
+the two finite candidate sets has the same order.
+35
+
+=== PAGE 36 ===
+1890
+1891
+1892
+1893
+1894
+1895
+1896
+1897
+1898
+1899
+1900
+1901
+1902
+1903
+1904
+1905
+1906
+1907
+1908
+1909
+1910
+1911
+1912
+1913
+1914
+1915
+1916
+1917
+1918
+1919
+1920
+1921
+1922
+1923
+1924
+1925
+1926
+1927
+1928
+1929
+1930
+1931
+1932
+1933
+1934
+1935
+1936
+1937
+1938
+1939
+1940
+1941
+1942
+1943
+Under review as a conference paper at ICLR 2027
+At levelk= 17, the minimizing indices in equation 64 and directed outward intervals are
+Quantity Index Outward interval
+ϕ17 181314 (0.9928123698,0.9928123700)
+ϕ17 181324 (0.9928193322,0.9928193324)
+Enlarging each side by10 −8 gives the certified enclosure
+0.99281236< ϕ∗ <0.99281934.(65)
+The certificate requires only the balanced recurrence through2 18 and the exact finite minima in
+equation 64.
+D.9 MARGINAL INCREMENTS AND FIXED DYADIC RAYS
+The derivative products also determine the first-order gain from adding one leaf at a fixed dyadic
+mantissa. Ifx∈(1,2)is nondyadic andN k =
+
+2kx
+
+, then
+lim
+k→∞
+N 1−p
+k
+ 
+UNk+1 −U Nk
+
+=x 1−pD(x).(66)
+Indeed, the slope of the level-kcell containingxis
+2kρ−k 
+UNk+1 −U Nk
+
+.
+It converges toD(x)by Proposition D.8; multiplying by(N k/2k)1−p and usingN k/2k →xproves
+equation 66. At a dyadicx, the same argument along the right or left adjacent cells replacesD(x)
+byF ′
++(x)orF ′
+−(x), respectively.
+Exact scaling separately shows that a fixed finite seed selects a phase but cannot change the exponent.
+For everym≥1andk≥0,
+Um2k
+(m2k)p = Um
+mp ,(m2 k)psm2k =m psm.
+More generally, a seed withmleaves and reciprocal scalar valueW >0has valueρ kWafterk
+symmetric self-compositions, so its normalized scalar and rate constants remainW/mp andm p/W.
+For example,
+(2k)ps2k = 1,(3·2 k)ps3·2k = 3p
+U3
+≈1.006818956.
+E ASYMMETRIC PHASE:PROOFS AND STRICT SUPPORT SEPARATION
+The proof of Theorem 5.1 has three parts: comparison with the symmetric recursion, uniform con-
+vergence of the phase interpolants, and a support deficit argument excluding both a constant phase
+and contact with the support bound.
+E.1 RECIPROCAL COMPARISON AND FIXED-RAY LIMITS
+The analysis of Grimmer et al. (2025b) also gives, for an explicitc low >0,
+ηF
+2N ≤ρ −1ηF
+N , η F
+N ≥c lowN −p.(67)
+These are the only OBS-F asymptotic estimates imported from that work; see Grimmer et al. (2025b,
+Lemma 10 and Theorem 5).
+Reciprocating equation 31 exposes the Bellman structure. By equation 30, writeW N := (ηF
+N )−1 =
+21⊤h(N−1)
+• + 1. Then
+W1 = 1, W N = max
+1≤m<N
+A(Um, WN−m ),
+36
+
+=== PAGE 37 ===
+1944
+1945
+1946
+1947
+1948
+1949
+1950
+1951
+1952
+1953
+1954
+1955
+1956
+1957
+1958
+1959
+1960
+1961
+1962
+1963
+1964
+1965
+1966
+1967
+1968
+1969
+1970
+1971
+1972
+1973
+1974
+1975
+1976
+1977
+1978
+1979
+1980
+1981
+1982
+1983
+1984
+1985
+1986
+1987
+1988
+1989
+1990
+1991
+1992
+1993
+1994
+1995
+1996
+1997
+Under review as a conference paper at ICLR 2027
+where
+A(u, w):= 4u+w+
+√
+w2 + 8uw
+2 .
+The mapAis continuous, increasing, and positively homogeneous, but asymmetric in its two argu-
+ments:U m represents the optimized ConPP/OBS-S prefix, whereasWN−m represents the optimized
+ConPD/OBS-F continuation. Thus equation 18 is an ordered Bellman recursion, and the balanced
+rearrangement argument of Section 3 does not apply.
+Before comparing the two recursions, note a simple consequence of the imported estimates. For each
+fixedm≥1, the sequence{(m2 k)pηF
+m2k }k is nonincreasing and bounded below by equation 67,
+and hence converges to a positive limit, which is denoted byC F
+m. Shifting the ray index gives
+C F
+2m =C F
+m. We use these limits to identify the phase below.
+E.1.1 LOCAL COMPARISONS FOR THE RECIPROCAL SANDWICH
+Lemma E.1.Forx, y >0,
+A(x, ρy)≤ρK(x, y),(68)
+A(x,2y−1)≥2K(x, y)−1, x, y≥1.(69)
+Proof.Letk=K(x, y), so
+k2 = (x+y)k+xy.(70)
+Forx, y >0, the valueA(x, ρy)is the larger root of
+Q(z) =z 2 −(4x+ρy)z+ 4x 2.
+Using equation 70 andρ 2 = 2ρ+ 1gives
+Q(ρk) =x
+ 
+4x+ρ 2y−(2ρ−1)k
+
+.
+Putθ=x/yands=
+√
+2. After substituting the explicit formula fork, the nonnegativity of the
+factor in parentheses is equivalent to
+(7−2s)θ+ 5 + 2s≥(1 + 2s)
+p
+θ2 + 6θ+ 1.
+Both sides are positive, and the left-hand side squared minus the right-hand side squared equals
+8(6−4s)
+
+θ−2− 3s
+2
+2
+≥0.
+HenceQ(ρk)≥0. The smaller root ofQis below2x, whileρk >2x; thusρklies to the right of
+the larger root. This proves equation 68.
+For equation 69,A(x,2y−1)is the larger root of
+eQ(z) =z 2 −(4x+ 2y−1)z+ 4x 2.
+Atz= 2k−1, reduction by equation 70 gives the equivalent inequality
+(2x+ 1)
+p
+x2 + 6xy+y 2 ≥2x 2 + 2xy+ 3x+y.
+The difference of squares is8x 2(2xy−x+y−1)≥0forx, y≥1. Therefore eQ(2k−1)≤0.
+Since2k−1>2(x+y)−1>2xlies to the right of the smaller root, it does not exceed the larger
+root, proving equation 69.
+Proposition E.2.For everyN≥1,
+2UN −1≤W N ≤ρU N .
+Consequently, ift={log 2 m}, then
+1
+ρΦ(t) ≤C F
+m ≤ 1
+2Φ(t) .
+37
+
+=== PAGE 38 ===
+1998
+1999
+2000
+2001
+2002
+2003
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+2026
+2027
+2028
+2029
+2030
+2031
+2032
+2033
+2034
+2035
+2036
+2037
+2038
+2039
+2040
+2041
+2042
+2043
+2044
+2045
+2046
+2047
+2048
+2049
+2050
+2051
+Under review as a conference paper at ICLR 2027
+Proof.The local comparisons established in Lemma E.1 are
+A(x, ρy)≤ρK(x, y), x, y >0,
+A(x,2y−1)≥2K(x, y)−1, x, y≥1.
+Assume equation 20 belowN. For every split,
+A(Um, WN−m )≤ A(Um, ρUN−m )≤ρK(U m, UN−m ).
+Maximizing and using equation 4 givesW N ≤ρU N . For the lower bound, choose a balanced
+optimal splitN=a+b. SinceU N =K(U a, Ub),
+WN ≥ A(Ua, Wb)≥ A(Ua,2U b −1)≥2K(U a, Ub)−1 = 2U N −1.
+The base case is immediate. Applying the sandwich alongN=m2 k, dividing by(m2 k)p, and
+using the exact phase law forU N gives the stated bounds onC F
+m.
+E.2 DISCRETE MODULUS AND INTERPOLANTS
+The fixed-ray limits do not by themselves define a continuous phase. One also needs uniform control
+of neighboring normalized values. Define
+DN := WN
+N p , C N :=N pηF
+N = 1
+DN
+,
+and recall thatT=R/Zandϕ ∗ = mint∈T Φ(t)>0. Recall thatL F is a Lipschitz constant for the
+canonical interpolationFand setL U := max{1, LF }. The discrete estimates proved in Lemma E.3
+give
+0< Um −U m−1 ≤L U mp−1,0< W N+1 −W N ≤4L U N p−1,|C N+1 −C N | ≤Lobs
+N ,
+whereL obs := (4LU +ρp)/ϕ2
+∗. Since adjacent logarithmic phases are separated bylog2(1+1/N)≍
+N −1, the preceding estimate yields a uniform bound on the slopes of the phase interpolants.
+For eachk≥0and0≤j≤2 k, define
+tk,j := log2
+2k +j
+2k .
+LetΨ k : [0,1]→Rbe the unique continuous function satisfying
+Ψk(tk,j ) =C 2k+j,0≤j≤2 k,
+and affine on each interval[t k,j , tk,j+1 ].
+Lemma E.3.SetL U := max{1, LF }, and putϕ ∗ := min Φ. WithU 0 = 0, for everym, N≥1,
+0< Um −U m−1 ≤L U mp−1,
+0< WN+1 −W N ≤4L U N p−1,
+|CN+1 −C N | ≤4LU +ρp
+ϕ2∗N .
+Proof.The first estimate is immediate form= 1. Ifm≥2, putr=⌊log 2(m−1)⌋. Exact
+interpolation gives
+Uj =ρ rF(j/2 r), j=m−1, m,
+and hence
+Um −U m−1 ≤L F ρr2−r =L F 2r(p−1) ≤L U mp−1.
+Strict positivity follows from Corollary B.5.
+The join satisfiesA(0, w) =wand
+∂uA(u, w) = 2 + 2w√
+w2 + 8uw
+≤4.
+38
+
+=== PAGE 39 ===
+2052
+2053
+2054
+2055
+2056
+2057
+2058
+2059
+2060
+2061
+2062
+2063
+2064
+2065
+2066
+2067
+2068
+2069
+2070
+2071
+2072
+2073
+2074
+2075
+2076
+2077
+2078
+2079
+2080
+2081
+2082
+2083
+2084
+2085
+2086
+2087
+2088
+2089
+2090
+2091
+2092
+2093
+2094
+2095
+2096
+2097
+2098
+2099
+2100
+2101
+2102
+2103
+2104
+2105
+Under review as a conference paper at ICLR 2027
+The splitm= 1in equation 18 givesW N+1 > WN . Choose a maximizing pivotm∈ {1, . . . , N}
+forW N+1 . Ifm≥2, the split(m−1, N+ 1−m)is admissible forW N ; ifm= 1, use
+A(U0, WN ) =W N . Therefore
+WN+1 −W N ≤ A(Um, WN+1−m )− A(Um−1, WN+1−m )
+≤4(U m −U m−1)≤4L U N p−1.
+The reciprocal sandwich andϕ ∗ ≤U N /Np ≤1giveϕ ∗ ≤D N ≤ρ. Thus
+|DN+1 −D N | ≤WN+1 −W N
+(N+ 1) p +W N
+ 1
+N p − 1
+(N+ 1) p
+
+≤ 4LU
+N +ρ
+
+1−
+ N
+N+ 1
+p
+≤ 4LU +ρp
+N .
+SinceC N =D −1
+N andD N , DN+1 ≥ϕ ∗, the final estimate follows.
+E.3 UNIFORM PHASE CONVERGENCE
+Theorem E.4.There exists a unique positive Lipschitz functionΨ F :T→(0,∞)such that the
+interpolation functionsΨ k converge uniformly toΨ F on[0,1]:
+∥Ψk −Ψ F ∥L∞([0,1]) →0.
+Equivalently, because the maximal interpolation mesh tends to zero andΨ F is Lipschitz,
+sup
+2k≤N≤2 k+1
+N pηF
+N −Ψ F ({log2 N})
+ →0.
+Thus
+ηF
+N =N −pΨF ({log2 N}) +o(N −p)
+asN→ ∞. Moreover,
+Clust(N pηF
+N ) = ΨF (T) = [min ΨF ,max ΨF ].
+Thus equation 22 is the complete cluster interval of the normalized tight objective coefficient in
+equation 19. Combining this expansion with equation 19 gives the following guarantee for the
+optimized ConPD/OBS-F schedules
+f(x N−1 )−f ∗ ≤
+
+N −pΨF ({log2 N}) +o(N −p)
+ L
+2 ∥x0 −x ∗∥2 (71)
+where theo(N −p)remainder has the same dyadic-block uniformity. One may take2L obs log 2as a
+Lipschitz constant forΨ F .
+Proof.For adjacent interpolation nodes,
+log2
+N+ 1
+N = log(1 + 1/N)
+log 2 ≥ 1
+(N+ 1) log 2 .
+The discrete modulus therefore makes{Ψk}equi-Lipschitz. The reciprocal sandwich gives common
+positive upper and lower bounds, so Arzel `a–Ascoli yields subsequences converging uniformly on
+[0,1].
+Every subsequential limit has the same values on dyadic mantissas. Indeed, ifx=j/2 ℓ ∈[1,2]and
+k≥ℓ, then
+Ψk(log2 x) =C j2k−ℓ ,
+which converges to the fixed-ray limitC F
+j . Hence all uniformly convergent subsequences have
+limits agreeing on a dense set and therefore, by continuity, everywhere. Since the family is relatively
+compact and has only one possible limit, the full function sequence{Ψ k}converges uniformly on
+[0,1]. The identityC F
+2m =C F
+m matches the endpoint values and gives a function onT, proving
+equation 21 and uniqueness.
+Compactness of the phase circle shows that every cluster point ofC N lies inΨ F (T). Conversely,
+Nk =
+
+2k+t
+approaches any prescribed phaset, soC Nk →Ψ F (t). Since the continuous image of
+the circle is a compact interval, equation 22 follows.
+39
+
+=== PAGE 40 ===
+2106
+2107
+2108
+2109
+2110
+2111
+2112
+2113
+2114
+2115
+2116
+2117
+2118
+2119
+2120
+2121
+2122
+2123
+2124
+2125
+2126
+2127
+2128
+2129
+2130
+2131
+2132
+2133
+2134
+2135
+2136
+2137
+2138
+2139
+2140
+2141
+2142
+2143
+2144
+2145
+2146
+2147
+2148
+2149
+2150
+2151
+2152
+2153
+2154
+2155
+2156
+2157
+2158
+2159
+Under review as a conference paper at ICLR 2027
+E.4 SHARP HOMOGENEOUS SUPPORT
+Lemma E.5.Letξ ∗ ∈(0,1)be the unique interior solution of
+ξ2q−1(2−ξ) = 1,(72)
+and define
+τ∗ := 1−ξ ∗
+2ξ2∗
+, B sup := 2q 1−ξ 2q
+∗
+(1−ξ ∗)q .
+ThenB sup >2 q and, for allu, w≥0,
+A(u, w)q ≤B supuq +w q.(73)
+Foru, w >0, equality holds if and only ifu/w=τ ∗. Equality also holds whenu= 0, whereas the
+inequality is strict whenw= 0< u.
+Proof.By homogeneity, normalizew= 1and writet=u >0. Set
+z= 1 + √1 + 8t
+2 .
+Thenz 2 −z−2t= 0, sot=z(z−1)/2andA(t,1) =z 2. Withx= 1/z∈(0,1), the smallest
+admissible support coefficient is the supremum of
+h(x) := A(t,1) q −1
+tq = 2q 1−x 2q
+(1−x) q .
+Its logarithmic derivative is
+h′(x)
+qh(x) = 1
+1−x − 2x2q−1
+1−x 2q ,
+whose sign is that of1−x 2q−1(2−x). Puta= 2q−1∈(0,1)andg(x) =x a(2−x). Since
+g′(x) =x a−1 
+2a−(a+ 1)x
+
+,
+gfirst increases and then decreases on(0,1); moreover,g(0) = 0,g(1) = 1, andg ′(1) =a−1<0.
+Thusg(x) = 1has exactly one interior solutionξ ∗ in addition to the endpoint1, andhhas its unique
+maximum atξ ∗. The endpoint limits are
+lim
+x↓0
+h(x) = 2q,lim
+x↑1
+h(x) = 0,
+soB sup =h(ξ ∗)>2 q. Back-substitution gives the unique positive equality ratio
+t= 1−ξ ∗
+2ξ2∗
+=τ ∗.
+Homogeneity yields the stated conditionu/w=τ ∗. The boundary cases follow fromA(0, w) =w
+andA(u,0) = 2u, together withB sup >2 q.
+Set
+d∗ :=B p
+sup, c ∗ :=d −1
+∗ =B −p
+sup, r ∗ :=τ q
+∗ , α ∗ := Bsupr∗
+1 +B supr∗
+.(74)
+Numerically,B sup ≈1.97530507031103andc ∗ ≈0.420809352823451. The support inequality
+equation 73 recovers the lower barrierC N ≥c ∗ =c low established by Grimmer et al. (2025b, The-
+orem 5). Below we will establish a strict separationc ∗ <min t∈T ΨF (t), obtained from the deficit
+and phase-rigidity arguments. The exact deficit identity in Proposition E.6 then shows what asymp-
+totic contact with this barrier would require: along an optimizing right spine, every macroscopic
+pivot must simultaneously saturate the symmetric power bound and the support inequality. The lat-
+ter selects the unique fractionα ∗, while the former forces a zero symmetric phase. The technical
+concentration and phase-circle arguments implementing this rigidity are collected in Appendix E.6
+and Appendix E.7.
+40
+
+=== PAGE 41 ===
+2160
+2161
+2162
+2163
+2164
+2165
+2166
+2167
+2168
+2169
+2170
+2171
+2172
+2173
+2174
+2175
+2176
+2177
+2178
+2179
+2180
+2181
+2182
+2183
+2184
+2185
+2186
+2187
+2188
+2189
+2190
+2191
+2192
+2193
+2194
+2195
+2196
+2197
+2198
+2199
+2200
+2201
+2202
+2203
+2204
+2205
+2206
+2207
+2208
+2209
+2210
+2211
+2212
+2213
+Under review as a conference paper at ICLR 2027
+E.5 SUPPORT DEFICIT AND CONTACT GEOMETRY
+Proposition E.6.For everyN≥1,
+W q
+N ≤B supN, C N =N pηF
+N ≥c ∗.
+DefineE N :=B supN−W q
+N ≥0. Ifmis any maximizing pivot forW N andr=N−m, then
+EN =B sup(m−U q
+m) +E r +σ(U m, Wr),(75)
+where
+σ(u, w):=B supuq +w q − A(u, w)q,
+and all three terms on the right-hand side of equation 75 are nonnegative.
+Proof.The sharp symmetric power bound givesU q
+m ≤m. AssumingW q
+j ≤B supjbelowN,
+Lemma E.5 gives, for every splitN=m+r,
+A(Um, Wr)q ≤B supU q
+m +W q
+r ≤B supm+B supr=B supN.
+Maximizing provesW q
+N ≤B supN; sincepq= 1, this is equivalent toC N ≥B −p
+sup =c ∗. For a
+maximizing split, adding and subtractingB supU q
+m +W q
+r gives equation 75.
+Lemma E.7.For everyx∈(1,2),
+F(x)< xp.
+Equivalently,Φ(t)<1for every nonzero phaset∈(0,1).
+Proof.Let an interior dyadic pointxfirst appear as the midpoint of a dyadic interval[a, b], and set
+H=ρ −1K. The midpoint rule, endpoint power bounds, and monotonicity give
+F(x) =H(F(a), F(b))≤H(a p, bp)< ρ−1(a+b) p =x p,
+where strictness follows froma < band Lemma D.1. For nondyadicx, choose a sufficiently fine
+dyadic interval[a, b]containingxwith1< a < b <2. With
+M= max{F(a)/a p, F(b)/bp}<1,
+homogeneity and the same midpoint argument propagateF(y)≤M y p to all dyadic descendants.
+Density and continuity yieldF(x)≤M x p < xp.
+Lemma E.8.Writer ∗ andα ∗ as in equation 74. Setx ∗ := 2α∗. The contact fraction satisfies
+α∗ = 1−ξ 2q
+∗ ,1−α ∗ =ξ 2q
+∗ ,(76)
+and
+1
+4 <1−α ∗ < 1
+2 .(77)
+In particular,1/2< α∗ <1andx ∗ ∈(1,2).
+Proof.The definitions ofB sup andτ ∗ give
+Bsupτ q
+∗ = 2q 1−ξ 2q
+∗
+(1−ξ ∗)q
+(1−ξ ∗)q
+2qξ2q
+∗
+= 1−ξ 2q
+∗
+ξ2q
+∗
+.
+Sincer ∗ =τ q
+∗ andα ∗ =B supr∗/(1 +B supr∗), this proves equation 76.
+We next locateξ ∗. The inequalitiesq <15/19and2 30 <3 19 imply2 2q <3. Indeed,q <15/19is
+equivalent toρ 15 >2 19, and
+ρ15 = 275807 + 195025
+√
+2>2 19.
+Consequently,
+(1/2)2q−1(2−1/2) = 3/2 2q >1.
+41
+
+=== PAGE 42 ===
+2214
+2215
+2216
+2217
+2218
+2219
+2220
+2221
+2222
+2223
+2224
+2225
+2226
+2227
+2228
+2229
+2230
+2231
+2232
+2233
+2234
+2235
+2236
+2237
+2238
+2239
+2240
+2241
+2242
+2243
+2244
+2245
+2246
+2247
+2248
+2249
+2250
+2251
+2252
+2253
+2254
+2255
+2256
+2257
+2258
+2259
+2260
+2261
+2262
+2263
+2264
+2265
+2266
+2267
+Under review as a conference paper at ICLR 2027
+Becauseξ ∗ is the first interior solution of equation 72,ξ ∗ <1/2. Since2q >1,
+1−α ∗ =ξ 2q
+∗ < ξ∗ < 1
+2 .
+For the other direction,q >11/14andq <4/5, equivalentlyρ 11 <2 14 andρ 4 >2 5. Atx= 12/25,
+these bounds give
+x2q−1(2−x)< x 4/7 38
+25 <1,
+where the last inequality is equivalent to12 4387 <25 11. Henceξ ∗ >12/25. Since2q <8/5,
+ξ2q
+∗ > ξ8/5
+∗ >
+ 12
+25
+8/5
+> 1
+4 ;
+the last inequality is equivalent to12 845 >25 8. Together with equation 76, this proves equation 77
+and the remaining assertions.
+E.6 DEFICIT CONCENTRATION AND NONCONSTANCY
+Lemma E.9.The dyadic-ray limit satisfies
+C F
+1 = lim
+k→∞
+(2k)pηF
+2k > c∗.
+Proof.Suppose instead thatC F
+1 =c ∗. ForN= 2 k, this is equivalent to
+WN
+N p →d ∗ =B p
+sup, EN
+N =B sup −
+ WN
+N p
+q
+→0.(78)
+Starting atn 0 =N, choose a maximizing pivotm i forW ni and setn i+1 =n i −m i untiln L = 1.
+Iterating equation 75 gives
+EN =E 1 +
+L−1X
+i=0
+
+Bsup(mi −U q
+mi ) +σ(U mi , Wni+1 )
+
+,(79)
+with every summand nonnegative.
+Small pivots incur a linear support deficit. Sinceq <1andA(t,1) = 1 +O(t)ast↓0,
+σ(t,1)
+tq →B sup.
+By homogeneity, there isδ >0such that
+0< u
+w ≤δ=⇒σ(u, w)≥ Bsup
+2 uq.
+The sandwich and symmetric phase bounds give
+Wr ≥U r ≥ϕ ∗rp, U m ≤m p, U q
+m ≥ϕ q
+∗m.
+Chooseε >0so that
+ϕ−1
+∗
+ ε
+1−ε
+p
+≤δ.
+Ifm i/ni ≤ε, thenn i+1 ≥(1−ε)n i andU mi /Wni+1 ≤δ. Thus
+σ(Umi , Wni+1 )≥c 0mi, c 0 := Bsup
+2 ϕq
+∗ >0.(80)
+Letjbe the first index withm j/nj > ε. Such an index exists for all largeN; otherwise equation 79,
+equation 80, and P
+i mi =N−1would contradict equation 78. Moreover,
+X
+i<j
+mi ≤ EN
+c0
+=o(N), nj
+N →1.
+42
+
+=== PAGE 43 ===
+2268
+2269
+2270
+2271
+2272
+2273
+2274
+2275
+2276
+2277
+2278
+2279
+2280
+2281
+2282
+2283
+2284
+2285
+2286
+2287
+2288
+2289
+2290
+2291
+2292
+2293
+2294
+2295
+2296
+2297
+2298
+2299
+2300
+2301
+2302
+2303
+2304
+2305
+2306
+2307
+2308
+2309
+2310
+2311
+2312
+2313
+2314
+2315
+2316
+2317
+2318
+2319
+2320
+2321
+Under review as a conference paper at ICLR 2027
+Nonnegativity in equation 79 then gives
+mj −U q
+mj =o(N), E nj+1 =o(N), σ(U mj , Wnj+1 ) =o(N).(81)
+Pass to a subsequence withm j/nj →α∈[ε,1]. The preceding relations imply
+U q
+mj
+nj
+→α,
+W q
+nj+1
+nj
+→B sup(1−α).
+Becauseσis homogeneous of degreeqandpq= 1, its vanishing limit becomes
+Bsupα+B sup(1−α)− A
+ 
+αp,[B sup(1−α)] pq
+= 0.
+The caseα= 1is impossible becauseB sup >2 q. Equality in Lemma E.5 therefore forces
+αp
+[Bsup(1−α)] p =τ ∗,henceα= Bsupr∗
+1 +B supr∗
+=α ∗.
+Thus every convergent subsequence has the same limit, andm j/N→α ∗ ∈(1/2,1).
+SinceN= 2 k, eventually2 k−1 < mj <2 k and2m j/N→x ∗ = 2α∗ ∈(1,2). Exact interpolation
+on[2 k−1,2 k]gives
+U q
+mj
+mj
+= F(2m j/N)q
+2mj/N .
+The left-hand side tends to one by equation 81. Passage to the limit yieldsF(x∗)q =x ∗, orF(x ∗) =
+xp
+∗, contradicting Lemma E.7. ThereforeC F
+1 > c∗.
+Lemma E.10.If the phase profile in Theorem E.4 were constant, then it would be identically equal
+toc ∗.
+Proof.SupposeΨ F ≡cand setd=c −1. The support bound givesd≤d ∗. Leth≥0andb≥1
+be arbitrary integers, and seta= 2 h. For eachk≥0, consider the Bellman recursion forW (a+b)2k
+and use the admissible pivota2 k. Exact scaling ofUand the constant-profile asymptotics give, after
+division by2 kp and passage to the limit,
+d(a+b) p ≥ A(ap, dbp).
+By homogeneity, withα=a/(a+b),
+d≥ A(αp, d(1−α)p).(82)
+The set{b/2 h :h≥0, b≥1}is dense in(0,∞), so equation 82 holds for everyα∈[0,1].
+Ifd q < Bsup, chooseα=d qr∗/(1 +d qr∗). The two positive arguments in equation 82 then have
+equality ratioτ ∗. By Lemma E.5, the joined value hasq-th power
+Bsupα+d q(1−α)> d q,
+contradicting equation 82. Henced q ≥B sup, sod≥d ∗. Therefored=d ∗ andc=c ∗.
+The preceding two results imply thatΨ F is nonconstant: a constant profile would equalc ∗ by
+Lemma E.10, contradicting its strictly larger value at the dyadic phase from Lemma E.9.
+E.7 GLOBAL STRICT SEPARATION
+Lemma E.11.For everyt∈T,
+ΨF (t)> c∗.
+Consequently,min t∈T ΨF (t)> c∗.
+43
+
+=== PAGE 44 ===
+2322
+2323
+2324
+2325
+2326
+2327
+2328
+2329
+2330
+2331
+2332
+2333
+2334
+2335
+2336
+2337
+2338
+2339
+2340
+2341
+2342
+2343
+2344
+2345
+2346
+2347
+2348
+2349
+2350
+2351
+2352
+2353
+2354
+2355
+2356
+2357
+2358
+2359
+2360
+2361
+2362
+2363
+2364
+2365
+2366
+2367
+2368
+2369
+2370
+2371
+2372
+2373
+2374
+2375
+Under review as a conference paper at ICLR 2027
+Proof.By Proposition E.6 and the uniform phase convergence in Theorem E.4,Ψ F (t)≥c ∗ for
+everyt∈T. Suppose, for a contradiction, thatΨ F (t0) =c ∗ for somet 0 ∈T. Choose integers
+Nk → ∞such that{log2 Nk} →t0 inT. Then
+WNk
+N p
+k
+→d ∗, ENk
+Nk
+=B sup −
+ WNk
+N p
+k
+q
+→0.
+We first make explicit the concentration argument underlying estimate equation 80, which applies
+to any integer sequence withE Nk /Nk →0. Along a maximizing right spine, write
+nk,0 =N k, n k,i+1 =n k,i −m k,i, n k,Lk = 1.
+The deficit identity of Proposition E.6 gives
+ENk =E 1 +
+Lk−1X
+i=0
+h
+Bsup
+ 
+mk,i −U q
+mk,i
+
++σ
+ 
+Umk,i , Wnk,i+1
+i
+,
+and every term is nonnegative. The small-pivot estimate equation 80 supplies constantsε∈(0,1)
+andc 0 >0, independent of the initial size, such that
+mk,i
+nk,i
+≤ε=⇒σ
+ 
+Umk,i , Wnk,i+1
+
+≥c 0mk,i.
+For all sufficiently largek, there must therefore be a first indexj k withm k,jk /nk,jk > ε. Otherwise,
+ENk ≥c 0(Nk −1), contradictingE Nk /Nk →0. Set
+bk :=
+X
+i<jk
+mk,i, s k :=n k,jk =N k −b k, m k :=m k,jk , r k :=n k,jk+1 =s k −m k.
+In particular,r k is the actual continuation size after the first macroscopic pivot. Nonnegativity and
+the small-pivot estimate yield
+0≤b k ≤ ENk
+c0
+=o(N k), sk
+Nk
+→1.
+Applying the deficit identity ats k, and observing that the deficit at any later spine node is at most
+ENk, also gives
+mk −U q
+mk =o(N k), E rk =o(N k), σ(U mk , Wrk ) =o(N k).
+Consider any subsequence on whichm k/sk →β∈[ε,1]. Sincer k =s k −m k, the preceding
+estimates imply
+U q
+mk
+sk
+→β, W q
+rk
+sk
+=B sup
+rk
+sk
+− Erk
+sk
+→B sup(1−β).
+Usingpq= 1, continuity, and the degree-qhomogeneity ofσ, we obtain
+0 =B sup − A(βp,[B sup(1−β)] p)q .
+The caseβ= 1would giveB sup = 2q, which is excluded by Lemma E.5. Thus both arguments of
+Aare positive, and the equality characterization in that lemma forces
+βp
+[Bsup(1−β)] p =τ ∗, β= Bsupτ q
+∗
+1 +B supτ q
+∗
+=α ∗.
+Every convergent subsequence ofm k/sk has this same limit. Consequently,
+mk
+Nk
+→α ∗, rk
+Nk
+→1−α ∗, U q
+mk
+mk
+→1, Erk
+rk
+→0.
+Here the last limit uses1−α ∗ >0; in particular,m k, rk → ∞.
+The exact symmetric phase law now gives
+U q
+mk
+mk
+= Φ({log2 mk})q →1.
+44
+
+=== PAGE 45 ===
+2376
+2377
+2378
+2379
+2380
+2381
+2382
+2383
+2384
+2385
+2386
+2387
+2388
+2389
+2390
+2391
+2392
+2393
+2394
+2395
+2396
+2397
+2398
+2399
+2400
+2401
+2402
+2403
+2404
+2405
+2406
+2407
+2408
+2409
+2410
+2411
+2412
+2413
+2414
+2415
+2416
+2417
+2418
+2419
+2420
+2421
+2422
+2423
+2424
+2425
+2426
+2427
+2428
+2429
+Under review as a conference paper at ICLR 2027
+By Lemma E.7,Φ(t) = 1only at the zero phase. Continuity and compactness ofTtherefore imply
+{log2 mk} →0inT. Since
+{log2 mk}={log 2 Nk + log2(mk/Nk)},
+we conclude that
+t0 + log2 α∗ = 0inT.
+On the other hand,E rk /rk →0impliesW rk /rp
+k →d ∗, while the actual continuation phases satisfy
+{log2 rk} →t1 :=t 0 + log2(1−α ∗)inT.
+Uniform phase convergence hence givesΨ F (t1) =c ∗. The same concentration argument, now
+applied to the sequencer k, yields
+t1 + log2 α∗ = 0inT.
+Subtracting the two phase identities shows thatlog 2(1−α ∗) = 0inT. Thus1−α ∗ would be
+an integral power of two, contrary to1/4<1−α ∗ <1/2from Lemma E.8. This contradiction
+provesΨ F (t)> c∗ for every phase. Finally,Ψ F is continuous on the compact circle and attains its
+minimum, somin t∈T ΨF (t)> c∗.
+Proposition E.12.For everyt∈T,
+ΨF (t)≤ c∗
+ϕ∗
+.
+Equivalently, with∆ F (t) = 1/ΨF (t), one has∆ F (t)≥d ∗ϕ∗.
+Proof.Lett 0 minimize∆ F , and chooseN k → ∞whose phases approacht0. Fixα∈(0,1)and
+putm k =⌊αN k⌋andr k =N k −m k. The Bellman recursion, the minimum property of∆ F (t0),
+andU mk /mp
+k ≥ϕ ∗ give, after division byN p
+k and passage to the limit,
+∆F (t0)≥ A
+ 
+ϕ∗αp,∆ F (t0)(1−α) p
+.(83)
+If∆ F (t0)q < Bsupϕq
+∗, choose
+α= ∆F (t0)qr∗
+ϕq
+∗ + ∆F (t0)qr∗
+.
+The two positive arguments in equation 83 then have equality ratioτ ∗. Their joined value hasq-th
+power
+Bsupϕq
+∗α+ ∆ F (t0)q(1−α)>∆ F (t0)q,
+contradicting equation 83. Hence∆ F (t0)q ≥B supϕq
+∗, so∆ F (t0)≥d ∗ϕ∗. Sincet 0 minimizes∆ F ,
+this bound holds at every phase; reciprocation proves the result.
+E.8 COMPLETION OF THE ASYMMETRIC PHASE THEOREM
+Theorem E.13.The phaseΨ F is nonconstant and satisfies
+c∗ <min
+t∈T
+ΨF (t)<max
+t∈T
+ΨF (t)≤ c∗
+ϕ∗
+.
+Consequently, the cluster interval in equation 22 is nondegenerate and lies strictly above the sharp
+homogeneous support barrier. By equation 71, this is precisely the nondegenerate interval of asymp-
+totic leading constants in the tight objective-gap guarantee for optimized ConPD/OBS-F schedules.
+Proof.The support and deficit decomposition are established in Proposition E.6. The dyadic-ray
+separation and constant-phase rigidity in Lemma E.9 and Lemma E.10 imply thatΨ F is noncon-
+stant. The global strict lower bound and the upper phase enclosure are proved in Lemma E.11 and
+Proposition E.12. These statements give equation 23, while equation 22 identifies the complete
+cluster interval.
+Together with the uniform convergence and cluster-set statement above, this proves Theorem 5.1.
+45

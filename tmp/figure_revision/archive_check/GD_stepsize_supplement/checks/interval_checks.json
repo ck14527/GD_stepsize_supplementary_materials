@@ -1,0 +1,23 @@
+{
+  "classification": "exact integer enclosures plus 60-digit interval arithmetic",
+  "level": 17,
+  "maximum_N": 262144,
+  "fixed_point_decimal_places": 45,
+  "interval_decimal_digits": 60,
+  "all_grid_lower_bounds_passed": true,
+  "lower_minimum_witness_N": 181314,
+  "lower_minimum_witness_interval": "[0.99281236987628481928182847726669963048398467163724113981606038064, 0.99281236987628481928182847726669963048398467228943366482937856881]",
+  "upper_minimum_witness_N": 181324,
+  "upper_minimum_witness_interval": "[0.99281933226151915264745168597433214372496503500302279497087193917, 0.99281933226151915264745168597433214372496503565523900731438775953]",
+  "certified_phi_enclosure": [
+    "0.99281236",
+    "0.99281934"
+  ],
+  "finite_grid_minimizing_indices_verified": true,
+  "finite_grid_minimizers_unique_at_level_17": true,
+  "limiting_profile_extremizer_uniqueness_claimed": false,
+  "corner_finite_products_separated": true,
+  "P_minus_6": "[1.4196879439923641350043459759123761077183052161532694947218426131, 1.4196879439923641350043459759123761077183052161532694948605052397]",
+  "P_plus_6": "[1.4196047720161959864594174538607262536718471680605108558012543652, 1.419604772016195986459417453860726253671847168060510855801887557]",
+  "seconds": 6.9424233329998515
+}

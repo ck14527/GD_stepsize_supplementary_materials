@@ -1,0 +1,513 @@
+{
+  "scope": "40 numbered scalar/combinatorial results in GD_stepsize_schedule.pdf (2026-09-24).",
+  "source_pdf_sha256": "db3137a4cc77fcebf4f7956f4afdccd5ed51dd006e32dec69657f84843898fc9",
+  "full_paper_formalization_complete": false,
+  "external_GD_certificate_interfaces_formalized": false,
+  "scalar_numbered_results_complete": true,
+  "optional_level17_interval_certificate_formalized": false,
+  "semantic_statement_matching": "Manual mathematical comparison, not an automatic proof that PDF prose equals a Lean proposition.",
+  "counts": {
+    "verified_scalar_model": 40,
+    "partial": 0,
+    "open": 0
+  },
+  "results": [
+    {
+      "paper_id": "3.1",
+      "kind": "Theorem",
+      "title": "Balanced optimality and complete equality classification",
+      "page": 4,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_3_1"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_3_1",
+      "scope_note": "Complete numbered scalar statement. EqualityPattern unfolds to the exact two arithmetic alternatives."
+    },
+    {
+      "paper_id": "3.2",
+      "kind": "Theorem",
+      "title": "Four-point rearrangement and both equality cases",
+      "page": 4,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_3_2"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_3_2",
+      "scope_note": "Complete numbered statement."
+    },
+    {
+      "paper_id": "4.1",
+      "kind": "Theorem",
+      "title": "Exact symmetric dyadic phase law",
+      "page": 6,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_4_1"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_4_1",
+      "scope_note": "Complete statement. Periodic real functions represent the phase circle; uniqueness is proved among all continuous periodic functions."
+    },
+    {
+      "paper_id": "4.2",
+      "kind": "Corollary",
+      "title": "Exact objective phase law and uniform expansion",
+      "page": 6,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_4_2"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_4_2",
+      "scope_note": "Complete scalar coefficient statement. The O(N^(-2*p)) assertion is certified by the stronger explicit positive remainder bound N^(-2*p)/(2*phiMin^2). The interpretation as a tight GD objective coefficient uses external certificates."
+    },
+    {
+      "paper_id": "5.1",
+      "kind": "Theorem",
+      "title": "Asymmetric uniform phase law and strict support separation",
+      "page": 8,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_5_1"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_5_1",
+      "scope_note": "Complete scalar statement of the numbered theorem; etaF is the concrete Bellman coefficient, with the external GD certificate boundary described above."
+    },
+    {
+      "paper_id": "A.5",
+      "kind": "Proposition",
+      "title": "Treewise conjugacy and common Bellman optimum",
+      "page": 14,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_A_5"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_A_5",
+      "scope_note": "Complete scalar/treewise statement, with Bellman maximum encoded by upper bounds and an attaining split. The correspondence to smooth-convex trajectories uses externally cited certificate interfaces; no such imported certificate is asserted as a Lean theorem."
+    },
+    {
+      "paper_id": "A.6",
+      "kind": "Proposition",
+      "title": "Composition-kernel properties and strict ratio bounds",
+      "page": 15,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_A_6"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_A_6",
+      "scope_note": "Complete numbered statement; continuity is proved globally, stronger than continuity restricted to the quadrant."
+    },
+    {
+      "paper_id": "B.1",
+      "kind": "Lemma",
+      "title": "Sign beyond the inner roots",
+      "page": 16,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_B_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_B_1",
+      "scope_note": "Complete statement in equivalent three-way form: negativity, zero and positivity iff the corresponding strict order or equality with the outer root. P is the product of all four actual conjugate-root factors."
+    },
+    {
+      "paper_id": "B.2",
+      "kind": "Lemma",
+      "title": "Pairing-difference identities",
+      "page": 17,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_B_2"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_B_2",
+      "scope_note": "Complete two-identity statement using the actual conjugate-root polynomials."
+    },
+    {
+      "paper_id": "B.3",
+      "kind": "Lemma",
+      "title": "Quartic evaluation at the composed root",
+      "page": 19,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_B_3"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_B_3",
+      "scope_note": "Complete statement, with precisely the positive-inner-root hypotheses required by the manuscript."
+    },
+    {
+      "paper_id": "B.4",
+      "kind": "Theorem",
+      "title": "Abstract balanced-composition principle",
+      "page": 21,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_B_4"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_B_4",
+      "scope_note": "Complete abstract theorem. NonnegativeCompositionLaw contains exactly the manuscript's nonnegative-domain operator assumptions, not the desired conclusion. Its V satisfies the original balanced recurrence by V_rec; BellmanSpec includes attainment."
+    },
+    {
+      "paper_id": "B.5",
+      "kind": "Corollary",
+      "title": "Balanced recurrence and symmetric supercomposition",
+      "page": 22,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_B_5"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_B_5",
+      "scope_note": "Complete numbered statement."
+    },
+    {
+      "paper_id": "C.1",
+      "kind": "Lemma",
+      "title": "Complete equality patterns in supercomposition",
+      "page": 22,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_C_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_C_1",
+      "scope_note": "Complete equivalence, with both unordered orientations represented explicitly by ScaledConsecutive."
+    },
+    {
+      "paper_id": "C.2",
+      "kind": "Corollary",
+      "title": "All maximizing root splits",
+      "page": 23,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_C_2"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_C_2",
+      "scope_note": "Complete three-case statement, parameterized by nu=2*n+1 (n>=1) and ell=k+1 in the third case."
+    },
+    {
+      "paper_id": "C.3",
+      "kind": "Theorem",
+      "title": "Conjecture 4.17 of Zhang and Jiang: balanced ConPP and all ties",
+      "page": 24,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_C_3"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_C_3",
+      "scope_note": "Complete recursive-family scalar/stepsize-sum statement. Positive valuation ell is encoded as k+1. Optimized recursive primitive sums are U_N-1, justified constructively by Proposition A.5. External trajectory-certificate closure is outside the scalar model."
+    },
+    {
+      "paper_id": "C.4",
+      "kind": "Corollary",
+      "title": "Optimal composition trees",
+      "page": 24,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_C_4"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_C_4",
+      "scope_note": "Complete treewise equivalences; no assumption that every optimal tree represents a different numerical schedule."
+    },
+    {
+      "paper_id": "C.5",
+      "kind": "Proposition",
+      "title": "Exact counts of optimal ordered composition trees",
+      "page": 24,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_C_5"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_C_5",
+      "scope_note": "Complete numbered recurrence and three cases for actual finite sets of trees. The subsequent unnumbered asymptotic paragraph and sample table are not included in this target."
+    },
+    {
+      "paper_id": "D.1",
+      "kind": "Lemma",
+      "title": "Sharp power-mean kernel bound",
+      "page": 26,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_D_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_D_1",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained."
+    },
+    {
+      "paper_id": "D.2",
+      "kind": "Proposition",
+      "title": "Sharp power envelope and all equality cases",
+      "page": 27,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_D_2"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_D_2",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained."
+    },
+    {
+      "paper_id": "D.3",
+      "kind": "Lemma",
+      "title": "Adjacent-ratio recursion and contraction",
+      "page": 27,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_D_3"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_D_3",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained."
+    },
+    {
+      "paper_id": "D.4",
+      "kind": "Lemma",
+      "title": "Unique strictly increasing bi-Lipschitz interpolation",
+      "page": 28,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_D_4"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_D_4",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained."
+    },
+    {
+      "paper_id": "D.5",
+      "kind": "Theorem",
+      "title": "Positive nonconstant symmetric phase profile",
+      "page": 30,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_D_5"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_D_5",
+      "scope_note": "Complete statement. Periodic real functions represent the phase circle; uniqueness is proved among all continuous periodic functions."
+    },
+    {
+      "paper_id": "D.6",
+      "kind": "Corollary",
+      "title": "Symmetric value and reciprocal-rate cluster intervals",
+      "page": 31,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_D_6"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_D_6",
+      "scope_note": "Complete numbered scalar statement, with all displayed domain assumptions and equality cases retained."
+    },
+    {
+      "paper_id": "D.7",
+      "kind": "Corollary",
+      "title": "Objective coefficient, uniform remainder and clusters",
+      "page": 32,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_D_7"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_D_7",
+      "scope_note": "Complete scalar coefficient statement. The O(N^(-2*p)) assertion is certified by the stronger explicit positive remainder bound N^(-2*p)/(2*phiMin^2). The interpretation as a tight GD objective coefficient uses external certificates."
+    },
+    {
+      "paper_id": "D.8",
+      "kind": "Proposition",
+      "title": "Integral density and nondyadic regularity",
+      "page": 32,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_D_8"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_D_8",
+      "scope_note": "Complete regularity statement and the stronger binary-product formulas in its proof. The same canonical derivativeProfile used in the integral explicitly satisfies the bounds, nondyadic continuity and derivative identity. The supporting target is GD.Targets.theorem_C_1."
+    },
+    {
+      "paper_id": "D.9",
+      "kind": "Corollary",
+      "title": "Certified dyadic corner",
+      "page": 35,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.corollary_D_9"
+      ],
+      "target_definition": "GD.PaperTargets.corollary_D_9",
+      "scope_note": "Complete one-sided derivative separation, nondifferentiability and not-C^1 conclusions. The finite rational corner certificate is checked by the Lean kernel."
+    },
+    {
+      "paper_id": "D.10",
+      "kind": "Proposition",
+      "title": "Nested certified grids and linear work",
+      "page": 36,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_D_10"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_D_10",
+      "scope_note": "Complete exact grid bounds and limits, a 30*2^k single-level work bound, and a 60*2^k cumulative bound for all levels through k, in the documented real-RAM model (real powers are primitive). Optional level-17 printed decimals are not a Lean interval certificate."
+    },
+    {
+      "paper_id": "E.1",
+      "kind": "Lemma",
+      "title": "Local reciprocal comparisons",
+      "page": 38,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_1"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_1",
+      "scope_note": "Complete statement, both inequalities with exactly their stated domains."
+    },
+    {
+      "paper_id": "E.2",
+      "kind": "Proposition",
+      "title": "Reciprocal sandwich and fixed-ray limits",
+      "page": 38,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_E_2"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_E_2",
+      "scope_note": "Complete scalar statement including existence, explicit bounds and identification of the fixed-ray limit."
+    },
+    {
+      "paper_id": "E.3",
+      "kind": "Lemma",
+      "title": "Discrete modulus",
+      "page": 39,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_3"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_3",
+      "scope_note": "Complete statement, parametrized by any valid Lipschitz constant LF."
+    },
+    {
+      "paper_id": "E.4",
+      "kind": "Theorem",
+      "title": "Uniform asymmetric phase convergence",
+      "page": 40,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_E_4"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_E_4",
+      "scope_note": "Complete scalar phase assertion. The discussion's equation (71) uses an external smooth-convex GD certificate; no claim that the certificate is formalized."
+    },
+    {
+      "paper_id": "E.5",
+      "kind": "Lemma",
+      "title": "Sharp homogeneous support",
+      "page": 41,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_5"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_5",
+      "scope_note": "Complete statement, unique interior root and all boundary/interior equality cases."
+    },
+    {
+      "paper_id": "E.6",
+      "kind": "Proposition",
+      "title": "Support barrier and nonnegative deficit decomposition",
+      "page": 42,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_E_6"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_E_6",
+      "scope_note": "Complete scalar statement."
+    },
+    {
+      "paper_id": "E.7",
+      "kind": "Lemma",
+      "title": "Strict symmetric power envelope",
+      "page": 42,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_7"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_7",
+      "scope_note": "Complete statement."
+    },
+    {
+      "paper_id": "E.8",
+      "kind": "Lemma",
+      "title": "Contact fraction geometry",
+      "page": 42,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_8"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_8",
+      "scope_note": "Complete statement including all identities and strict interval bounds."
+    },
+    {
+      "paper_id": "E.9",
+      "kind": "Lemma",
+      "title": "Strict dyadic-ray separation",
+      "page": 43,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_9"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_9",
+      "scope_note": "Complete statement; no circular proof dependency."
+    },
+    {
+      "paper_id": "E.10",
+      "kind": "Lemma",
+      "title": "Constant-phase rigidity",
+      "page": 44,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_10"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_10",
+      "scope_note": "Complete statement."
+    },
+    {
+      "paper_id": "E.11",
+      "kind": "Lemma",
+      "title": "Global strict support separation",
+      "page": 44,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.lemma_E_11"
+      ],
+      "target_definition": "GD.PaperTargets.lemma_E_11",
+      "scope_note": "Complete pointwise and strict-minimum statement."
+    },
+    {
+      "paper_id": "E.12",
+      "kind": "Proposition",
+      "title": "Uniform upper phase enclosure",
+      "page": 46,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.proposition_E_12"
+      ],
+      "target_definition": "GD.PaperTargets.proposition_E_12",
+      "scope_note": "Complete pair of equivalent enclosures."
+    },
+    {
+      "paper_id": "E.13",
+      "kind": "Theorem",
+      "title": "Nonconstant phase and final support bounds",
+      "page": 46,
+      "status": "verified_scalar_model",
+      "proof_declarations": [
+        "GD.Paper.theorem_E_13"
+      ],
+      "target_definition": "GD.PaperTargets.theorem_E_13",
+      "scope_note": "Complete scalar statement. Its interpretation as tight objective-gap leading constants invokes the external GD certificate described above."
+    }
+  ],
+  "additional_verified": {
+    "ALG1": [
+      "GD.Paper.algorithm_1",
+      "GD.algorithm_1",
+      "GD.bitStep_correct",
+      "GD.runBits_correct"
+    ],
+    "support_supremum": [
+      "GD.Paper.Bsup_eq_support_supremum"
+    ],
+    "exact_dyadic_scaling": [
+      "GD.U_dyadic"
+    ],
+    "objective_coefficient_comparison": [
+      "GD.quadratic_not_objective_extremizer"
+    ]
+  }
+}

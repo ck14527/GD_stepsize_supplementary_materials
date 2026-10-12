@@ -1,0 +1,13 @@
+{
+  "classification": "Independent high-precision numerical regression; not interval or Lean certification",
+  "xi_star": "0.483326296700704744335073466996555265659991518988275980937695",
+  "B_sup": "1.97530507031102747580833958209628747598758624863858155945239",
+  "c_star": "0.420809352823450997292557666544222300969975101037134042449271",
+  "checks": {
+    "interior_root": true,
+    "script_matches_independent_support_value": true,
+    "exported_line_matches_support_value": true,
+    "support_line_inside_vertical_range": true
+  },
+  "passed": true
+}

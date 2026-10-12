@@ -1,0 +1,378 @@
+[
+  {
+    "file": "sec2_preliminaries.tex",
+    "type": "definition",
+    "labels": [
+      "def:primitive"
+    ],
+    "statement": "\\begin{definition}[Definition~2.7 in \\citet{ZhangJiang}]\\label{def:primitive}\n    A schedule $h\\in\\R_+^n$ is primitive if, with $H\\coloneqq\\one^\\top h$, every $f\\in\\F_1$ and every associated trajectory satisfy\n    \\begin{align*}\n        \\frac12\\norm{x_0-x_*}^2+\\sum_{i=0}^{n-1}h_iQ_{i,*}-H(f_n-f_*)\n        \\ge\\frac12\\norm{x_n-x_*}^2+\\frac{H(H+1)}2\\norm{g_n}^2.\n    \\end{align*}\n    The empty schedule is primitive with $H=0$.\n\\end{definition}"
+  },
+  {
+    "file": "sec2_preliminaries.tex",
+    "type": "definition",
+    "labels": [
+      "def:optimized-primitive"
+    ],
+    "statement": "\\begin{definition}[Definition~4.1 in \\citet{ZhangJiang}]\\label{def:optimized-primitive}\n    Set $h_\\circ^{(0)}=[\\,]^\\top$. For $n\\ge1$, choose\n    \\begin{align*}\n        h_\\circ^{(n)}\n        \\in\\argmax_{h\\in\\mathcal H_\\circ^{(n)}}\\one^\\top h,\n        \\quad\n        \\mathcal H_\\circ^{(n)}\n        \\coloneqq\n        \\left\\{\n        \\operatorname{ConPP}\\!\\(h_\\circ^{(k)},h_\\circ^{(n-k-1)}\\):\n        0\\le k<n\n        \\right\\}.\n    \\end{align*}\n    If the maximizer is not unique, any maximizing schedule may be selected.\n\\end{definition}"
+  },
+  {
+    "file": "sec2_preliminaries.tex",
+    "type": "definition",
+    "labels": [
+      "def:scomposable"
+    ],
+    "statement": "\\begin{definition}[Definition~3 in \\citet{GrimmerShuWangMOR}]\\label{def:scomposable}\n    A positive schedule $h=(h_0,\\ldots,h_{n-1})^\\top$ is s-composable with rate $\\eta>0$ if for every $f\\in\\F_1$ and every associated trajectory, it holds that\n        \\begin{align*}\n        \\frac{1-\\eta}{2}\\norm{g_n}^2+\\frac{\\eta^2}{2}\\norm{x_n-x_*}^2\n        +(\\eta-\\eta^2)(f_n-f_*)\n        \\le\\frac{\\eta^2}{2}\\norm{x_0-x_*}^2,\n    \\end{align*}\n    and\n    \\begin{align*}\n        \\eta=\\frac{1}{1+\\sum_{i=0}^{n-1}h_i}\n        =\\prod_{i=0}^{n-1}(h_i-1).\n    \\end{align*}\n\\end{definition}"
+  },
+  {
+    "file": "sec2_preliminaries.tex",
+    "type": "definition",
+    "labels": [
+      "def:obs-s"
+    ],
+    "statement": "\\begin{definition}[Optimized Basic s-composable Schedule (OBS-S) in \\citet{GrimmerShuWangMOR}]\\label{def:obs-s}\n    Set $h^{\\mathrm{OBS\\text{-}S}}(0)=[\\,]^\\top$ and $\\eta^{\\mathrm{OBS\\text{-}S}}(0)=1$. For $N\\ge2$, define\n    \\begin{align*}\n        \\eta^{\\mathrm{OBS\\text{-}S}}(N-1)\n        \\coloneqq\\min_{1\\le m<N}\n        \\Jop\\!\\left(\n        \\eta^{\\mathrm{OBS\\text{-}S}}(m-1),\n        \\eta^{\\mathrm{OBS\\text{-}S}}(N-m-1)\n        \\right).\n    \\end{align*}\n    If $m_N$ is any minimizing index, set\n    \\begin{align*}\n        h^{\\mathrm{OBS\\text{-}S}}(N-1)\n        \\coloneqq\n        h^{\\mathrm{OBS\\text{-}S}}(m_N-1)\n        \\bowtie\n        h^{\\mathrm{OBS\\text{-}S}}(N-m_N-1).\n    \\end{align*}\n\\end{definition}"
+  },
+  {
+    "file": "sec2_preliminaries.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:scalar-equivalence",
+      "eq:U-DP"
+    ],
+    "statement": "\\begin{proposition}\\label{prop:scalar-equivalence}\n    For every $N\\ge1$,\n    \\begin{align*}\n        U_N\\coloneqq H_N+1=\\frac1{s_N}.\n    \\end{align*}\n    The common value satisfies\n    \\begin{align}\\label{eq:U-DP}\n        U_1=1,\n        \\quad\n        U_N=\\max_{1\\le m<N}\\Kop(U_m,U_{N-m})\n        \\quad(N\\ge2).\n    \\end{align}\n\\end{proposition}"
+  },
+  {
+    "file": "sec2_preliminaries.tex",
+    "type": "proposition",
+    "labels": [
+      "lem:K-properties",
+      "eq:K-special",
+      "eq:ratio-sandwich"
+    ],
+    "statement": "\\begin{proposition}\\label{lem:K-properties}\n    The map $\\Kop:[0,+\\infty)^2\\to[0,+\\infty)$ is continuous, symmetric, positively homogeneous, and strictly increasing in each coordinate. It satisfies\n    \\begin{align}\\label{eq:K-special}\n        \\Kop(0,x)=x,\n        \\quad\n        \\Kop(x,x)=\\rho x,\n        \\quad\n        \\Kop(x,y)>x+y>\\max\\{x,y\\}\n        \\quad(x,y>0).\n    \\end{align}\n    Moreover, for $x,y,x',y'>0$,\n    \\begin{align}\\label{eq:ratio-sandwich}\n        \\min\\!\\left\\{\\frac{x'}x,\\frac{y'}y\\right\\}\n        \\le\\frac{\\Kop(x',y')}{\\Kop(x,y)}\n        \\le\\max\\!\\left\\{\\frac{x'}x,\\frac{y'}y\\right\\},\n    \\end{align}\n    and both inequalities are strict if $x'/x\\ne y'/y$.\n\\end{proposition}"
+  },
+  {
+    "file": "sec3_rearrangement.tex",
+    "type": "theorem",
+    "labels": [
+      "thm:four-point-rearrangement",
+      "eq:four-point-chain",
+      "eq:first-equality-case",
+      "eq:second-equality-case"
+    ],
+    "statement": "\\begin{theorem} \\label{thm:four-point-rearrangement}\nFor every $0\\leq a\\leq b\\leq c\\leq d$,\n\\begin{align}\n    Z_{ab\\mid cd} \\leq Z_{ac\\mid bd} \\leq Z_{ad\\mid bc}.\n    \\label{eq:four-point-chain}\n\\end{align}\nMoreover,\n\\begin{align}\n    Z_{ab\\mid cd} = Z_{ac\\mid bd} & \\quad\\Longleftrightarrow\\quad b=c\\ \\text{or}\\ ad=bc, \\label{eq:first-equality-case}\\\\\n    Z_{ac\\mid bd} = Z_{ad\\mid bc} & \\quad\\Longleftrightarrow\\quad a=b\\ \\text{or}\\ c=d. \\label{eq:second-equality-case}\n\\end{align}\n\\end{theorem}"
+  },
+  {
+    "file": "sec3_rearrangement.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:sign-beyond-inner-roots"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:sign-beyond-inner-roots}\nLet $a,b,c,d\\geq0$ and let $P_{ab\\mid cd}$ be defined in \\eqref{eq:conjugate-polynomial}. Define\n\\begin{align*}\n    M_{ab\\mid cd} \\coloneqq \\max\\{\\mathcal K(a,b),\\mathcal K(c,d)\\}.\n\\end{align*}\nThen, for every $z>M_{ab\\mid cd}$,\n\\begin{align*}\n    \\operatorname{sgn}P_{ab\\mid cd}(z) = \\operatorname{sgn}\\bigl(z-Z_{ab\\mid cd}\\bigr).\n\\end{align*}\n\\end{lemma}"
+  },
+  {
+    "file": "sec3_rearrangement.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:pairing-differences"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:pairing-differences}\nFor all $a,b,c,d\\geq 0$,\n\\begin{align*}\n    P_{ac\\mid bd}(z)-P_{ab\\mid cd}(z) & = 2z^2(d-a)(c-b)Q_{ad+bc}(z), \\\\\n    P_{ad\\mid bc}(z)-P_{ac\\mid bd}(z) & = 2z^2(b-a)(d-c)Q_{ab+cd}(z).\n\\end{align*}\n\\end{lemma}"
+  },
+  {
+    "file": "sec3_rearrangement.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:quartic-evaluation"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:quartic-evaluation}\nFix a pairing $(a,b)\\mid(c,d)$, where $a,b,c,d\\geq 0$, and set\n\\begin{align*}\n    u=\\mathcal K(a,b), \\quad v=\\mathcal K(c,d),\\quad z=\\mathcal K(u,v).\n\\end{align*}\nIf $u,v>0$, then, for every scalar $E$,\n\\begin{align*}\n    Q_E(z)=\\frac{2\\bigl(abv^2+cdu^2-Euv\\bigr)(uv+uz+vz)}{uv},\n\n\\end{align*}\nwhere $Q_E$ is formed from the four inputs $a,b,c,d$.\n\\end{lemma}"
+  },
+  {
+    "file": "sec4_balanced.tex",
+    "type": "theorem",
+    "labels": [
+      "thm:abstract-balanced",
+      "eq:V-balanced",
+      "eq:W-bellman"
+    ],
+    "statement": "\\begin{theorem} \\label{thm:abstract-balanced}\n    Let $\\star:[0,\\infty)^2\\to[0,\\infty)$ be symmetric, positively homogeneous, and strictly increasing in each coordinate. Assume that, for some $\\lambda>1$,\n    \\begin{align*}\n        0\\star x=x,\\quad x\\star x=\\lambda x,\n    \\end{align*}\n    hold for all $x\\ge0$, and that the four-point rearrangement inequalities\n    \\begin{align*}\n        (a\\star b)\\star(c\\star d)\n        \\le(a\\star c)\\star(b\\star d)\n        \\le(a\\star d)\\star(b\\star c)\n    \\end{align*}\n    hold whenever $0\\le a\\le b\\le c\\le d$. Define the balanced sequence $\\{V_N\\}_{N\\ge0}$ by\n    \\begin{align}\\label{eq:V-balanced}\n        V_0=0,\n        \\quad\n        V_1=1,\n        \\quad\n        V_N=V_{\\floor{N/2}}\\star V_{\\ceil{N/2}}\n        \\;(N\\ge2),\n    \\end{align}\n    and define the Bellman sequence $\\{W_N\\}_{N\\ge1}$ by\n    \\begin{align}\\label{eq:W-bellman}\n        W_1=1,\n        \\quad\n        W_N=\\max_{1\\le m<N}W_m\\star W_{N-m}\n        \\;(N\\ge2).\n    \\end{align}\n    Then $\\{V_N\\}_{N\\ge0}$ is strictly increasing and satisfies the supercomposition inequality\n    \\begin{align*}\n        V_m\\star V_n\\le V_{m+n}\n        \\quad(m,n\\ge0).\n    \\end{align*}\n    Consequently, $W_N=V_N$ for every $N\\ge1$.\n\\end{theorem}"
+  },
+  {
+    "file": "sec4_balanced.tex",
+    "type": "corollary",
+    "labels": [
+      "cor:balanced-optimality",
+      "eq:balanced-recurrence"
+    ],
+    "statement": "\\begin{corollary}\\label{cor:balanced-optimality}\n    Extend the common scalar sequence by $U_0 \\coloneqq 0$. Then $\\{U_N\\}_{N\\ge0}$ is strictly increasing, and for all $m,n\\ge0$,\n    \\begin{align*}\n        \\Kop(U_m,U_n)\\le U_{m+n}.\n    \\end{align*}\n    Moreover, every $N\\ge2$ satisfies the balanced recurrence\n    \\begin{align} \\label{eq:balanced-recurrence}\n        U_N=\\Kop\\bigl(U_{\\floor{N/2}},U_{\\ceil{N/2}}\\bigr).\n    \\end{align}\n    In particular, the balanced root split solves the Bellman program~\\eqref{eq:U-DP} at every leaf count.\n\\end{corollary}"
+  },
+  {
+    "file": "sec4_balanced.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:equality-supercomposition"
+    ],
+    "statement": "\\begin{lemma}\\label{lem:equality-supercomposition}\n    For positive integers $m,n$,\n    \\begin{align*}\n        \\Kop(U_m,U_n)=U_{m+n}\n    \\end{align*}\n    if and only if either\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item $m=n$; or\n        \\item there exist integers $k\\ge0$ and $r\\ge1$ such that\n        \\begin{align*}\n            \\{m,n\\}=\\{2^kr,2^k(r+1)\\}.\n        \\end{align*}\n    \\end{enumerate}\n\\end{lemma}"
+  },
+  {
+    "file": "sec4_balanced.tex",
+    "type": "corollary",
+    "labels": [
+      "cor:all-splits",
+      "eq:three-splits"
+    ],
+    "statement": "\\begin{corollary}\\label{cor:all-splits}\n    For $N\\ge2$, define the set of maximizing left-child leaf counts by\n    \\begin{align*}\n        \\mathcal{M}_N\n        \\coloneqq \\argmax_{1\\le m<N}\\Kop(U_m,U_{N-m}).\n    \\end{align*}\n\n    Write $N=\\nu \\cdot 2^\\ell$, where $\\nu$ is odd. Then\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item If $\\nu=1$, then\n        \\begin{align*}\n            \\mathcal{M}_N=\\{N/2\\}.\n        \\end{align*}\n        \\item If $\\nu>1$ and $\\ell=0$, then\n        \\begin{align*}\n            \\mathcal{M}_N=\\{(N-1)/2,(N+1)/2\\}.\n        \\end{align*}\n        \\item If $\\nu>1$ and $\\ell\\ge1$, then\n        \\begin{align}\\label{eq:three-splits}\n            \\mathcal{M}_N\n            =\\left\\{(\\nu-1)2^{\\ell-1},\\nu\\cdot2^{\\ell-1},(\\nu+1)2^{\\ell-1}\\right\\}.\n        \\end{align}\n    \\end{enumerate}\n\n\\end{corollary}"
+  },
+  {
+    "file": "sec4_balanced.tex",
+    "type": "theorem",
+    "labels": [
+      "cor:ZhangJiang-conjecture"
+    ],
+    "statement": "\\begin{theorem}[Conjecture~4.17 in \\citet{ZhangJiang}]\\label{cor:ZhangJiang-conjecture}\n    For every step count $n\\ge1$,\n\n    \\begin{align*}\n        \\one^\\top h_\\circ^{(n)}\n        =\\one^\\top\\operatorname{ConPP}\\!\\left(\n        h_\\circ^{(\\floor{(n-1)/2})},\n        h_\\circ^{(\\ceil{(n-1)/2})}\n        \\right).\n    \\end{align*}\n    Moreover, if $n=\\nu\\cdot2^\\ell-1$ with $\\nu>1$ odd and $\\ell\\ge1$, then, for every $i\\in\\{-1,0,1\\}$,\n    \\begin{align*}\n        \\one^\\top h_\\circ^{(n)}\n        =\\one^\\top\\operatorname{ConPP}\\!\\left(\n        h_\\circ^{((\\nu+i)2^{\\ell-1}-1)},\n        h_\\circ^{((\\nu-i)2^{\\ell-1}-1)}\n        \\right),\n    \\end{align*}\n    and no other ConPP root split between two recursively optimized primitive schedules attains the same total stepsize.\n\\end{theorem}"
+  },
+  {
+    "file": "sec4_balanced.tex",
+    "type": "corollary",
+    "labels": [
+      "cor:optimal-trees"
+    ],
+    "statement": "\\begin{corollary} \\label{cor:optimal-trees}\n    Let $T$ be an ordered full binary composition tree with $N$ leaves, assign value $1$ to every leaf, and evaluate each internal node using $\\Kop$. Then $T$ attains the optimal root value $U_N$ if and only if, at every internal node with $j$ descendant leaves, its two child subtrees are optimal for their respective leaf counts and its left-child leaf count belongs to $\\mathcal{M}_j$. Equivalently, $T$ is optimal if and only if every internal split satisfies one of the two equality patterns in Lemma \\ref{lem:equality-supercomposition}.\n\\end{corollary}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:silver-power"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:silver-power}\nFor all $x,y\\geq0$,\n\\begin{align*}\n    \\Kop(x,y)\\le (x^q+y^q)^{1/q}.\n\\end{align*}\nEquality holds if and only if $x=y$ or $xy=0$.\n\\end{lemma}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:sharp-growth"
+    ],
+    "statement": "\\begin{proposition}\\label{prop:sharp-growth}\nFor every $N\\ge1$,\n\\begin{align*}\n    U_N\\le N^p.\n\\end{align*}\nEquivalently, $s_N\\ge N^{-p}$. Equality holds if and only if $N$ is a power of two.\n\\end{proposition}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:ratio-contraction",
+      "eq:R-recursion",
+      "eq:R-bound"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:ratio-contraction}\nFor every $N\\ge1$,\n\\begin{align}\\label{eq:R-recursion}\n    R_{2N}=T_0(R_N), \\quad R_{2N+1}=T_1(R_N),\n\\end{align}\nand\n\\begin{align}\\label{eq:R-bound}\n    1<R_N\\le\\rho, \\quad\n    0<R_N-1\\le\\frac{\\rho-1}{2^{\\floor{\\log_2N}}}\n    \\le\\frac{2(\\rho-1)}N.\n\\end{align}\n\\end{lemma}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:Lipschitz-F",
+      "eq:bilipschitz"
+    ],
+    "statement": "\\begin{lemma}\\label{lem:Lipschitz-F}\nThe function in \\eqref{eq:F-dyadic} extends uniquely to a strictly increasing bi-Lipschitz map\n\\begin{align*}\n    F:[1,2]\\to[1,\\rho]\n\\end{align*}\nthat satisfies $F(1)=1$, $F(2)=\\rho$, and \\eqref{eq:midpoint-rule} on every dyadic interval. More precisely,\n\\begin{align}\\label{eq:bilipschitz}\n    c_-(y-x)\\le F(y)-F(x)\\le c_+(y-x),\n    \\quad 1\\le x<y\\le2,\n\\end{align}\nwhere\n\\begin{align*}\n    c_-\\coloneqq(\\rho-1)\\left(1-\\frac1{2\\rho}\\right),\n    \\quad\n    c_+\\coloneqq(\\rho-1)\\exp\\left(\\frac1{2\\rho}\\right).\n\\end{align*}\nIn particular, one may take $L_F\\coloneqq c_+$ as a Lipschitz constant for $F$.\n\\end{lemma}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "theorem",
+    "labels": [
+      "thm:phase",
+      "eq:exact-phase",
+      "eq:phase-extrema"
+    ],
+    "statement": "\\begin{theorem} \\label{thm:phase}\nFor $0\\le t\\le1$, define\n\\begin{align*}\n    \\Phi(t)\\coloneqq \\rho^{-t}F(2^t),\n\\end{align*}\nand extend $\\Phi$ as a $1$-periodic function. Let $\\mathbb T \\coloneqq \\R/\\mathbb Z$. Then $\\Phi: \\mathbb T \\to \\mathbb R$ is positive, Lipschitz, and nonconstant, and\n\\begin{align}\\label{eq:exact-phase}\n    U_N=N^p\\Phi\\bigl(\\{\\log_2N\\}\\bigr) \\quad (N\\ge1),\n\\end{align}\nwhere $\\{\\cdot\\}$ takes the fractional part of a real. It is the unique continuous $1$-periodic function with this property. Furthermore,\n\\begin{align}\\label{eq:phase-extrema}\n    0<\\phimin\\coloneqq\\min_{t\\in[0,1]}\\Phi(t)<1,\n    \\quad\n    \\max_{t\\in[0,1]}\\Phi(t)=1.\n\\end{align}\nOne valid Lipschitz constant on the phase circle is $L_\\Phi\\coloneqq2(\\log 2)c_++\\rho\\log\\rho$.\n\\end{theorem}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "remark",
+    "labels": [],
+    "statement": "\\begin{remark}\nThe level-17 rational certificate recorded in Appendix \\ref{app:certificates} yields\n\\begin{align*}\n    0.99281236<\\phimin<0.99281934.\n\\end{align*}\n\\end{remark}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "corollary",
+    "labels": [
+      "cor:cluster-sets"
+    ],
+    "statement": "\\begin{corollary}\\label{cor:cluster-sets}\nThe normalized scalar and rate sequences satisfy\n\\begin{align*}\n    \\Clust\\left(\\frac{U_N}{N^p}\\right)=[\\phimin,1],\n    \\quad\n    \\Clust(N^ps_N)=\\left[1,\\frac1{\\phimin}\\right].\n\\end{align*}\nIn particular, neither sequence converges.\n\\end{corollary}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "corollary",
+    "labels": [
+      "cor:objective-phase",
+      "eq:B-exact",
+      "eq:B-asymptotic"
+    ],
+    "statement": "\\begin{corollary}\\label{cor:objective-phase}\nLet $\\theta_N = \\{\\log_2N\\}$. For every $N\\ge1$,\n\\begin{align}\\label{eq:B-exact}\n    B_N=\\frac1{2N^p\\Phi(\\theta_N)-1}.\n\\end{align}\nAs $N \\to \\infty$,\n\\begin{align}\\label{eq:B-asymptotic}\n    B_N\n    =\\frac{N^{-p}}{2\\Phi(\\theta_N)}\n    +O(N^{-2p}),\n\\end{align}\nwhere the $O(N^{-2p})$ remainder is uniform in the dyadic phase $\\theta_N$.\nFurthermore,\n\\begin{align*}\n    \\Clust(N^pB_N)\n    =\\left[\\frac12,\\frac1{2\\phimin}\\right].\n\\end{align*}\nConsequently, the normalized tight objective coefficient has no single asymptotic constant.\n\\end{corollary}"
+  },
+  {
+    "file": "sec5_phase.tex",
+    "type": "remark",
+    "labels": [],
+    "statement": "\\begin{remark}\n    The matching instances make $B_N$ tight for each corresponding optimized ConPP/OBS-S schedule. Since $B_N$ decreases strictly with $U_N$, balanced scalar optimization also makes this coefficient best among schedules generated recursively by ConPP or by basic s-composition. These statements do not assert exact finite-horizon minimax optimality over all predetermined schedules. The optimized ConPD/OBS-F schedules obey an asymmetric recursion and are treated separately in the next section.\n\\end{remark}"
+  },
+  {
+    "file": "sec6_obsf.tex",
+    "type": "definition",
+    "labels": [
+      "def:fcomposable",
+      "eq:f-rate-identity"
+    ],
+    "statement": "\\begin{definition}[Definition~1 in \\citet{GrimmerShuWangMOR}]\\label{def:fcomposable}\nA positive $n$-step schedule $h=(h_0,\\ldots,h_{n-1})^\\top$ is \\emph{f-composable with rate $\\eta>0$} if, for every $f\\in\\F_1$, every minimizer $x_*$, and every associated gradient-descent trajectory,\n\\begin{align*}\n    f(x_n)-f_*\n    \\le\\frac\\eta2\\norm{x_0-x_*}^2,\n\\end{align*}\nand its rate satisfies the sum--product identities\n\\begin{align}\\label{eq:f-rate-identity}\n    \\eta\n    =\\frac1{1+2\\sum_{i=0}^{n-1}h_i}\n    =\\prod_{i=0}^{n-1}(h_i-1)^2.\n\\end{align}\nThe empty schedule is f-composable with rate one.\n\\end{definition}"
+  },
+  {
+    "file": "sec6_obsf.tex",
+    "type": "proposition",
+    "labels": [
+      "thm:obsf-sandwich",
+      "eq:obsf-sandwich"
+    ],
+    "statement": "\\begin{proposition} \\label{thm:obsf-sandwich}\nFor every $N\\ge1$,\n\\begin{align}\\label{eq:obsf-sandwich}\n    2U_N-1\\le W_N\\le\\rho U_N.\n\\end{align}\nConsequently, if $t=\\{\\log_2m\\}$, then\n\\begin{align*}\n    \\frac{1}{\\rho\\Phi(t)}\n    \\le C_m^F\n    \\le\\frac{1}{2\\Phi(t)}.\n\\end{align*}\n\\end{proposition}"
+  },
+  {
+    "file": "sec6_obsf.tex",
+    "type": "theorem",
+    "labels": [
+      "thm:obsf-continuous-phase",
+      "eq:obsf-uniform-phase",
+      "eq:obsf-cluster-set",
+      "eq:obsf-objective-phase"
+    ],
+    "statement": "\\begin{theorem} \\label{thm:obsf-continuous-phase}\nThere exists a unique positive Lipschitz function $\\Psi_F:\\mathbb T\\to(0,\\infty)$ such that the interpolation functions $\\Psi_k$ converge uniformly to $\\Psi_F$ on $[0,1]$:\n\\begin{align}\\label{eq:obsf-uniform-phase}\n    \\norm{\\Psi_k-\\Psi_F}_{L^\\infty([0,1])}\n    \\to0.\n\\end{align}\nEquivalently, because the maximal interpolation mesh tends to zero and $\\Psi_F$ is Lipschitz,\n\\begin{align*}\n    \\sup_{2^k\\le N\\le2^{k+1}}\n    \\left|N^p\\eta^{\\mathrm{F}}_N-\\Psi_F(\\{\\log_2N\\})\\right|\n    \\to0.\n\\end{align*}\nThus\n\\begin{align*}\n    \\eta^{\\mathrm{F}}_N=N^{-p}\\Psi_F(\\{\\log_2N\\})+o(N^{-p})\n\\end{align*}\nas $N \\to \\infty$.\nMoreover,\n\\begin{align}\\label{eq:obsf-cluster-set}\n    \\Clust(N^p\\eta^{\\mathrm{F}}_N)\n    =\\Psi_F(\\mathbb T)\n    =[\\min\\Psi_F,\\max\\Psi_F].\n\\end{align}\nThus \\eqref{eq:obsf-cluster-set} is the complete cluster interval of the normalized tight objective coefficient in \\eqref{eq:obsf-objective-bound}. Combining this expansion with \\eqref{eq:obsf-objective-bound} gives the following guarantee for the optimized ConPD/OBS-F schedules\n\n\\begin{align}\\label{eq:obsf-objective-phase}\n    f(x_{N-1})-f_*\n    \\le\n    \\left[N^{-p}\\Psi_F(\\{\\log_2N\\})+o(N^{-p})\\right]\n    \\frac{L}{2}\\norm{x_0-x_*}^2\n\\end{align}\nwhere the $o(N^{-p})$ remainder has the same dyadic-block uniformity. One may take $2L_{\\mathrm{obs}}\\log 2$ as a Lipschitz constant for $\\Psi_F$.\n\\end{theorem}"
+  },
+  {
+    "file": "sec6_obsf.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-support",
+      "eq:obsf-xi-equation",
+      "eq:obsf-support"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-support}\nLet $\\xi_*\\in(0,1)$ be the unique interior solution of\n\\begin{align}\\label{eq:obsf-xi-equation}\n    \\xi^{2q-1}(2-\\xi)=1,\n\\end{align}\nand define\n\\begin{align*}\n    \\tau_*\\coloneqq\\frac{1-\\xi_*}{2\\xi_*^2},\n    \\quad\n    B_{\\mathrm{sup}}\\coloneqq2^q\\frac{1-\\xi_*^{2q}}{(1-\\xi_*)^q}.\n\\end{align*}\nThen $B_{\\mathrm{sup}}>2^q$ and, for all $u,w\\ge0$,\n\\begin{align}\\label{eq:obsf-support}\n    \\mathcal A(u,w)^q\\le B_{\\mathrm{sup}}u^q+w^q.\n\\end{align}\nFor $u,w>0$, equality holds if and only if $u/w=\\tau_*$. Equality also holds when $u=0$, whereas the inequality is strict when $w=0<u$.\n\\end{lemma}"
+  },
+  {
+    "file": "sec6_obsf.tex",
+    "type": "theorem",
+    "labels": [
+      "cor:obsf-complete-phase",
+      "eq:obsf-final-enclosure"
+    ],
+    "statement": "\\begin{theorem} \\label{cor:obsf-complete-phase}\nThe phase $\\Psi_F$ is nonconstant and satisfies\n\\begin{align}\\label{eq:obsf-final-enclosure}\n    c_*<\\min_{t\\in\\mathbb T}\\Psi_F(t)\n    <\\max_{t\\in\\mathbb T}\\Psi_F(t)\n    \\le\\frac{c_*}{\\phi_*}.\n\\end{align}\nConsequently, the cluster interval in \\eqref{eq:obsf-cluster-set} is nondegenerate and lies strictly above the sharp homogeneous support barrier. By \\eqref{eq:obsf-objective-phase}, this is precisely the nondegenerate interval of asymptotic leading constants in the tight objective-gap guarantee for optimized ConPD/OBS-F schedules.\n\\end{theorem}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:tree-recurrence",
+      "eq:tree-recurrence",
+      "eq:tree-three"
+    ],
+    "statement": "\\begin{proposition} \\label{prop:tree-recurrence}\n    The sequence $\\{T_N\\}_{N\\ge1}$ satisfies\n    \\begin{align}\\label{eq:tree-recurrence}\n        T_1=1,\n        \\quad\n        T_N=\\sum_{m\\in\\mathcal{M}_N}T_mT_{N-m}\n        \\quad(N\\ge2).\n    \\end{align}\n    More explicitly, write $N=\\nu2^\\ell$, where $\\nu$ is odd. For $N\\ge2$,\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item if $\\nu=1$, then $T_N=T_{N/2}^2=1$;\n        \\item if $\\nu>1$ and $\\ell=0$, then\n        \\begin{align*}\n            T_N=2T_{(N-1)/2}T_{(N+1)/2};\n        \\end{align*}\n        \\item if $\\nu>1$ and $\\ell\\ge1$, setting\n        \\begin{align*}\n            a=(\\nu-1)2^{\\ell-1},\n            \\quad\n            b=\\nu2^{\\ell-1},\n            \\quad\n            c=(\\nu+1)2^{\\ell-1},\n        \\end{align*}\n        gives\n        \\begin{align}\\label{eq:tree-three}\n            T_N=2T_aT_c+T_b^2.\n        \\end{align}\n    \\end{enumerate}\n\\end{proposition}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:subdivision-derivative",
+      "eq:F-integral",
+      "eq:r-bit",
+      "eq:D-product"
+    ],
+    "statement": "\\begin{proposition} \\label{prop:subdivision-derivative}\nThere exists a bounded function $D:[1,2]\\to[c_-,c_+]$ such that\n\\begin{align}\\label{eq:F-integral}\n    F(x)=1+\\int_1^xD(u)\\,\\mathrm{d} u.\n\\end{align}\nThe function $D$ is continuous at every nondyadic point $x\\in(1,2)$, and $F'(x)=D(x)$ there. At every interior dyadic point, both one-sided derivatives of $F$ exist.\n\nFor a binary path $\\epsilon=\\{\\epsilon_i\\}_{i\\ge1}\\in\\{0,1\\}^{\\mathbb N}$, set $r_0=\\rho$ and recursively define\n\\begin{align}\\label{eq:r-bit}\n    r_i=\n    \\begin{cases}\n        T_0(r_{i-1}),&\\epsilon_i=0,\\\\\n        T_1(r_{i-1}),&\\epsilon_i=1.\n    \\end{cases}\n\\end{align}\nFor $k\\ge1$, define the partial product\n\\begin{align*}\n    P_k(\\epsilon)\n    \\coloneqq(\\rho-1)\\prod_{i=1}^{k}w_{\\epsilon_i}(r_{i-1}).\n\\end{align*}\nThen $P_k$ converges uniformly on the path space $\\{0,1\\}^{\\mathbb N}$ to\n\\begin{align}\\label{eq:D-product}\n    P(\\epsilon)\\coloneqq\n    (\\rho-1)\\prod_{i=1}^{\\infty}w_{\\epsilon_i}(r_{i-1})\n\\end{align}\nin the precise sense that $\\sup_\\epsilon|P_k(\\epsilon)-P(\\epsilon)|\\to0$. More precisely, with $M=1/[4\\rho(\\rho-1)]$,\n\\begin{align*}\n    \\sup_{\\epsilon\\in\\{0,1\\}^{\\mathbb N}}\n    \\sum_{i=k+1}^{\\infty}\n    \\left|\\log w_{\\epsilon_i}(r_{i-1})\\right|\n    \\le4M(\\rho-1)2^{-k}.\n\\end{align*}\nIf $x\\in(1,2)$ is nondyadic and $x-1=0.\\epsilon_1\\epsilon_2\\cdots$, then $D(x)=F'(x)=P(\\epsilon)$. If an interior dyadic point $x_0$ has the two binary expansions\n\\begin{align*}\n    x_0-1\n    &=0.\\epsilon_1\\cdots\\epsilon_m000\\cdots\\\\\n    &=0.\\epsilon_1\\cdots\\epsilon_{m-1}0111\\cdots,\n    \\quad \\epsilon_m=1,\n\\end{align*}\nthen\n\\begin{align*}\n    F'_+(x_0)&=P(\\epsilon_1,\\ldots,\\epsilon_m,0,0,\\ldots),\\\\\n    F'_-(x_0)&=P(\\epsilon_1,\\ldots,\\epsilon_{m-1},0,1,1,\\ldots).\n\\end{align*}\n\\end{proposition}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "corollary",
+    "labels": [
+      "cor:strict-corner",
+      "eq:strict-corner"
+    ],
+    "statement": "\\begin{corollary} \\label{cor:strict-corner}\nThe two one-sided derivatives at $x=3/2$ satisfy\n\\begin{align}\\label{eq:strict-corner}\n    F'_-(3/2)>F'_+(3/2).\n\\end{align}\nConsequently, $F$ is not differentiable at $3/2$ and is not continuously differentiable on $[1,2]$.\n\\end{corollary}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:phase-cert"
+    ],
+    "statement": "\\begin{proposition} \\label{prop:phase-cert}\nFor every $k\\ge0$,\n\\begin{align*}\n    \\underline\\phi_k\\le\\phimin\\le\\overline\\phi_k,\n    \\quad\n    0\\le\\overline\\phi_k-\\underline\\phi_k\\le\\frac{p}{2^k}.\n\\end{align*}\nThe sequence $\\{\\underline\\phi_k\\}$ is nondecreasing, the sequence $\\{\\overline\\phi_k\\}$ is nonincreasing, and both converge to $\\phimin$. All quantities through level $k$ are computable in $O(2^k)$ scalar operations.\n\\end{proposition}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-local-comparisons",
+      "eq:obsf-upper-local",
+      "eq:obsf-lower-local"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-local-comparisons}\nFor $x,y>0$,\n\\begin{align}\n    \\mathcal A(x,\\rho y)&\\le\\rho\\Kop(x,y),\n    \\label{eq:obsf-upper-local}\\\\\n    \\mathcal A(x,2y-1)&\\ge2\\Kop(x,y)-1,\n    \\quad x,y\\ge1.\n    \\label{eq:obsf-lower-local}\n\\end{align}\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-discrete-modulus"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-discrete-modulus}\nSet $L_U\\coloneqq\\max\\{1,L_F\\}$, and put $\\phi_*\\coloneqq\\min\\Phi$. With $U_0=0$, for every $m,N\\ge1$,\n\\begin{align*}\n    0<U_m-U_{m-1}&\\le L_Um^{p-1},\\\\\n    0<W_{N+1}-W_N&\\le4L_UN^{p-1},\\\\\n    |C_{N+1}-C_N|&\\le\\frac{4L_U+\\rho p}{\\phi_*^2N}.\n\\end{align*}\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:obsf-deficit",
+      "eq:obsf-deficit-decomposition"
+    ],
+    "statement": "\\begin{proposition} \\label{prop:obsf-deficit}\nFor every $N\\ge1$,\n\\begin{align*}\n    W_N^q\\le B_{\\mathrm{sup}}N,\n    \\quad\n    C_N=N^p\\eta^{\\mathrm{F}}_N\\ge c_*.\n\\end{align*}\nDefine $E_N\\coloneqq B_{\\mathrm{sup}}N-W_N^q\\ge0$. If $m$ is any maximizing pivot for $W_N$ and $r=N-m$, then\n\\begin{align}\\label{eq:obsf-deficit-decomposition}\n    E_N=B_{\\mathrm{sup}}(m-U_m^q)+E_r+\\sigma(U_m,W_r),\n\\end{align}\nwhere\n\\begin{align*}\n    \\sigma(u,w)\\coloneqq B_{\\mathrm{sup}}u^q+w^q-\\mathcal A(u,w)^q,\n\\end{align*}\nand all three terms on the right-hand side of \\eqref{eq:obsf-deficit-decomposition} are nonnegative.\n\\end{proposition}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-strict-S-phase"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-strict-S-phase}\nFor every $x\\in(1,2)$,\n\\begin{align*}\n    F(x)<x^p.\n\\end{align*}\nEquivalently, $\\Phi(t)<1$ for every nonzero phase $t\\in(0,1)$.\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-contact-fraction",
+      "eq:obsf-contact-identity",
+      "eq:obsf-contact-interval"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-contact-fraction}\nWrite $r_*$ and $\\alpha_*$ as in \\eqref{eq:star}. Set $x_*\\coloneqq2\\alpha_*$. The contact fraction satisfies\n\\begin{align}\\label{eq:obsf-contact-identity}\n    \\alpha_*=1-\\xi_*^{2q},\n    \\quad\n    1-\\alpha_*=\\xi_*^{2q},\n\\end{align}\nand\n\\begin{align}\\label{eq:obsf-contact-interval}\n    \\frac14<1-\\alpha_*<\\frac12.\n\\end{align}\nIn particular, $1/2<\\alpha_*<1$ and $x_*\\in(1,2)$.\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-dyadic-strict"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-dyadic-strict}\nThe dyadic-ray limit satisfies\n\\begin{align*}\n    C_1^F=\\lim_{k\\to\\infty}(2^k)^p\\eta^{\\mathrm{F}}_{2^k}>c_*.\n\\end{align*}\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-constant-rigidity"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-constant-rigidity}\nIf the phase profile in Theorem \\ref{thm:obsf-continuous-phase} were constant, then it would be identically equal to $c_*$.\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "lemma",
+    "labels": [
+      "lem:obsf-global-strict"
+    ],
+    "statement": "\\begin{lemma} \\label{lem:obsf-global-strict}\nFor every $t\\in\\mathbb T$,\n\\begin{align*}\n    \\Psi_F(t)>c_*.\n\\end{align*}\nConsequently, $\\min_{t\\in\\mathbb T}\\Psi_F(t)>c_*$.\n\\end{lemma}"
+  },
+  {
+    "file": "appendix.tex",
+    "type": "proposition",
+    "labels": [
+      "prop:obsf-phase-enclosure"
+    ],
+    "statement": "\\begin{proposition} \\label{prop:obsf-phase-enclosure}\nFor every $t\\in\\mathbb T$,\n\\begin{align*}\n    \\Psi_F(t)\\le\\frac{c_*}{\\phi_*}.\n\\end{align*}\nEquivalently, with $\\Delta_F(t)=1/\\Psi_F(t)$, one has $\\Delta_F(t)\\ge d_*\\phi_*$.\n\\end{proposition}"
+  }
+]

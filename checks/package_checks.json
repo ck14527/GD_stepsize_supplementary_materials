@@ -1,0 +1,60 @@
+{
+  "created_utc": "2026-09-24T03:51:54.880961+00:00",
+  "version": "Appendix-F-to-Markdown migration; Figure 1 redesign pending instructions",
+  "base_archive": "GD_stepsize_ICLR_readable_anonymous_source.zip",
+  "base_archive_sha256": "e85e4f72873529bab64fafc6603cec2680944c01b58f05ce2b2b1c3c6e1cbf60",
+  "figure_1_changed": false,
+  "figure_PDFs_byte_identical": {
+    "phi_phase_compact.pdf": true,
+    "psi_phase_compact.pdf": true,
+    "phi_phase_original.pdf": true,
+    "psi_phase_original.pdf": true
+  },
+  "appendix_F_removed_from_TeX": true,
+  "old_appendix_F_references_remaining": [],
+  "markdown_subsections": [
+    "1. Reference implementations and numerical checks",
+    "2. Phase plots and the distinction between samples and certificates",
+    "3. Checking the finite certificates",
+    "4. Further related work"
+  ],
+  "mathematical_statement_blocks": 44,
+  "mathematical_statement_blocks_unchanged": true,
+  "appendix_A_through_E_files_byte_identical": {
+    "appA_certificates.tex": true,
+    "appB_rearrangement.tex": true,
+    "appC_optimizers.tex": true,
+    "appD_symmetric.tex": true,
+    "appE_asymmetric.tex": true
+  },
+  "original_numerical_and_build_code_unchanged": {
+    "reference_checks.py": true,
+    "obsf_exhaustive.cpp": true,
+    "check_phase_certificate.py": true,
+    "prepare_phase_plots.py": true,
+    "verify_project.py": true,
+    "build.sh": true
+  },
+  "bundled_OBSF_dataset_byte_identical": true,
+  "new_checks": [
+    "pdfLaTeX/BibTeX rebuild and document preflight",
+    "Small Python checks (binary N<=4096, symmetric splits N<=256, OBS-F N<=2048)",
+    "Fresh C++ OBS-F N<=2048 compared with independent Python reference",
+    "Consistency checks on the inherited 524288-row dataset, without large maximization",
+    "Python source syntax, local Markdown links, PDF internal link destinations",
+    "Rendered review of changed pages and the final appendix page"
+  ],
+  "not_rerun": [
+    "Full OBS-F Bellman search through 2^19",
+    "Level-17 interval certificate",
+    "Level-22 plotting computation",
+    "Lean verification"
+  ],
+  "main_text_pages": 9,
+  "total_pdf_pages": 46,
+  "internal_pdf_links": 415,
+  "invalid_internal_links": [],
+  "missing_local_markdown_links": [],
+  "preflight_passed": true,
+  "new_data_checks_passed": true
+}

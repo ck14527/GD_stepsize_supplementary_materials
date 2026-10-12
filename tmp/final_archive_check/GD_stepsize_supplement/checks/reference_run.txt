@@ -1,0 +1,28 @@
+{
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "classification": "floating-point numerical regression; not a proof",
+  "binary_evaluator_test_N_max": 4096,
+  "max_relative_binary_error": 8.881784197001252e-16,
+  "symmetric_all_splits_test_N_max": 256,
+  "split_mismatch_N": [],
+  "symmetric_table_seconds": 0.6813404360000277,
+  "symmetric_phase": {
+    "level": 22,
+    "sampled_minimum": 0.9928193322613984,
+    "minimizing_N": 5802376,
+    "sampled_minimum_phase": 0.46821235602851274,
+    "nonconstancy_witness": 0.993227227071306
+  },
+  "obsf": {
+    "level": 12,
+    "maximum_N": 8192,
+    "ordered_candidates": 33550336,
+    "seconds": 0.1731330000000071,
+    "sampled_minimum": 0.4214358355432481,
+    "sampled_maximum": 0.42317665443418245,
+    "successive_scale_difference": 6.720432770579432e-05,
+    "sandwich_test_passed": true
+  },
+  "total_seconds": 0.9405831860001399
+}

@@ -1,0 +1,36 @@
+{
+  "title_and_abstract_match_uploaded_source": {
+    "title": true,
+    "abstract": true
+  },
+  "unchanged_template_bibliography_and_notation_files": {
+    "iclr2027_conference.sty": true,
+    "iclr2027_conference.bst": true,
+    "iclr2027_conference.bib": true,
+    "references.bib": true,
+    "math_commands.tex": true
+  },
+  "original_labeled_results": 41,
+  "preserved_labeled_results": 41,
+  "missing_original_result_labels": [],
+  "duplicate_labels": [],
+  "unresolved_source_references": [],
+  "log_issues": {
+    "undefined_references": [],
+    "undefined_citations": [],
+    "multiply_defined_labels": [],
+    "overfull_boxes": [],
+    "missing_characters": [],
+    "latex_errors": []
+  },
+  "main_text_last_page": 9,
+  "main_text_within_nine_pages": true,
+  "total_pdf_pages": 46,
+  "anonymous_pdf_author_metadata": true,
+  "author_identity_tokens_found_in_pdf": [],
+  "mathematical_truth_or_lean_verification_claimed": false,
+  "remaining_layout_notices": [
+    "Underfull \\hbox (badness 1565) in paragraph at lines 66--66"
+  ],
+  "passed": true
+}

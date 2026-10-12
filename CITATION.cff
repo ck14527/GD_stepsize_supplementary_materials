@@ -1,0 +1,58 @@
+{
+  "cff-version": "1.2.0",
+  "message": "Please cite the accompanying paper when using these supplementary materials.",
+  "type": "software",
+  "title": "Supplementary materials for Optimal Recursive Composition and Dyadic Phase Laws for Gradient Descent with Predetermined Stepsizes",
+  "authors": [
+    {
+      "given-names": "Yu",
+      "family-names": "Liu"
+    },
+    {
+      "given-names": "Kang",
+      "family-names": "Chen"
+    },
+    {
+      "given-names": "Rujun",
+      "family-names": "Jiang"
+    },
+    {
+      "given-names": "Tianyu",
+      "family-names": "Wang"
+    }
+  ],
+  "repository-code": "https://github.com/ck14527/GD_stepsize_supplementary_materials",
+  "url": "https://arxiv.org/abs/2609.11788",
+  "keywords": [
+    "gradient descent",
+    "stepsize schedules",
+    "dyadic phase laws",
+    "Lean 4",
+    "reproducibility"
+  ],
+  "preferred-citation": {
+    "type": "article",
+    "title": "Optimal Recursive Composition and Dyadic Phase Laws for Gradient Descent with Predetermined Stepsizes",
+    "authors": [
+      {
+        "given-names": "Yu",
+        "family-names": "Liu"
+      },
+      {
+        "given-names": "Kang",
+        "family-names": "Chen"
+      },
+      {
+        "given-names": "Rujun",
+        "family-names": "Jiang"
+      },
+      {
+        "given-names": "Tianyu",
+        "family-names": "Wang"
+      }
+    ],
+    "year": 2026,
+    "doi": "10.48550/arXiv.2609.11788",
+    "url": "https://arxiv.org/abs/2609.11788"
+  }
+}

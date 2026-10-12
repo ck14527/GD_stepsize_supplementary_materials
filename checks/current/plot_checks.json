@@ -1,0 +1,22 @@
+{
+  "classification": "float64 postprocessing of a supplied Bellman table; not a fresh exhaustive search",
+  "large_bellman_search_rerun": false,
+  "support_barrier_c_star": 0.420809352823451,
+  "support_barrier_definition": "Lemma E.5, equations (72)-(74); floating-point evaluation",
+  "max_N": 524288,
+  "phase_level": 18,
+  "ordered_candidates": 137438691328,
+  "sampled_minimum": 0.42139018953946744,
+  "sampled_minimum_N": 369674,
+  "sampled_minimum_phase": 0.4958940535580841,
+  "sampled_maximum": 0.42311312303600535,
+  "sampled_maximum_N": 263572,
+  "sampled_maximum_phase": 0.00783759134297737,
+  "successive_scale_difference": 9.823505837114332e-07,
+  "reported_rounded_minimum_matches": true,
+  "reported_rounded_maximum_matches": true,
+  "reported_rounded_scale_difference_matches": true,
+  "postprocessing_system": "Windows-11-10.0.26200-SP0",
+  "inherited_bellman_environment_file": "checks/environment.json",
+  "inherited_bellman_run_log": "maximum_N=524288 candidates=137438691328 seconds=81.5125153"
+}
