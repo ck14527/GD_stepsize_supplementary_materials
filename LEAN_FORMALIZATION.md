@@ -1,5 +1,9 @@
 # Lean 4 formalization in the supplementary material
 
+## Current repository verification
+
+The public repository now provides a **Lean formal verification** GitHub Actions workflow. It performs a clean `lake build GD` with the pinned Lean 4.19.0 and mathlib revision, then audits the freshly exported declarations. It checks all 40 registered proof targets and rejects unsupported theorem axioms, including `sorryAx`. The workflow badge in the root README links to the execution status and downloadable evidence. The preparation records and limitations below describe the earlier 2026-09-24 work and are preserved as historical evidence. The formalization scope is unchanged.
+
 This supplement provides Lean 4 proofs for the paper's **scalar recurrences, composition trees and phase laws**. It also provides Python computations and figures, described separately in [NUMERICAL_REPRODUCIBILITY.md](NUMERICAL_REPRODUCIBILITY.md). A plotted curve, a numerical interval certificate and a Lean theorem provide different kinds of evidence.
 
 ## Reviewer entry points

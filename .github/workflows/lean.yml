@@ -37,7 +37,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p ../checks/lean_verification
-          cp audit/lean_declarations.json "$RUNNER_TEMP/historical_lean_declarations.json"
+          git show HEAD:lean/audit/lean_declarations.json > "$RUNNER_TEMP/historical_lean_declarations.json"
           trap 'cp "$RUNNER_TEMP/historical_lean_declarations.json" audit/lean_declarations.json' EXIT
           lake env lean GD/Audit.lean
           cp audit/lean_declarations.json ../checks/lean_verification/current_declarations.json

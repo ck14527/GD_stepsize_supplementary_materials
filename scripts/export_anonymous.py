@@ -81,7 +81,7 @@ def allowed(name: str) -> bool:
         if parts[1] == 'graphs':
             return path.suffix in {'.svg', '.dot', '.html'}
         if parts[1] == 'tools':
-            return len(parts) == 3 and parts[2] in {'check_snapshot.py', 'run_checks.py'}
+            return len(parts) == 3 and parts[2] in {'check_snapshot.py', 'check_elaborated.py', 'run_checks.py'}
         if parts[1] == 'audit':
             return len(parts) == 3 and parts[2] in LEAN_AUDIT_FILES
     return False

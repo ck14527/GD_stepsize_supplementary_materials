@@ -1,0 +1,18 @@
+{
+  "check": "axioms and exact paper targets in a Lean-produced elaborated export",
+  "declaration_export_sha256": "a2ee105d4a37e99ecc0ad2408408c0e9e0f0da4e650e6e422ee0bea5d6394e08",
+  "named_source_theorems": 623,
+  "exported_declarations": 1602,
+  "registered_scalar_results": 40,
+  "verified_registered_targets": 40,
+  "allowed_theorem_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "unsupported_theorem_axioms": [],
+  "unsafe_or_partial_in_theorem_closure": [],
+  "project_axioms_in_theorem_closure": [],
+  "errors": [],
+  "passed": true
+}

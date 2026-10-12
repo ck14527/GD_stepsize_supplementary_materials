@@ -21,6 +21,14 @@ These are consistency checks of supplied records, not independent proof checking
 
 The registry refers to manuscript SHA-256 `db3137a4cc77fcebf4f7956f4afdccd5ed51dd006e32dec69657f84843898fc9`. The supplied `GD_stepsize_schedule.pdf` has SHA-256 `e38f43f82aca4cf4e26d3f58d202a853aedee2bfd4be0d6c9f1fb1a5d6374003`. A different hash alone does not imply a mathematical change, but prevents claiming identical manuscript provenance. The final PDF needs a statement-by-statement semantic review before its hash is registered. Old audit JSON is preserved as historical evidence; it has not been relabeled as a fresh run or rewritten to hide this difference. `audit/source_sha256.json` also includes hashes of older documentation and missing historical tooling; it is not a manifest of the revised submission package.
 
+## Current clean build and compiled-declaration audit
+
+The public supplementary-materials repository now has a root-level **Lean formal verification** workflow. Each run starts from the specified Git commit, uses Lean 4.19.0 and the exact recorded mathlib revision, retrieves the dependency cache, and executes `lake build GD` without restoring project build products. The historical preparation described above is a separate event.
+
+After the build succeeds, the workflow runs `lake env lean GD/Audit.lean` and audits that newly generated declaration export with `tools/check_elaborated.py`. It verifies all named source theorems and the exact targets of all 40 registered statements, rejects `sorryAx` and other unsupported theorem axioms, and checks the project theorem closures for custom axioms and unsafe or partial definitions. Only `propext`, `Classical.choice`, and `Quot.sound` are allowed. The current export, audit report, toolchain version and commit are published as workflow artifacts; the inherited declaration export is restored without modification.
+
+A successful run establishes Lean compilation and these compiled-environment properties for its exact proof inputs. It does not extend the mathematical scope below or establish a new semantic correspondence with the final PDF. The public workflow run page reports whether the current execution has succeeded.
+
 ## Formalized mathematics and exclusions
 
 | Topic | Precise scope |
@@ -72,4 +80,4 @@ lake build GD
 
 This compiles every imported proof in the root library. Cache retrieval needs initial network access. No GPU or dataset is required; a fresh-build duration and peak RAM have not been measured for this package. The inherited two-second build timing is incremental and must not be used as a clean-build estimate.
 
-To export current elaborated types, references and axioms, run `lake env lean GD/Audit.lean` in a separate copy. It writes `audit/lean_declarations.json`; it does not regenerate provenance, the correspondence registry, or all audit reports. Recheck the new export against the intended sources and inspect its axiom closures before recording new provenance. The historical full-runner and graph-generation scripts are not supplied, and no CI execution is claimed for this revised supplement.
+To export current elaborated types, references and axioms, run `lake env lean GD/Audit.lean` in a separate copy. It writes `audit/lean_declarations.json`; it does not regenerate provenance, the correspondence registry, or all audit reports. Recheck the new export against the intended sources and inspect its axiom closures before recording new provenance. The historical full-runner and graph-generation scripts are not supplied. The public repository now provides a separate clean-build and compiled-declaration CI workflow; its run records and artifacts report the actual execution results.
