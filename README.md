@@ -1,6 +1,8 @@
 <!-- public-repository-metadata:start -->
 # Supplementary materials
 
+[![Lean formal verification](https://github.com/ck14527/GD_stepsize_supplementary_materials/actions/workflows/lean.yml/badge.svg)](https://github.com/ck14527/GD_stepsize_supplementary_materials/actions/workflows/lean.yml)
+
 This repository accompanies **Optimal Recursive Composition and Dyadic Phase Laws for Gradient Descent with Predetermined Stepsizes** by **Yu Liu, Kang Chen, Rujun Jiang, and Tianyu Wang**.
 
 - **Paper:** [arXiv:2609.11788](https://arxiv.org/abs/2609.11788)
@@ -10,6 +12,8 @@ This repository accompanies **Optimal Recursive Composition and Dyadic Phase Law
 The repository contains the supplied supplementary-materials working folder: numerical code, stored numerical data, figure sources and PDFs, Lean 4 proofs, theorem mappings, audit records, author notes, existing review archives, and intermediate working files. `GD_stepsize_schedule.pdf`, `GD_stepsize_schedule copy.pdf`, and Git internal metadata are excluded. The arXiv link above is the canonical entry point for the paper.
 
 For reproduction, start with the numerical and Lean commands in the guide below. Python dependencies are pinned in [requirements.txt](requirements.txt); the Lean development pins Lean 4.19.0 and a specific mathlib commit. [NUMERICAL_REPRODUCIBILITY.md](NUMERICAL_REPRODUCIBILITY.md) and [LEAN_FORMALIZATION.md](LEAN_FORMALIZATION.md) explain the validation scope.
+
+[Lean formal verification on GitHub Actions](https://github.com/ck14527/GD_stepsize_supplementary_materials/actions/workflows/lean.yml) performs a clean `lake build GD` with Lean 4.19.0 and the pinned mathlib revision on every push and pull request. It then exports the compiled declarations, rejects theorem axioms other than `propext`, `Classical.choice`, and `Quot.sound` (including `sorryAx`), and checks the exact proof targets of all 40 registered scalar/combinatorial results. Each run publishes its declaration export and audit report as a downloadable artifact. The badge above reports the latest run; the run page identifies the exact verified commit. Historical build records below describe the earlier supplement preparation.
 
 The publication checks in [checks/github_publication/package_validation.json](checks/github_publication/package_validation.json) rerun the small numerical reference checks, bundled-data consistency checks, and historical Lean-input hash checks. They do not perform a new full Lean kernel build or the large asymmetric Bellman search.
 

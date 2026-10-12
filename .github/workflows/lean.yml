@@ -1,0 +1,57 @@
+name: Lean formal verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lean-verification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Build proofs and audit axioms
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out the exact commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Check the preserved historical proof inputs
+        run: python3 lean/tools/check_snapshot.py
+      - name: Build every proof with the pinned toolchain
+        uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865 # v1
+        with:
+          lake-package-directory: lean
+          auto-config: false
+          build: true
+          build-args: GD
+          use-mathlib-cache: true
+          use-github-cache: false
+      - name: Export and audit the freshly compiled declarations
+        working-directory: lean
+        run: |
+          set -euo pipefail
+          mkdir -p ../checks/lean_verification
+          cp audit/lean_declarations.json "$RUNNER_TEMP/historical_lean_declarations.json"
+          trap 'cp "$RUNNER_TEMP/historical_lean_declarations.json" audit/lean_declarations.json' EXIT
+          lake env lean GD/Audit.lean
+          cp audit/lean_declarations.json ../checks/lean_verification/current_declarations.json
+          python3 tools/check_elaborated.py \
+            --declarations ../checks/lean_verification/current_declarations.json \
+            --output ../checks/lean_verification/axiom_audit.json
+          lean --version > ../checks/lean_verification/toolchain.txt
+          lake --version >> ../checks/lean_verification/toolchain.txt
+          git rev-parse HEAD > ../checks/lean_verification/commit.txt
+      - name: Publish verification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lean-verification-${{ github.sha }}
+          path: checks/lean_verification/
+          if-no-files-found: warn
+          retention-days: 90
